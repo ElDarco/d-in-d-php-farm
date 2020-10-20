@@ -1,0 +1,10 @@
+.idea
+.env
+.env.custom
+.VERSION
+container-init.log
+docker-compose.yml
+database/*
+!database/.gitkeep
+docker/sphinx/var/lib/*
+docker/sphinx/var/log/*

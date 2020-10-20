@@ -1,0 +1,143 @@
+version: '2.2'
+services:
+  nginx:
+    build: docker/nginx
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/var/log/nginx:/var/log/nginx
+    depends_on:
+      - php-fpm-53
+      - php-fpm-54
+      - php-fpm-55
+      - php-fpm-56
+      - php-fpm-70
+      - php-fpm-71
+      - php-fpm-72
+      - php-fpm-73
+      - php-fpm-74
+      - php-fpm-80-alpha
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      outside-network:
+        aliases:
+          - $COMPOSE_PROJECT_NAME
+      backend-network:
+  php-fpm-80-alpha:
+    build: docker/php-fpm-80-alpha
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-80-alpha/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-80-alpha/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-74:
+    build: docker/php-fpm-74
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-74/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-74/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-73:
+    build: docker/php-fpm-73
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-73/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-73/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-72:
+    build: docker/php-fpm-72
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-72/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-72/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-71:
+    build: docker/php-fpm-71
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-71/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-71/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-70:
+    build: docker/php-fpm-70
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-70/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-70/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-56:
+    build: docker/php-fpm-56
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-56/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-56/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-55:
+    build: docker/php-fpm-55
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-55/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-55/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-54:
+    build: docker/php-fpm-54
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-54/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-54/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-53:
+    build: docker/php-fpm-53
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+      - ./docker/php-fpm-53/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-53/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  nodejs:
+    image: node:8
+    command: /bin/bash -c "env > .env && yarn install && npm run dev"
+    working_dir: /var/www/
+    env_file: .env
+    volumes:
+      - ./src/frontend:/var/www
+    ports:
+      - 8080:8080
+    networks:
+      - backend-network
+networks:
+  backend-network:
+  outside-network:
+    external:
+      name: $APP_SERVICE_NETWORK_NAME
