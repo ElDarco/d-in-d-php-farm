@@ -40,8 +40,17 @@ function error_handler($errno, $errstr) {
         throw new \Exception($errstr);
     }
 }
-
+// Проверка на OPTIONS запрос for sensitivity client
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    $result['responseCode'] = 200;
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    die();
+}
+
+// Проверка на GET запрос health check
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
     $result['responseCode'] = 200;
     header('Content-Type: application/json');
@@ -71,10 +80,15 @@ sem_release($semRes);
 
 $body = file_get_contents('php://input');
 $json = json_decode($body, true);
+$jsonCode = '';
+if (array_key_exists('code', $json)) {
+    $jsonCode = $json['code'];
+}
 
-$jsonCode = $json['code'] ?? '';
-
-$code = $_POST['code'] ?? $jsonCode;
+$code = $jsonCode;
+if (array_key_exists('code', $_POST)) {
+    $jsonCode = $_POST['code'];
+}
 
 // Get code
 if (empty($code)) {
@@ -104,6 +118,8 @@ $start = microtime(true);
 
 try {
     eval($code);
+} catch (\Exception $e) {
+    echo 'Uncaught exception: '.get_class($e).' '.$e->getMessage().'<br>';
 } catch (\Throwable $e) {
     echo 'Uncaught exception: '.get_class($e).' '.$e->getMessage().'<br>';
 }
