@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Code\TurnoverObject;
 
-use App\Exception\ServerErrorExceptions\TurnoverPropertyException;
+use Core\TurnoverObject\TurnoverPropertyException;
 use Doctrine\Common\Collections\Collection;
 
 class AbstractTurnoverObject implements Exportable, Importable
@@ -48,7 +48,7 @@ class AbstractTurnoverObject implements Exportable, Importable
     public function set($name, $value)
     {
         if (property_exists($this, 'disable_set') && in_array($name, $this->disable_set)) {
-            throw new TurnoverPropertyException('cannot set property: ' . $name);
+            throw TurnoverPropertyException::create('cannot set property: ' . $name);
         }
 
         return $this->__set($name, $value);
@@ -70,7 +70,7 @@ class AbstractTurnoverObject implements Exportable, Importable
             return $this->$name;
         }
 
-        throw new TurnoverPropertyException('invalid property name: ' . $name);
+        throw TurnoverPropertyException::create('invalid property name: ' . $name);
     }
 
     /**
@@ -82,11 +82,11 @@ class AbstractTurnoverObject implements Exportable, Importable
     public function __set($name, $value)
     {
         if (property_exists($this, 'disable_set') && in_array($name, $this->disable_set)) {
-            throw new TurnoverPropertyException('cannot set property: ' . $name);
+            throw TurnoverPropertyException::create('cannot set property: ' . $name);
         }
 
         if (!property_exists($this, $name)) {
-            throw new TurnoverPropertyException('invalid property name: ' . $name);
+            throw TurnoverPropertyException::create('invalid property name: ' . $name);
         }
 
         if (method_exists($this, 'set' . ucfirst($name))) {
@@ -145,7 +145,7 @@ class AbstractTurnoverObject implements Exportable, Importable
                 $result[$prop->getName()] = array_map(function ($entity) use ($ignore, $reflect) {
                     return $entity->export(array_merge($ignore, [$reflect->name]));
                 }, array_values($value->toArray()));
-            } elseif ($value instanceof \App\DataTransferObject\Base) {
+            } elseif ($value instanceof \Core\DTO\Multiple\BaseMultipleSingleDTO) {
                 $result[$prop->getName()] = [];
                 foreach ($value as $element) {
                     if ($element instanceof Exportable) {

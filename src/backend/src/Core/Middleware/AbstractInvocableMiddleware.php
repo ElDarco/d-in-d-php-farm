@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Class AbstractMiddleware
+ * Class InvokableMiddleware
  * @package Core\Middleware
  *
  * @method __invoke()

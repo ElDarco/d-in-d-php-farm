@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Api\ExternalApi\v1;
 
 use Mezzio\Application;
+use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -29,7 +30,8 @@ class RoutesDelegator
 
         $basePath   = '/api/v1';
 
-        $app->get($basePath . '', [                                                                      // Достаем из реквеста шину ответа и возвращаем json и 200 статус
+        $app->get($basePath . '/1', [
+            \Middleware\SuccessMiddleware::class // Достаем из реквеста шину ответа и возвращаем json и 200 статус
         ]);
 
         return $app;

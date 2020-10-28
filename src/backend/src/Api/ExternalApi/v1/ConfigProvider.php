@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Api\ExternalApi\v1;
 
-
 use Mezzio\Application;
 
 /**

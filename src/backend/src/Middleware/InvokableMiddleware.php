@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Middleware;
+namespace Middleware;
+
+use Core\Middleware\AbstractInvocableMiddleware;
+use Core\Middleware\RequestDecorator;
+use Core\Middleware\RequestDecoratorInterface;
+use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Class Middleware
  * @abstract
  * @package App\Middleware
  */
-abstract class AbstractMiddleware extends AbstractInvocableMiddleware
+class InvokableMiddleware extends AbstractInvocableMiddleware
 {
     /**
      * @inheritdoc

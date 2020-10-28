@@ -13,6 +13,7 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Mezzio\ProblemDetails\ConfigProvider::class,
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     // Include cache configuration
@@ -29,7 +30,7 @@ $aggregator = new ConfigAggregator([
         : function(): array { return[]; },
 
     // Default App module config
-    App\ConfigProvider::class,
+    Api\ExternalApi\v1\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
