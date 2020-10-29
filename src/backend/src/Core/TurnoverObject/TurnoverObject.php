@@ -7,7 +7,7 @@ namespace Code\TurnoverObject;
 use Core\TurnoverObject\TurnoverPropertyException;
 use Doctrine\Common\Collections\Collection;
 
-class AbstractTurnoverObject implements Exportable, Importable
+class TurnoverObject implements Exportable, Importable
 {
     /**
      * @param array $data

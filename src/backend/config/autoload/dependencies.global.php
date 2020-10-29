@@ -24,6 +24,9 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
+            \Doctrine\ORM\EntityManager::class => \Roave\PsrContainerDoctrine\EntityManagerFactory::class,
+            \Doctrine\Migrations\Configuration\Configuration::class => \Roave\PsrContainerDoctrine\MigrationsConfigurationFactory::class,
+            \Doctrine\Migrations\Tools\Console\Command\ExecuteCommand::class => \Roave\PsrContainerDoctrine\MigrationsCommandFactory::class,
             \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class => \Mezzio\ProblemDetails\ProblemDetailsMiddlewareFactory::class,
         ],
     ],

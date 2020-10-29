@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Core\DTO\Single;
 
-class BaseSingleDTO
+use Code\TurnoverObject\TurnoverObject;
+
+class BaseSingleDTO extends TurnoverObject
 {
 
 }
