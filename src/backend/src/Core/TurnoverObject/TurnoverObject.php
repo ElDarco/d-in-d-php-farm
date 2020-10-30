@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Code\TurnoverObject;
+namespace Core\TurnoverObject;
 
 use Core\TurnoverObject\TurnoverPropertyException;
 use Doctrine\Common\Collections\Collection;

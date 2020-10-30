@@ -24,10 +24,9 @@ return [
                     'password' => $_ENV['APP_DB_PASSWORD'] ?? '',
                     'dbname'   => $_ENV['APP_DB_DATABASE'] ?? '',
                     'driverOptions' => [
-                        \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+                        \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8' COLLATE 'utf8_general_ci'",
                     ],
                     'server_version' => '5.7'
-
                 ],
             ],
         ],
@@ -55,7 +54,7 @@ return [
             'directory' => 'migrations',
             'name' => 'My DB Migrations',
             'namespace' => 'DoctrineMigrations',
-            'table' => 'migration',
+            'table' => 'doctrine_migration_versions',
             'column' => 'version_timestamp',
         ],
     ],

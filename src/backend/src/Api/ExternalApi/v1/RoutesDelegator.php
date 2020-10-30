@@ -30,8 +30,13 @@ class RoutesDelegator
 
         $basePath   = '/api/v1';
 
-        $app->get($basePath . '/1', [
-            \Middleware\SuccessMiddleware::class // Достаем из реквеста шину ответа и возвращаем json и 200 статус
+        $app->get($basePath . '/ping', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->post($basePath . '/php-instance/register[/]', [
+            \Middleware\PhpInstance\UseCase\LeaveMarkAboutWork::class,
+            \Middleware\SuccessMiddleware::class
         ]);
 
         return $app;

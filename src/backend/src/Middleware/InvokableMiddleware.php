@@ -11,7 +11,7 @@ use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class Middleware
+ * Class InvokableMiddleware
  * @abstract
  * @package App\Middleware
  */
