@@ -2,13 +2,22 @@
 
 namespace Middleware;
 
-use Exceptions\ServerErrorException;
+use Core\DTO\ResponseData;
 use Laminas\Diactoros\Response\JsonResponse;
 
+/**
+ * Class SuccessMiddleware
+ * @package Middleware
+ */
 class SuccessMiddleware extends InvokableMiddleware
 {
-    public function __invoke()
-    {
-        return new JsonResponse([], 200);
+    /**
+     * @param ResponseData $return
+     * @return JsonResponse
+     */
+    public function __invoke(
+        ResponseData $return
+    ) {
+        return new JsonResponse($return->__toArray(), 200);
     }
 }

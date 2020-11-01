@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Entity\Mixin\DefaultFields;
 
 /**
+ * @property string $phpVersion
+ * @property string $status
+ * @property string $publicUrl
+ *
  * @ORM\Entity()
  * @ORM\Table(name="php_instance")
  * @ORM\HasLifecycleCallbacks

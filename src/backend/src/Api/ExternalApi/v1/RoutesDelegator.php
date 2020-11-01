@@ -34,6 +34,11 @@ class RoutesDelegator
             \Middleware\SuccessMiddleware::class
         ]);
 
+        $app->get($basePath . '/php-instance[/]', [
+            \Middleware\PhpInstance\UseCase\GetActivePhpInstances::class,
+            \Middleware\SuccessMiddleware::class
+        ]);
+
         $app->post($basePath . '/php-instance/register[/]', [
             \Middleware\PhpInstance\UseCase\LeaveMarkAboutWork::class,
             \Middleware\SuccessMiddleware::class
