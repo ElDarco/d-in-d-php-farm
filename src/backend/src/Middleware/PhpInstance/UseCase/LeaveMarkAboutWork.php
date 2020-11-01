@@ -5,6 +5,7 @@ namespace Middleware\PhpInstance\UseCase;
 use Doctrine\ORM\EntityManager;
 use Entity\PhpInstance;
 use Exceptions\BadRequestException;
+use Exceptions\PhpInstanceAlreadyRegistered;
 use Middleware\InvokableMiddleware;
 
 /**
@@ -49,7 +50,17 @@ class LeaveMarkAboutWork extends InvokableMiddleware
             ]);
         }
 
-        $phpInstance = new PhpInstance();
+        $phpInstance = $em->getRepository(PhpInstance::class)->findOneBy([
+            'phpVersion' => $phpVersion,
+            'publicUrl' => $publicUrl,
+        ]);
+
+        if (!$phpInstance instanceof PhpInstance) {
+            $phpInstance = new PhpInstance();
+        } else {
+            throw PhpInstanceAlreadyRegistered::create();
+        }
+
         $phpInstance->import([
             'phpVersion' => $phpVersion,
             'publicUrl' => $publicUrl,
