@@ -44,6 +44,12 @@ class RoutesDelegator
             \Middleware\SuccessMiddleware::class
         ]);
 
+        $app->post($basePath . "/php-instance/{PhpInstanceUUID}/run[/]", [
+            \Middleware\PhpInstance\UseCase\GetActivePhpInstanceByUuid::class,
+
+            \Middleware\SuccessMiddleware::class
+        ]);
+
         return $app;
     }
     // @codingStandardsIgnoreEnd

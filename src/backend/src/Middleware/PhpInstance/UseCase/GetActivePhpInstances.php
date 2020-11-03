@@ -30,7 +30,7 @@ class GetActivePhpInstances extends InvokableMiddleware
         $phpInstancesResponseData = [];
         foreach ($phpInstances as $phpInstance) {
             $phpInstancesResponseData[$phpInstance->phpVersion][] =
-                $phpInstance->export(['phpVersion', 'status', 'publicUrl']);
+                $phpInstance->export([], ['uuid', 'phpVersion', 'status']);
         }
 
         $responseData->phpInstances = $phpInstancesResponseData;

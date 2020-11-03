@@ -20,6 +20,7 @@
     "require": {
         "php": "^7.4",
         "composer/package-versions-deprecated": "^1.10.99",
+        "guzzlehttp/guzzle": "^7.2",
         "laminas/laminas-component-installer": "^2.1.2",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-diactoros": "^2.3.0",
