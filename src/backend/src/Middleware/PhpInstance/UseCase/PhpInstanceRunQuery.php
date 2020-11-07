@@ -20,6 +20,7 @@ class PhpInstanceRunQuery extends InvokableMiddleware
      * @param Client $httpClient
      * @param ResponseData $responseData
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
      */
     public function __invoke(
         PhpInstance $phpInstance,
@@ -31,7 +32,6 @@ class PhpInstanceRunQuery extends InvokableMiddleware
             $phpInstance->publicUrl,
             ['json' =>  $requestBody]
         );
-
         $responseData->responseFromPhpInstance =
             json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         $responseData->responseCodeFromPhpInstance = $response->getStatusCode();
