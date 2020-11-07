@@ -26,6 +26,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(ServerUrlMiddleware::class);
 
     $app->pipe(\Middleware\Response\InitResponseDataMiddleware::class);
+    $app->pipe(\Mezzio\Helper\BodyParams\BodyParamsMiddleware::class);
 
     // Pipe more middleware here that you want to execute on every request:
     // - bootstrapping
