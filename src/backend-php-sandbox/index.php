@@ -33,13 +33,15 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Request-Method: POST, OPTIONS');
 header('Access-Control-Max-Age: 86400');    // cache for 1 day
 
-function error_handler($errno, $errstr) {
+function error_handler($errno, $errstr)
+{
     if ($errno == E_WARNING) {
         throw new \Exception($errstr);
-    } else if($errno == E_NOTICE) {
+    } else if ($errno == E_NOTICE) {
         throw new \Exception($errstr);
     }
 }
+
 // Проверка на OPTIONS запрос for sensitivity client
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -68,15 +70,16 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 }
 
 // Установим и проверим на занятость семафор, что бы не допустить большое колличество запросов
-$semRes = sem_get(intval(str_replace('.', '', $_SERVER['REMOTE_ADDR'])), 1, 0666, 1);
-if(!sem_acquire($semRes, true)) {
+// TODO external to billing
+/*$semRes = sem_get(intval(str_replace('.', '', $_SERVER['REMOTE_ADDR'])), 1, 0666, 1);
+if (!sem_acquire($semRes, true)) {
     http_response_code(429);
     $result['responseCode'] = 429;
     header('Content-Type: application/json');
     echo json_encode($result);
     die();
 }
-sem_release($semRes);
+sem_release($semRes);*/
 
 $body = file_get_contents('php://input');
 $json = json_decode($body, true);
@@ -119,9 +122,9 @@ $start = microtime(true);
 try {
     eval($code);
 } catch (\Exception $e) {
-    echo 'Uncaught exception: '.get_class($e).' '.$e->getMessage().'<br>';
+    echo 'Uncaught exception: ' . get_class($e) . ' ' . $e->getMessage() . '<br>';
 } catch (\Throwable $e) {
-    echo 'Uncaught exception: '.get_class($e).' '.$e->getMessage().'<br>';
+    echo 'Uncaught exception: ' . get_class($e) . ' ' . $e->getMessage() . '<br>';
 }
 $debugOutput = '';
 
@@ -143,5 +146,4 @@ $result = [
 http_response_code(200);
 header('Content-Type: application/json');
 echo json_encode($result);
-
 die();
