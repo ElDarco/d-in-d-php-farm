@@ -1,6 +1,7 @@
 version: '2.2'
 services:
   nginx:
+    container_name: $COMPOSE_PROJECT_NAME-nginx
     build: docker/nginx
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -27,8 +28,10 @@ services:
           - $COMPOSE_PROJECT_NAME
       backend-network:
   php-hub:
+    container_name: $COMPOSE_PROJECT_NAME-php-hub
     build: docker/php-hub
     user: $DOCKER_UID:$DOCKER_GID
+    env_file: .env
     depends_on:
       db:
         condition: service_healthy
@@ -41,6 +44,7 @@ services:
     networks:
       - backend-network
   php-fpm-80-alpha:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-80-alpha
     build: docker/php-fpm-80-alpha
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -51,6 +55,7 @@ services:
     networks:
       - backend-network
   php-fpm-74:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-74
     build: docker/php-fpm-74
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -61,7 +66,7 @@ services:
     networks:
       - backend-network
   php-fpm-73:
-    container_name: php-fpm-73
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-73
     build: docker/php-fpm-73
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -72,6 +77,7 @@ services:
     networks:
       - backend-network
   php-fpm-72:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-72
     build: docker/php-fpm-72
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -82,6 +88,7 @@ services:
     networks:
       - backend-network
   php-fpm-71:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-71
     build: docker/php-fpm-71
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -92,6 +99,7 @@ services:
     networks:
       - backend-network
   php-fpm-70:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-70
     build: docker/php-fpm-70
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -102,6 +110,7 @@ services:
     networks:
       - backend-network
   php-fpm-56:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-56
     build: docker/php-fpm-56
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -112,6 +121,7 @@ services:
     networks:
       - backend-network
   php-fpm-55:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-55
     build: docker/php-fpm-55
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -122,6 +132,7 @@ services:
     networks:
       - backend-network
   php-fpm-54:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-54
     build: docker/php-fpm-54
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -132,6 +143,7 @@ services:
     networks:
       - backend-network
   php-fpm-53:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-53
     build: docker/php-fpm-53
     volumes:
       - ./src/backend-php-sandbox:/var/www
@@ -142,6 +154,7 @@ services:
     networks:
       - backend-network
   nodejs:
+    container_name: $COMPOSE_PROJECT_NAME-nodejs
     image: node:8
     command: /bin/bash -c "env > .env && yarn install && npm run dev"
     working_dir: /var/www/
@@ -180,6 +193,8 @@ services:
       - PMA_HOST=${APP_DB_HOST}
       - PMA_USER=${APP_DB_USER}
       - PMA_PASSWORD=${APP_DB_PASSWORD}
+    ports:
+      - 8082:80
     networks:
       outside-network:
         aliases:

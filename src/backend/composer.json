@@ -73,6 +73,9 @@
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "migrate:run": "php vendor/bin/doctrine migrations:migrate -q",
+        "migrate:create": "vendor/bin/doctrine migrations:generate",
+        "migrate:diff": "vendor/bin/doctrine migrations:diff"
     }
 }

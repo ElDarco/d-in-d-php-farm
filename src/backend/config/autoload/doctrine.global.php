@@ -9,7 +9,7 @@ $_ENV['APP_DB_PASSWORD'] = $_ENV['APP_DB_PASSWORD'] ?? '';
 $_ENV['APP_DB_DATABASE'] = $_ENV['APP_DB_DATABASE'] ?? null;
 
 if (empty($_ENV['APP_DB_HOST']) || empty($_ENV['APP_DB_USER']) || empty($_ENV['APP_DB_DATABASE'])) {
-    throw new \Doctrine\DBAL\ConnectionException('Incorrect database connection configuration');
+    throw new \Doctrine\DBAL\ConnectionException('Incorrect database connection from ENV configuration');
 }
 
 return [
