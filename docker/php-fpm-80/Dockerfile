@@ -1,4 +1,4 @@
-FROM php:8.0-rc-fpm
+FROM php:8.0-fpm
 
 RUN mkdir -p /var/log/php-fpm
 RUN ln -sf /dev/stdout /var/log/php-fpm/access.log

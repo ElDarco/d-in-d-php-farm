@@ -18,10 +18,10 @@ services:
       - php-fpm-72
       - php-fpm-73
       - php-fpm-74
-      - php-fpm-80-alpha
+      - php-fpm-80
     restart: always
     ports:
-      - 8081:80
+      - 18081:80
     networks:
       outside-network:
         aliases:
@@ -43,13 +43,13 @@ services:
     restart: always
     networks:
       - backend-network
-  php-fpm-80-alpha:
-    container_name: $COMPOSE_PROJECT_NAME-php-fpm-80-alpha
-    build: docker/php-fpm-80-alpha
+  php-fpm-80:
+    container_name: $COMPOSE_PROJECT_NAME-php-fpm-80
+    build: docker/php-fpm-80
     volumes:
       - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-80-alpha/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-80-alpha/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+      - ./docker/php-fpm-80/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/php-fpm-80/php.ini:/usr/local/etc/php/conf.d/00-php.ini
     working_dir: /var/www/
     restart: always
     networks:
@@ -155,14 +155,15 @@ services:
       - backend-network
   nodejs:
     container_name: $COMPOSE_PROJECT_NAME-nodejs
-    image: node:12
-    command: /bin/bash -c "env > .env && yarn install && npm run dev"
-    working_dir: /var/www/
+    build:
+      context: ./
+      dockerfile: ./docker/nodejs/Dockerfile
+    working_dir: /home/node
     env_file: .env
-    volumes:
-      - ./src/frontend:/var/www
+    #volumes:
+    #  - ./src/frontend:/home/node
     ports:
-      - 8080:8080
+      - 18080:8080
     networks:
       - backend-network
   db:
@@ -194,7 +195,7 @@ services:
       - PMA_USER=${APP_DB_USER}
       - PMA_PASSWORD=${APP_DB_PASSWORD}
     ports:
-      - 8082:80
+      - 18082:80
     networks:
       outside-network:
         aliases:
