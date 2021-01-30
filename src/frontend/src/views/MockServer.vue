@@ -1,18 +1,18 @@
 <template>
-  <php-sandbox-layout>
+  <mock-server-layout>
     <div class="environment">
     </div>
-  </php-sandbox-layout>
+  </mock-server-layout>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import PhpSandboxLayout from '@/layouts/PhpSandboxLayout.vue';
+import MockServerLayout from '@/layouts/MockServerLayout.vue';
 
 @Component({
   components: {
-    PhpSandboxLayout,
+    MockServerLayout,
   },
 })
-export default class Environment extends Vue {}
+export default class MockServer extends Vue {}
 </script>

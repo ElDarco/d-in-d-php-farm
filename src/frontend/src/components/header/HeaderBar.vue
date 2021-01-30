@@ -27,6 +27,14 @@
               <hr class="navbar-divider">
               <a class="navbar-item is-disabled">
                 <span class="badge is-warning">Coming soon</span>
+                <img src="../../assets/planform_logos/mysql.svg">
+                <span
+                    class="has-tooltip-arrow has-tooltip-right has-tooltip-info"
+                    data-tooltip="Coming in next update">MYSQL
+                </span>
+              </a>
+              <a class="navbar-item is-disabled">
+                <span class="badge is-warning">Coming soon</span>
                 <img src="../../assets/planform_logos/python.svg">
                 <span
                     class="has-tooltip-arrow has-tooltip-right has-tooltip-info"
@@ -54,7 +62,7 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-info">
+              <a class="button is-info" @click="getInstanceList">
                 <strong>RUN</strong>
                 <span class="icon is-small">
                   <i class="fas fa-play"></i>
@@ -75,12 +83,12 @@
             <div class="buttons">
               <a class="button is-info is-outlined">
                 <span class="icon is-small">
-                  <i class="fas fa-adjust"></i>
+                  <i class="fas fa-share"></i>
                 </span>
               </a>
               <a class="button is-info is-outlined">
                 <span class="icon is-small">
-                  <i class="fas fa-cogs"></i>
+                  <i class="fas fa-adjust"></i>
                 </span>
               </a>
               <a class="button is-info">
@@ -91,6 +99,69 @@
               </a>
             </div>
           </div>
+          <div
+            class="navbar-item has-dropdown is-mega"
+            :class="{'is-active': showSettingsBar}"
+          >
+            <div class="buttons">
+              <a
+                class="button is-info"
+                :class="{'is-outlined': !showSettingsBar}"
+                @click="showSettingsBar = !showSettingsBar"
+              >
+                  <span class="icon is-small">
+                    <i class="fas fa-cogs"></i>
+                  </span>
+              </a>
+              <div class="navbar-dropdown">
+                <div class="container">
+                  <div class="columns">
+                    <div class="column is-one-fifth">
+                      <label class="checkbox">
+                        <input type="checkbox">
+                        Only auto-run code that validates
+                      </label>
+                      <label class="checkbox">
+                        <input type="checkbox">
+                        Run code on CTRL+S
+                      </label>
+                      <label class="checkbox">
+                        <input type="checkbox">
+                        Run code on CTRL/ALT + ENTER
+                      </label>
+                    </div>
+                    <div class="column">
+                    </div>
+                    <div class="column">
+                      <p>Editor layout:</p>
+                      <div class="field has-addons">
+                        <p class="control">
+                          <button class="button is-info is-disabled" disabled>
+                            <span>Columns</span>
+                          </button>
+                        </p>
+                        <p class="control">
+                          <button class="button">
+                            <span>Bottom results</span>
+                          </button>
+                        </p>
+                        <p class="control">
+                          <button class="button">
+                            <span>Tabs (columns)</span>
+                          </button>
+                        </p>
+                        <p class="control">
+                          <button class="button">
+                            <span>Tabs (rows)</span>
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -99,9 +170,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import {PhpHubApi} from "@/providers/php-hub-api";
 
 @Component
-export default class HeaderBar extends Vue {}
+export default class HeaderBar extends Vue {
+  @Prop() private showSettingsBar = false;
+
+  protected phpHubApiClient = new PhpHubApi();
+
+  getInstanceList() {
+    console.log(this.phpHubApiClient.getListPhpInstances());
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -127,6 +207,12 @@ export default class HeaderBar extends Vue {}
         }
         &:after {
           margin-bottom: -10px;
+        }
+      }
+
+      &.is-mega {
+        & .navbar-dropdown {
+          z-index: 19;
         }
       }
     }

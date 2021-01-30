@@ -2,11 +2,10 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-@import "../node_modules/bulma/sass/utilities/_all.sass";
-@import "../node_modules/bulma/sass/base/_all.sass";
-@import "../node_modules/bulma/sass/elements/button.sass";
-@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/bulma.sass";
 
 @import "../node_modules/@creativebulma/bulma-badge/src/sass/index.sass";
 
 @import "../node_modules/@creativebulma/bulma-tooltip/src/sass/index.sass";
+
+@import "./megamenu.scss";

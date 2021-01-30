@@ -1,17 +1,21 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/welcome',
+    path: '/',
     name: 'Welcome',
     component: () => import(/* webpackChunkName: "about" */ '../views/Welcome.vue')
   },
   {
-    path: '/',
+    path: '/mock-server',
+    name: 'MockServer',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue')
+  },
+  {
+    path: '/php',
     name: 'Environment',
     component: () => import(/* webpackChunkName: "about" */ '../views/Environment.vue')
   }

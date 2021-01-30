@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="basic-layout">
+    <header-bar/>
+    <div class="php-sandbox-layout">
       <slot></slot>
     </div>
   </div>
@@ -16,7 +17,7 @@ import HeaderBar from "@/components/header/HeaderBar.vue";
     HeaderBar,
   }
 })
-export default class MainLayout extends Vue {}
+export default class PhpSandboxLayout extends Vue {}
 </script>
 
 <style scoped>
