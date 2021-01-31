@@ -15,6 +15,6 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class MockServerLayout extends Vue {}
 </script>
 
-<style scoped>
+<style>
 
 </style>

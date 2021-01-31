@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HeaderBar from "@/components/header/HeaderBar.vue";
+import HeaderBar from "@/components/php-sandbox/header/HeaderBar.vue";
 
 @Component({
   components: {
@@ -19,6 +19,6 @@ import HeaderBar from "@/components/header/HeaderBar.vue";
 export default class MainLayout extends Vue {}
 </script>
 
-<style scoped>
+<style>
 
 </style>

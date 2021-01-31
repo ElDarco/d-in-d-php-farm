@@ -3,7 +3,7 @@
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img src="../../assets/logo.svg">
+          <img src="../../../assets/logo.svg">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -17,37 +17,32 @@
         <div class="navbar-start">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link" style="width: 120px">
-              <img src="../../assets/planform_logos/php.svg"> PHP
+              <img src="../../../assets/planform_logos/php.svg"> PHP
             </a>
 
             <div class="navbar-dropdown">
               <a class="navbar-item is-active">
-                <img src="../../assets/planform_logos/php.svg"> PHP
+                <img src="../../../assets/planform_logos/php.svg"> PHP
               </a>
               <hr class="navbar-divider">
-              <a class="navbar-item is-disabled">
+              <a class="navbar-item is-disabled has-tooltip-arrow has-tooltip-right has-tooltip-info"
+                 data-tooltip="Coming in next update">
                 <span class="badge is-warning">Coming soon</span>
-                <img src="../../assets/planform_logos/mysql.svg">
-                <span
-                    class="has-tooltip-arrow has-tooltip-right has-tooltip-info"
-                    data-tooltip="Coming in next update">MYSQL
+                <img src="../../../assets/planform_logos/mysql.svg">
+                <span>MYSQL</span>
+              </a>
+              <a class="navbar-item is-disabled has-tooltip-arrow has-tooltip-right has-tooltip-info"
+                 data-tooltip="Coming in next update">
+                <span class="badge is-warning">Coming soon</span>
+                <img src="../../../assets/planform_logos/python.svg">
+                <span>PYTHON
                 </span>
               </a>
-              <a class="navbar-item is-disabled">
+              <a class="navbar-item is-disabled has-tooltip-arrow has-tooltip-right has-tooltip-info"
+                 data-tooltip="Coming in next update">
                 <span class="badge is-warning">Coming soon</span>
-                <img src="../../assets/planform_logos/python.svg">
-                <span
-                    class="has-tooltip-arrow has-tooltip-right has-tooltip-info"
-                    data-tooltip="Coming in next update">PYTHON
-                </span>
-              </a>
-              <a class="navbar-item is-disabled">
-                <span class="badge is-warning">Coming soon</span>
-                <img src="../../assets/planform_logos/go.svg">
-                <span
-                    class="has-tooltip-arrow has-tooltip-right has-tooltip-info"
-                    data-tooltip="Coming in next update">GO
-                </span>
+                <img src="../../../assets/planform_logos/go.svg">
+                <span>GO</span>
               </a>
             </div>
           </div>
@@ -80,21 +75,22 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-info is-outlined">
+            <div class="buttons has-tooltip-bottom has-tooltip-info"
+                 data-tooltip="Coming in next update">
+              <a class="button is-info is-outlined" disabled>
                 <span class="icon is-small">
                   <i class="fas fa-share"></i>
                 </span>
               </a>
-              <a class="button is-info is-outlined">
+              <a class="button is-info is-outlined" disabled>
                 <span class="icon is-small">
                   <i class="fas fa-adjust"></i>
                 </span>
               </a>
-              <a class="button is-info">
+              <a class="button is-info" disabled>
                 <strong>Sign up</strong>
               </a>
-              <a class="button is-light">
+              <a class="button is-light" disabled>
                 Log in
               </a>
             </div>
@@ -116,17 +112,18 @@
               <div class="navbar-dropdown">
                 <div class="container">
                   <div class="columns">
-                    <div class="column is-one-fifth">
+                    <div class="column is-one-fifth has-tooltip-bottom has-tooltip-info"
+                         data-tooltip="Coming in next update">
                       <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" disabled>
                         Only auto-run code that validates
                       </label>
                       <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" checked disabled>
                         Run code on CTRL+S
                       </label>
                       <label class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" checked disabled>
                         Run code on CTRL/ALT + ENTER
                       </label>
                     </div>
@@ -134,24 +131,30 @@
                     </div>
                     <div class="column">
                       <p>Editor layout:</p>
-                      <div class="field has-addons">
+                      <div class="field has-addons has-tooltip-bottom has-tooltip-info"
+                           data-tooltip="Coming in next update">
                         <p class="control">
-                          <button class="button is-info is-disabled" disabled>
+                          <button class="button is-info is-disabled">
+                            <span>Rows</span>
+                          </button>
+                        </p>
+                        <p class="control">
+                          <button class="button is-disabled" disabled>
                             <span>Columns</span>
                           </button>
                         </p>
                         <p class="control">
-                          <button class="button">
+                          <button class="button is-disabled" disabled>
                             <span>Bottom results</span>
                           </button>
                         </p>
                         <p class="control">
-                          <button class="button">
+                          <button class="button is-disabled" disabled>
                             <span>Tabs (columns)</span>
                           </button>
                         </p>
                         <p class="control">
-                          <button class="button">
+                          <button class="button is-disabled" disabled>
                             <span>Tabs (rows)</span>
                           </button>
                         </p>
@@ -174,8 +177,7 @@ import {PhpHubApi} from "@/providers/php-hub-api";
 
 @Component
 export default class HeaderBar extends Vue {
-  @Prop() private showSettingsBar = false;
-
+  private showSettingsBar = false;
   protected phpHubApiClient = new PhpHubApi();
 
   getInstanceList() {
@@ -184,7 +186,7 @@ export default class HeaderBar extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .header-bar {
   & .navbar {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
