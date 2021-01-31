@@ -21,12 +21,14 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
+    $app->pipe(\Middleware\AccessControl::class);
     $app->pipe(ErrorHandler::class);
     $app->pipe(\Mezzio\ProblemDetails\ProblemDetailsMiddleware::class);
     $app->pipe(ServerUrlMiddleware::class);
 
     $app->pipe(\Middleware\Response\InitResponseDataMiddleware::class);
     $app->pipe(\Mezzio\Helper\BodyParams\BodyParamsMiddleware::class);
+
 
     // Pipe more middleware here that you want to execute on every request:
     // - bootstrapping

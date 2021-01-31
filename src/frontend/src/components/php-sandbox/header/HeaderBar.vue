@@ -57,7 +57,7 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-info" @click="getInstanceList">
+              <a class="button is-info">
                 <strong>RUN</strong>
                 <span class="icon is-small">
                   <i class="fas fa-play"></i>
@@ -172,17 +172,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import {PhpHubApi} from "@/providers/php-hub-api";
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class HeaderBar extends Vue {
   private showSettingsBar = false;
-  protected phpHubApiClient = new PhpHubApi();
-
-  getInstanceList() {
-    console.log(this.phpHubApiClient.getListPhpInstances());
-  }
 }
 </script>
 

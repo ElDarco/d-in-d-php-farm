@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @abstract
  * @package App\Middleware
  */
-class InvokableMiddleware extends AbstractInvocableMiddleware
+abstract class InvokableMiddleware extends AbstractInvocableMiddleware
 {
     /**
      * @inheritdoc

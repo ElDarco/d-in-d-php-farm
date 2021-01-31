@@ -7,7 +7,7 @@ export class PhpHubApi extends HttpClient {
     }
 
     protected beforeRequest(config: AxiosRequestConfig): AxiosRequestConfig {
-        config.baseURL = 'http://localhost/';
+        config.baseURL = process.env.VUE_APP_MAIN_HOST_URL;
 
         return config;
     }

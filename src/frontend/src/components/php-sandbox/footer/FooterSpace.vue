@@ -14,6 +14,9 @@
         <a href="https://github.com/GoogleChromeLabs/dark-mode-toggle">
           <img src="https://avatars.githubusercontent.com/u/31970254?s=200&v=4" alt="google-chrome-labs">
         </a>
+        <a href="https://www.php.net/">
+          <img src="https://www.php.net/images/logos/php-logo.svg" alt="php-net">
+        </a>
       </div>
     </div>
   </footer>
