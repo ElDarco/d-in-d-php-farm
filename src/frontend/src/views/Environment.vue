@@ -8,10 +8,21 @@
       <div :style="styleResultHeight" class="box result">
         123
       </div>
-      <div :style="styleTechHeight" class="box tech">
-        123
+      <div class="box tech">
+        <div class="columns">
+          <div class="column">
+            Time to execution:
+          </div>
+          <div class="column">
+            Use memory (MB):
+          </div>
+          <div class="column">
+            PHP version:
+          </div>
+        </div>
       </div>
     </div>
+    <footer-space/>
   </php-sandbox-layout>
 </template>
 
@@ -20,18 +31,19 @@ import { Component, Vue } from 'vue-property-decorator';
 import PhpSandboxLayout from '@/layouts/PhpSandboxLayout.vue';
 import Editor from '@/components/php-sandbox/content/Editor.vue';
 import HeaderBar from "@/components/php-sandbox/header/HeaderBar.vue";
+import FooterSpace from "@/components/php-sandbox/footer/FooterSpace.vue";
 
 @Component({
   components: {
+    FooterSpace,
     Editor,
     PhpSandboxLayout,
     HeaderBar,
   },
 })
 export default class Environment extends Vue {
-  private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*5 + "px;";
+  private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
   private styleResultHeight = "height: " + (document.documentElement.clientHeight-160)/10*3 + "px;";
-  private styleTechHeight = "height: " + (document.documentElement.clientHeight-160)/10 + "px;";
 }
 </script>
 

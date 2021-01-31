@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="basic-layout">
-      <slot></slot>
-    </div>
+  <div class="landing-layout">
+    <slot></slot>
   </div>
 </template>
 
