@@ -47,7 +47,8 @@
             </div>
           </div>
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">7.3</a>
+            <a v-if="loadInstances" class="navbar-link">LOADING...</a>
+            <a v-else class="navbar-link">7.3</a>
             <div class="navbar-dropdown">
               <a class="navbar-item is-active">7.3</a>
               <a class="navbar-item">7.2</a>
@@ -57,7 +58,7 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-info">
+              <a class="button is-info" :class="{'is-loading': loadInstances }">
                 <strong>RUN</strong>
                 <span class="icon is-small">
                   <i class="fas fa-play"></i>
@@ -172,10 +173,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import PhpInstanceList from "@/dto/PhpInstanceList";
 
 @Component
 export default class HeaderBar extends Vue {
+  @Prop()
+  private instanceList: PhpInstanceList;
+  @Prop()
+  private loadInstances: boolean;
+
   private showSettingsBar = false;
 }
 </script>

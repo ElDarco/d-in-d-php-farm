@@ -33,6 +33,7 @@ import Editor from '@/components/php-sandbox/content/Editor.vue';
 import HeaderBar from "@/components/php-sandbox/header/HeaderBar.vue";
 import FooterSpace from "@/components/php-sandbox/footer/FooterSpace.vue";
 import {PhpHubApi} from "@/providers/php-hub-api";
+import PhpInstanceList from "@/dto/PhpInstanceList";
 
 @Component({
   components: {
@@ -46,9 +47,21 @@ export default class PhpSandbox extends Vue {
   private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
   private styleResultHeight = "height: " + (document.documentElement.clientHeight-160)/10*3 + "px;";
   protected phpHubApiClient = new PhpHubApi();
+  protected instanceList: PhpInstanceList;
+  protected loadInstances = false;
 
   getInstanceList() {
-    console.log(this.phpHubApiClient.getListPhpInstances());
+    this.loadInstances = true;
+    this.phpHubApiClient.getListPhpInstances()
+      .then((response) => {
+        this.instanceList = response.data.phpInstances as PhpInstanceList;
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => {
+        this.loadInstances = false;
+      });
   }
 
   mounted() {

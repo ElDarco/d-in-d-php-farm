@@ -5,4 +5,7 @@
 </template>
 
 <style lang="scss">
+#app {
+  font-family: 'Inconsolata', monospace;
+}
 </style>
