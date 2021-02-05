@@ -48,12 +48,14 @@
           </div>
           <div class="navbar-item has-dropdown is-hoverable">
             <a v-if="loadInstances" class="navbar-link">LOADING...</a>
-            <a v-else class="navbar-link">7.3</a>
+            <a v-else class="navbar-link">
+              <template v-if="selectedPhpVersion !== undefined">{{selectedPhpVersion.phpVersion}}</template>
+              <template v-else>None</template>
+            </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item is-active">7.3</a>
-              <a class="navbar-item">7.2</a>
-              <a class="navbar-item">7.1</a>
-              <a class="navbar-item">7.0</a>
+              <div v-for="(instance, listKey) in instanceList" v-bind:key="listKey">
+                <a class="navbar-item is-active">{{instance.phpVersion}}</a>
+              </div>
             </div>
           </div>
           <div class="navbar-item">
@@ -174,16 +176,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import PhpInstanceList from "@/dto/PhpInstanceList";
 
 @Component
 export default class HeaderBar extends Vue {
   @Prop()
-  private instanceList: PhpInstanceList;
+  private instanceList: PhpInstanceList | undefined;
   @Prop()
-  private loadInstances: boolean;
+  private loadInstances: boolean | undefined;
 
   private showSettingsBar = false;
+  private selectedPhpVersion: PhpInstance | undefined;
 }
 </script>
 

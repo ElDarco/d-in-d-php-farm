@@ -1,3 +1,3 @@
 interface PhpInstanceList {
-    [x: string]: PhpInstance[];
+    [x: number]: PhpInstance;
 }
