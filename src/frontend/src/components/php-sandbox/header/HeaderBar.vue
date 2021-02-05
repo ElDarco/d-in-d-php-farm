@@ -54,7 +54,7 @@
             </a>
             <div class="navbar-dropdown">
               <div v-for="(instance, listKey) in instanceList" v-bind:key="listKey">
-                <a class="navbar-item is-active">{{instance.phpVersion}}</a>
+                <a v-on:click="switchSelectedInstance(instance)" class="navbar-item is-active">{{instance.phpVersion}}</a>
               </div>
             </div>
           </div>
@@ -175,17 +175,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 
 @Component
 export default class HeaderBar extends Vue {
   @Prop()
-  private instanceList: PhpInstanceList | undefined;
+  private instanceList: PhpInstance[] | undefined;
   @Prop()
   private loadInstances: boolean | undefined;
 
-  private showSettingsBar = false;
-  private selectedPhpVersion: PhpInstance | undefined;
+  public showSettingsBar = false;
+  public selectedPhpVersion: PhpInstance | undefined = {
+    phpVersion: 'None',
+    status: 'active',
+    uuid: '',
+  };
+
+  @Watch('instanceList')
+  public getFirstInstanceInInit(instances: PhpInstance[] | undefined) {
+    if (instances !== undefined) {
+      const instance = instances[0];
+      this.switchSelectedInstance(instance);
+    }
+  }
+
+  public switchSelectedInstance(instance: PhpInstance) {
+    this.selectedPhpVersion = instance;
+  }
 }
 </script>
 

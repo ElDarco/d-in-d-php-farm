@@ -46,13 +46,13 @@ export default class PhpSandbox extends Vue {
   private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
   private styleResultHeight = "height: " + (document.documentElement.clientHeight-160)/10*3 + "px;";
   protected phpHubApiClient = new PhpHubApi();
-  protected instanceList: PhpInstanceList | undefined;
+  protected instanceList: PhpInstance[] | undefined = [];
   protected loadInstances = true;
 
   getInstanceList() {
     this.phpHubApiClient.getListPhpInstances()
       .then((response) => {
-        this.instanceList = response.data.phpInstances as PhpInstanceList;
+        this.instanceList = response.data.phpInstances as PhpInstance[];
       })
       .catch((e) => {
         console.error(e);
