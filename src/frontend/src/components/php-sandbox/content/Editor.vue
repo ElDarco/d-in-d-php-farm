@@ -5,6 +5,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import MonacoEditor from 'vue-monaco'
+import Cookies from 'js-cookie'
 
 @Component({
   components: {
@@ -14,10 +15,19 @@ import MonacoEditor from 'vue-monaco'
 export default class Editor extends Vue {
   @Prop() private styleEditorHeight: string | undefined;
 
-  private code = "<"+"?php"+"\n"+"\n";
+  private code = "";
 
   public getCode() {
+    Cookies.set('code', this.code);
     return this.code
+  }
+
+  mounted() {
+    this.code = "<"+"?php"+"\n"+"\n";
+    const cookieCode = Cookies.get('code');
+    if (cookieCode) {
+      this.code = Cookies.get('code');
+    }
   }
 }
 </script>

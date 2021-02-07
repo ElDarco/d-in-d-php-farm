@@ -5,27 +5,28 @@
       :instance-list="instanceList"
       v-on:submit-button-run="runCode"
     />
-    <div class="container environment">
-      <div class="box editor">
-        <editor ref="editor" :style-editor-height="styleEditorHeight"></editor>
-      </div>
-      <div :style="styleResultHeight" class="box result">
-        <pre v-if="runResponse.responseFromPhpInstance.result !== ''">{{runResponse.responseFromPhpInstance.result}}</pre>
-      </div>
-      <div v-if="runResponse.responseFromPhpInstance.result !== ''" class="box tech">
-        <div class="columns">
-          <div v-if="runResponse.responseFromPhpInstance.execTime !== 0" class="column">
-            Time to execution: {{runResponse.responseFromPhpInstance.execTime}}
-          </div>
-          <div v-if="runResponse.responseFromPhpInstance.useMemoryMb !== 0" class="column">
-            Use memory (MB): {{runResponse.responseFromPhpInstance.useMemoryMb}}
-          </div>
-          <div v-if="runResponse.responseFromPhpInstance.version !== ''" class="column">
-            PHP version: {{runResponse.responseFromPhpInstance.version}}
+      <div class="container environment">
+        <div class="box editor">
+          <editor ref="editor" :style-editor-height="styleEditorHeight"></editor>
+        </div>
+        <div :style="styleResultHeight" class="box result">
+          <pre v-if="runResponse.responseFromPhpInstance.result !== ''">{{runResponse.responseFromPhpInstance.result}}</pre>
+        </div>
+        <div v-if="runResponse.responseFromPhpInstance.result !== ''" class="box tech">
+          <div class="columns">
+            <div v-if="runResponse.responseFromPhpInstance.execTime !== 0" class="column">
+              Time to execution: {{runResponse.responseFromPhpInstance.execTime}}
+            </div>
+            <div v-if="runResponse.responseFromPhpInstance.useMemoryMb !== 0" class="column">
+              Use memory (MB): {{runResponse.responseFromPhpInstance.useMemoryMb}}
+            </div>
+            <div v-if="runResponse.responseFromPhpInstance.version !== ''" class="column">
+              PHP version: {{runResponse.responseFromPhpInstance.version}}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <spinner-component :visible="loadCodeResult"/>
     <footer-space/>
   </php-sandbox-layout>
 </template>
