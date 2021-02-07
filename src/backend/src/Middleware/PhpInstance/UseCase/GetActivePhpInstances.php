@@ -25,11 +25,13 @@ class GetActivePhpInstances extends InvokableMiddleware
         /** @var PhpInstance[] $phpInstances */
         $phpInstances = $em->getRepository(PhpInstance::class)->findBy([
             'status' => PhpInstance::STATUS_ACTIVE
+        ], [
+            'phpVersion' => 'DESC'
         ]);
 
         $phpInstancesResponseData = [];
         foreach ($phpInstances as $phpInstance) {
-            $phpInstancesResponseData[] = $phpInstance->export([], ['uuid', 'phpVersion', 'status']);
+            $phpInstancesResponseData[] = $phpInstance->export([], ['uuid', 'phpVersion', 'status', 'runUrl']);
         }
 
         $responseData->phpInstances = $phpInstancesResponseData;

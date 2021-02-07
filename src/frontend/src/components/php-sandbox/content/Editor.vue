@@ -13,6 +13,11 @@ import MonacoEditor from 'vue-monaco'
 })
 export default class Editor extends Vue {
   @Prop() private styleEditorHeight: string | undefined;
+
   private code = "<"+"?php"+"\n"+"\n";
+
+  public getCode() {
+    return this.code
+  }
 }
 </script>

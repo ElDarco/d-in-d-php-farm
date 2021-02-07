@@ -15,8 +15,8 @@ $config = [
 $result = [
     'responseCode' => 0,
     'result' => '',
-    'exec_time' => 0,
-    'use_memory_mb' => 0,
+    'execTime' => 0,
+    'useMemoryMb' => 0,
     'version' => phpversion()
 ];
 
@@ -81,7 +81,14 @@ if (!sem_acquire($semRes, true)) {
 }
 sem_release($semRes);*/
 
+
 $body = file_get_contents('php://input');
+if ($body === '' || empty($body)) {
+    $result['responseCode'] = 403;
+    header('Content-Type: application/json');
+    echo json_encode($result);
+    die();
+}
 $json = json_decode($body, true);
 $jsonCode = '';
 if (array_key_exists('code', $json)) {
@@ -138,8 +145,8 @@ $execTime = sprintf('%.3f', (($end - $start) * 1000)); // in ms
 $result = [
     'responseCode' => 200,
     'result' => $debugOutput,
-    'exec_time' => $execTime,
-    'use_memory_mb' => $memory,
+    'execTime' => $execTime,
+    'useMemoryMb' => $memory,
     'version' => phpversion()
 ];
 

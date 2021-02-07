@@ -19,8 +19,8 @@ use Entity\Mixin\DefaultFields;
  */
 class PhpInstance extends TurnoverObject
 {
-    const STATUS_ACTIVE = 'active';
-    const STATUS_DEACTIVE = 'deactive';
+    const STATUS_ACTIVE = 'activate';
+    const STATUS_DEACTIVE = 'deactivate';
 
     use DefaultFields;
 
@@ -44,4 +44,11 @@ class PhpInstance extends TurnoverObject
      * @ORM\Column(name="public_url", type="string")
      */
     protected string $publicUrl;
+
+    protected string $runUrl;
+
+    public function getRunUrl(): string
+    {
+        return '/php-instance/' . $this->uuid . '/run/';
+    }
 }

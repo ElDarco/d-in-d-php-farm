@@ -54,18 +54,18 @@
             </a>
             <div class="navbar-dropdown">
               <div v-for="(instance, listKey) in instanceList" v-bind:key="listKey">
-                <a v-on:click="switchSelectedInstance(instance)" class="navbar-item is-active">{{instance.phpVersion}}</a>
+                <a v-on:click="switchSelectedInstance(instance)" class="navbar-item">{{instance.phpVersion}}</a>
               </div>
             </div>
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-info" :class="{'is-loading': loadInstances }">
+              <button v-on:click="runCode" class="button is-info" :class="{'is-loading': loadInstances }">
                 <strong>RUN</strong>
                 <span class="icon is-small">
                   <i class="fas fa-play"></i>
                 </span>
-              </a>
+              </button>
             </div>
           </div>
           <div class="navbar-item is-disabled">
@@ -176,6 +176,7 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+import { settingsPhpModule } from '@/store/settings-php';
 
 @Component
 export default class HeaderBar extends Vue {
@@ -185,22 +186,27 @@ export default class HeaderBar extends Vue {
   private loadInstances: boolean | undefined;
 
   public showSettingsBar = false;
-  public selectedPhpVersion: PhpInstance | undefined = {
-    phpVersion: 'None',
-    status: 'active',
-    uuid: '',
-  };
 
   @Watch('instanceList')
   public getFirstInstanceInInit(instances: PhpInstance[] | undefined) {
-    if (instances !== undefined) {
-      const instance = instances[0];
-      this.switchSelectedInstance(instance);
+    if (this.selectedPhpVersion.uuid === '') {
+      if (instances !== undefined) {
+        const instance = instances[0];
+        this.switchSelectedInstance(instance);
+      }
     }
   }
 
+  public runCode() {
+    this.$emit('submit-button-run');
+  }
+
+  public get selectedPhpVersion() {
+    return settingsPhpModule.state.selectedPhpInstance;
+  }
+
   public switchSelectedInstance(instance: PhpInstance) {
-    this.selectedPhpVersion = instance;
+    settingsPhpModule.mutations.setSelectedPhpInstance(instance)
   }
 }
 </script>

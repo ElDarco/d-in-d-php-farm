@@ -24,6 +24,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(\Middleware\AccessControl::class);
     $app->pipe(ErrorHandler::class);
     $app->pipe(\Mezzio\ProblemDetails\ProblemDetailsMiddleware::class);
+    $app->pipe(\Middleware\ErrorFactoryMiddleware::class);
     $app->pipe(ServerUrlMiddleware::class);
 
     $app->pipe(\Middleware\Response\InitResponseDataMiddleware::class);

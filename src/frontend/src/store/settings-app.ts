@@ -1,7 +1,7 @@
 import { createModule } from 'vuexok'
 import store from '@/store'
 
-export const settingsAppModule = createModule(store, 'settings', {
+export const settingsAppModule = createModule(store, 'settings-app', {
     namespaced: true,
     state: {
         activeEditor: 'php',

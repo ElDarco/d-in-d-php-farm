@@ -1,4 +1,5 @@
 <?php
+//USE php install.php http://localhost:18081/php-fpm-73/index.php
 $publicUrl = '';
 if (array_key_exists('1', $argv)) {
     $publicUrl = $argv[1];
