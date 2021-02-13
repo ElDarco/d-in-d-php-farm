@@ -46,9 +46,16 @@ class PhpInstance extends TurnoverObject
     protected string $publicUrl;
 
     protected string $runUrl;
+    protected string $shortVersion;
 
     public function getRunUrl(): string
     {
         return '/php-instance/' . $this->uuid . '/run/';
+    }
+
+    public function getShortVersion(): string
+    {
+        $versionElements = explode('.', $this->phpVersion);
+        return $versionElements[0] . '.' . $versionElements[1];
     }
 }

@@ -49,12 +49,12 @@
           <div class="navbar-item has-dropdown is-hoverable">
             <a v-if="loadInstances" class="navbar-link">LOADING...</a>
             <a v-else class="navbar-link">
-              <template v-if="selectedPhpVersion !== undefined">{{selectedPhpVersion.phpVersion}}</template>
+              <template v-if="selectedPhpVersion !== undefined">{{selectedPhpVersion.shortVersion}}</template>
               <template v-else>None</template>
             </a>
             <div class="navbar-dropdown">
               <div v-for="(instance, listKey) in instanceList" v-bind:key="listKey">
-                <a v-on:click="switchSelectedInstance(instance)" class="navbar-item">{{instance.phpVersion}}</a>
+                <a v-on:click="switchSelectedInstance(instance)" class="navbar-item">{{instance.shortVersion}}</a>
               </div>
             </div>
           </div>

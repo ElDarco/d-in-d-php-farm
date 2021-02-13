@@ -18,7 +18,7 @@
           <p>
             Created with:
           </p>
-          <div class="support-logos">
+          <div class="by-create-logos">
             <a href="https://bulma.io/">
               <img src="https://bulma.io/images/bulma-logo.png" alt="bulma">
             </a>
@@ -36,9 +36,14 @@
       </div>
       <div class="column">
         <div class="content has-text-centered">
-          <a href="https://www.buymeacoffee.com/codetryclub">
-            <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=codetryclub&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff">
-          </a>
+          <p>
+            For support project:
+          </p>
+          <div class="support-logos">
+            <a href="https://www.buymeacoffee.com/codetryclub">
+              <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=codetryclub&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -59,6 +64,14 @@ export default class FooterSpace extends Vue {
   bottom: 0;
   width: 100%;
 }
+.support-logos {
+  height: 25px;
+  & a {
+    & img {
+      height: 25px;
+    }
+  }
+}
 .roadmap-logos {
   height: 25px;
   & a {
@@ -67,12 +80,12 @@ export default class FooterSpace extends Vue {
     }
   }
 }
-.support-logos {
-  height: 15px;
+.by-create-logos {
+  height: 25px;
   & a {
     padding-left: 15px;
     & img {
-      height: 15px;
+      height: 25px;
     }
   }
 }

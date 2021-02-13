@@ -3,4 +3,5 @@ interface PhpInstance {
     status: string;
     uuid: string;
     runUrl: string;
+    shortVersion: string;
 }
