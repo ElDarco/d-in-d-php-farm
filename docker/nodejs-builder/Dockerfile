@@ -14,4 +14,4 @@ COPY .env /home/node/.env
 COPY /src/frontend /home/node
 RUN cp -r /usr/src/cache/node_modules/. /home/node/node_modules/
 
-CMD [ "yarn", "serve" ]
+CMD [ "yarn", "build" ]
