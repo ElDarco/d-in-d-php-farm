@@ -4,42 +4,42 @@ import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'Welcome',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Welcome.vue'),
-    meta: {
-      title: 'CodeTry - Welcome',
-      metaTags: [
-        {
-          name: 'description',
-          content: 'The welcome page on CodeTry portal.'
-        },
-        {
-          property: 'og:description',
-          content: 'The welcome page on CodeTry portal.'
-        }
-      ]
-    }
-  },
-  {
-    path: '/mock-server',
-    name: 'MockServer',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue'),
-    meta: {
-      title: 'CodeTry - MockServer',
-      metaTags: [
-        {
-          name: 'description',
-          content: 'This page need for create MockServer for your integration tests.'
-        },
-        {
-          property: 'og:description',
-          content: 'This page need for create MockServer for your integration tests.'
-        }
-      ]
-    }
-  },
+  //{
+  //  path: '/',
+  //  name: 'Welcome',
+  //  component: () => import(/* webpackChunkName: "about" */ '../views/Welcome.vue'),
+  //  meta: {
+  //    title: 'CodeTry - Welcome',
+  //    metaTags: [
+  //      {
+  //        name: 'description',
+  //        content: 'The welcome page on CodeTry portal.'
+  //      },
+  //      {
+  //        property: 'og:description',
+  //        content: 'The welcome page on CodeTry portal.'
+  //      }
+  //    ]
+  //  }
+  //},
+  //{
+  //  path: '/mock-server',
+  //  name: 'MockServer',
+  //  component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue'),
+  //  meta: {
+  //    title: 'CodeTry - MockServer',
+  //    metaTags: [
+  //      {
+  //        name: 'description',
+  //        content: 'This page need for create MockServer for your integration tests.'
+  //      },
+  //      {
+  //        property: 'og:description',
+  //        content: 'This page need for create MockServer for your integration tests.'
+  //      }
+  //    ]
+  //  }
+  //},
   {
     path: '/php',
     component: () => import(/* webpackChunkName: "about" */ '../views/PhpSandbox.vue'),
