@@ -1,6 +1,8 @@
 <template>
-  <div class="php-sandbox-layout">
-    <slot></slot>
+  <div class="layout">
+    <div class="php-sandbox-layout">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

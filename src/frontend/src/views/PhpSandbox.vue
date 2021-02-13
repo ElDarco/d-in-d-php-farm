@@ -5,7 +5,7 @@
       :instance-list="instanceList"
       v-on:submit-button-run="runCode"
     />
-      <div class="container environment">
+      <div class="container environment is-hidden-touch">
         <div class="box editor">
           <editor
               ref="editor"
@@ -28,6 +28,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="container environment is-hidden-desktop">
+        <h1>Sorry, but this page dont work in your device</h1>
+        <h2>Please, use your desktop for work</h2>
+        <h3>But we are working on a mobile version of your sandbox!</h3>
+        <h3>Comming soon!</h3>
       </div>
       <spinner-component :visible="loadCodeResult"/>
     <footer-space/>
