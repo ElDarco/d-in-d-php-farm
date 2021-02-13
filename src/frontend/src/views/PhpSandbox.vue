@@ -7,7 +7,10 @@
     />
       <div class="container environment">
         <div class="box editor">
-          <editor ref="editor" :style-editor-height="styleEditorHeight"></editor>
+          <editor
+              ref="editor"
+              :style-editor-height="styleEditorHeight"
+          />
         </div>
         <div :style="styleResultHeight" class="box result">
           <pre v-if="runResponse.responseFromPhpInstance.result !== ''">{{runResponse.responseFromPhpInstance.result}}</pre>

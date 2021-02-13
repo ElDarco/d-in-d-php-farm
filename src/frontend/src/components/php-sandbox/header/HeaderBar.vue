@@ -60,7 +60,13 @@
           </div>
           <div class="navbar-item">
             <div class="buttons">
-              <button v-on:click="runCode" class="button is-info" :class="{'is-loading': loadInstances }">
+              <button
+                v-shortkey="{one: ['ctrl', 's'], two: ['ctrl', 'enter'], three: ['alt', 'enter'], mac: ['meta', 's']}"
+                @shortkey="runCode"
+                v-on:click="runCode"
+                class="button is-info"
+                :class="{'is-loading': loadInstances }"
+              >
                 <strong>RUN</strong>
                 <span class="icon is-small">
                   <i class="fas fa-play"></i>
