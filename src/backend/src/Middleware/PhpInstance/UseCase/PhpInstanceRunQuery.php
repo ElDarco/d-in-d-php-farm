@@ -6,6 +6,7 @@ use Core\DTO\ResponseData;
 use Doctrine\ORM\EntityManager;
 use Entity\PhpInstance;
 use Exceptions\PhpInstanceNotFound;
+use Exceptions\ServerErrorExceptions\PhpInstanceBroken;
 use GuzzleHttp\Client;
 use Middleware\InvokableMiddleware;
 
@@ -32,6 +33,10 @@ class PhpInstanceRunQuery extends InvokableMiddleware
             $phpInstance->publicUrl,
             ['json' =>  $requestBody]
         );
+
+        if ($response->getBody()->getContents() === '') {
+            throw PhpInstanceBroken::create();
+        }
 
         $responseData->responseFromPhpInstance =
             json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);

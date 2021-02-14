@@ -77,13 +77,26 @@ export default class PhpSandbox extends Vue {
   protected loadInstances = true;
   protected loadCodeResult = false;
 
+  clearRunResult() {
+    this.runResponse = {
+      responseCodeFromPhpInstance: 0,
+      responseFromPhpInstance: {
+        responseCode: 0,
+        result: '',
+        execTime: 0,
+        useMemoryMb: 0,
+        version: '',
+      },
+    };
+  }
+
   getInstanceList() {
     this.phpHubApiClient.getListPhpInstances()
       .then((response) => {
         this.instanceList = response.data.phpInstances as PhpInstance[];
       })
       .catch((e) => {
-        console.error(e);
+        console.log(e);
       })
       .finally(() => {
         this.loadInstances = false;
@@ -100,7 +113,18 @@ export default class PhpSandbox extends Vue {
         this.runResponse = response.data as RunResponseFromHub;
       })
       .catch((e) => {
-        console.error(e);
+        this.clearRunResult();
+        console.log(e);
+        this.runResponse = {
+          responseCodeFromPhpInstance: 500,
+          responseFromPhpInstance: {
+            responseCode: 500,
+            result: 'Something Went Wrong',
+            execTime: 0,
+            useMemoryMb: 0,
+            version: '',
+          }
+        } as RunResponseFromHub;
       })
       .finally(() => {
         this.loadCodeResult = false;
