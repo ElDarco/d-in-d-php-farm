@@ -6,7 +6,7 @@ services:
     volumes:
       - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
       - ./src/backend:/var/www/backend
-      - ./src/frontend:/var/www/frontend
+      - ./src/frontend/dist:/var/www/frontend/dist
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
       - ./docker/nginx/var/log/nginx:/var/log/nginx
     depends_on:
