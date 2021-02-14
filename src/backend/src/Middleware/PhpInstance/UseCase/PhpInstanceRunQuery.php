@@ -37,7 +37,7 @@ class PhpInstanceRunQuery extends InvokableMiddleware
         if ($response->getBody()->getContents() === '') {
             throw PhpInstanceBroken::create();
         }
-
+        $response->getBody()->rewind();
         $responseData->responseFromPhpInstance =
             json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         $responseData->responseCodeFromPhpInstance = $response->getStatusCode();
