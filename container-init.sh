@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+if ! /usr/bin/env docker-compose exec -T php-hub /var/www/init.sh; then
+    echo "Running php init.sh failed"
+    exit 1;
+fi;
+
 versions=(54 55 56 70 71 72 73 74 80)
 for v in "${versions[@]}"
 do
@@ -8,11 +13,6 @@ do
       exit 1;
   fi;
 done
-
-if ! /usr/bin/env docker-compose exec -T php-hub /var/www/init.sh; then
-    echo "Running php init.sh failed"
-    exit 1;
-fi;
 
 if ! /usr/bin/env docker-compose exec -T nodejs /entripont.sh; then
     echo "Running nodejs prod-entripont.sh failed"
