@@ -159,7 +159,7 @@ services:
     working_dir: /home/node
     env_file: .env
     volumes:
-      - ./src/backend/public/frontend:/home/dist
+      - ./src/frontend/dist:/home/dist
       - ./src/frontend/prod-entrypoint.sh:/entripont.sh
     command: sleep 3600
     networks:
