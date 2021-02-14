@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Exceptions;
+namespace Exceptions\UnprocessableEntityExceptions;
 
+use Exceptions\UnprocessableEntityException;
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
-use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 
 class PhpInstanceAlreadyRegistered extends UnprocessableEntityException
 {

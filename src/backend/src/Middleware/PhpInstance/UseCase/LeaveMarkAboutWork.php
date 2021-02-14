@@ -5,7 +5,7 @@ namespace Middleware\PhpInstance\UseCase;
 use Doctrine\ORM\EntityManager;
 use Entity\PhpInstance;
 use Exceptions\BadRequestException;
-use Exceptions\PhpInstanceAlreadyRegistered;
+use Exceptions\UnprocessableEntityExceptions\PhpInstanceAlreadyRegistered;
 use Middleware\InvokableMiddleware;
 
 /**
