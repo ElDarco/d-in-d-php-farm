@@ -14,4 +14,6 @@ COPY .env /home/node/.env
 COPY /src/frontend /home/node
 RUN cp -r /usr/src/cache/node_modules/. /home/node/node_modules/
 
-CMD [ "yarn", "build" ]
+RUN rm -rf /home/node/dist/*
+
+RUN yarn run vue-cli-service build

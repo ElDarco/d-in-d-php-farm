@@ -155,9 +155,7 @@ services:
       - backend-network
   nodejs:
     container_name: $APP_COMPOSE_PROJECT_NAME-nodejs-builder
-    build:
-      context: ./
-      dockerfile: docker/nodejs-builder/Dockerfile
+    image: eldarco/code-try:front-latest
     working_dir: /home/node
     env_file: .env
     volumes:
