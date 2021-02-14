@@ -4,7 +4,9 @@ services:
     container_name: $APP_COMPOSE_PROJECT_NAME-nginx
     build: docker/nginx
     volumes:
-      - ./src/backend-php-sandbox:/var/www
+      - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
+      - ./src/backend:/var/www/backend
+      - ./src/frontend:/var/www/frontend
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
       - ./docker/nginx/var/log/nginx:/var/log/nginx
     depends_on:
