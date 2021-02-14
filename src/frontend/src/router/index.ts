@@ -41,7 +41,7 @@ const routes: Array<RouteConfig> = [
   //  }
   //},
   {
-    path: '/php',
+    path: '/',
     component: () => import(/* webpackChunkName: "about" */ '../views/PhpSandbox.vue'),
     meta: {
       title: 'CodeTry - PHP Sandbox',
