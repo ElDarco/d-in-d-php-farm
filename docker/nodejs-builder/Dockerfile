@@ -9,9 +9,10 @@ COPY /src/frontend/yarn.lock .
 RUN yarn install
 
 WORKDIR /home/node
-COPY .env /home/node/.env
 
 COPY /src/frontend /home/node
+COPY .env.orig /home/node/.env
+
 RUN cp -r /usr/src/cache/node_modules/. /home/node/node_modules/
 
 RUN rm -rf /home/node/dist/*
