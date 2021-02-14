@@ -65,10 +65,10 @@ export default class FooterSpace extends Vue {
   width: 100%;
 }
 .support-logos {
-  height: 25px;
+  height: 35px;
   & a {
     & img {
-      height: 25px;
+      height: 35px;
     }
   }
 }
