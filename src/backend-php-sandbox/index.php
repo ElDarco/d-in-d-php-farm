@@ -90,14 +90,14 @@ if ($body === '' || empty($body)) {
     die();
 }
 $json = json_decode($body, true);
-$jsonCode = '';
+$code = '';
 if (array_key_exists('code', $json)) {
-    $jsonCode = $json['code'];
+    $code = $json['code'];
 }
 
-$code = $jsonCode;
-if (array_key_exists('code', $_POST)) {
-    $jsonCode = $_POST['code'];
+$profiler = 0;
+if (array_key_exists('profiler', $json)) {
+    $profiler = $json['profiler'];
 }
 
 // Get code
@@ -125,9 +125,15 @@ if (preg_match('{#((?:\\\\[rn]){1,2})}', $code, $m)) {
 ob_start();
 $memBefore = memory_get_usage(true);
 $start = microtime(true);
-
+$profilerCode = '';
+if ($profiler) {
+    $profilerCode = "xhprof_enable(
+        XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY
+    );";
+}
 try {
-    eval($code);
+    eval($profilerCode . $code);
+    $profilerData = xhprof_disable();
 } catch (\Exception $e) {
     echo 'Uncaught exception: ' . get_class($e) . ' ' . $e->getMessage() . '<br>';
 } catch (\Throwable $e) {
@@ -142,12 +148,17 @@ $debugOutput .= ob_get_clean();
 $memory = sprintf('%.3f', ($memAfter - $memBefore) / 1024.0 / 1024.0); // in MB
 $execTime = sprintf('%.3f', (($end - $start) * 1000)); // in ms
 
+if (is_null($profilerData)) {
+    $profilerData = [];
+}
+
 $result = [
     'responseCode' => 200,
     'result' => $debugOutput,
     'execTime' => $execTime,
     'useMemoryMb' => $memory,
-    'version' => phpversion()
+    'version' => phpversion(),
+    'profiler' => $profilerData,
 ];
 
 http_response_code(200);

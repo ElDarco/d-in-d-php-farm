@@ -6,9 +6,10 @@ export class PhpHubApi extends HttpClient {
         return this.get('/api/v1/php-instances')
     }
 
-    public postCodeToRunner(runUrl: string, code: string) {
+    public postCodeToRunner(runUrl: string, code: string, profiler: boolean) {
         return this.post('/api/v1' + runUrl, {
-            code: code
+            code: code,
+            profiler: profiler
         })
     }
 

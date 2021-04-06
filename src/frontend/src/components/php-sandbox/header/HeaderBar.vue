@@ -135,6 +135,10 @@
                         <input type="checkbox" checked disabled>
                         Run code on CTRL/ALT + ENTER
                       </label>
+                      <label class="checkbox" @click="switchProfilerToggle">
+                        <input type="checkbox" v-model="profilerToggle">
+                        Run profiler
+                      </label>
                     </div>
                     <div class="column">
                     </div>
@@ -192,6 +196,7 @@ export default class HeaderBar extends Vue {
   private loadInstances: boolean | undefined;
 
   public showSettingsBar = false;
+  public profilerToggle = true;
 
   @Watch('instanceList')
   public getFirstInstanceInInit(instances: PhpInstance[] | undefined) {
@@ -213,6 +218,11 @@ export default class HeaderBar extends Vue {
 
   public switchSelectedInstance(instance: PhpInstance) {
     settingsPhpModule.mutations.setSelectedPhpInstance(instance)
+  }
+
+  public switchProfilerToggle() {
+    this.profilerToggle = !this.profilerToggle;
+    this.$emit('profiler-toggle:update', this.profilerToggle);
   }
 }
 </script>

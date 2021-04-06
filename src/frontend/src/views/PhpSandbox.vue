@@ -4,6 +4,7 @@
       :load-instances="loadInstances"
       :instance-list="instanceList"
       v-on:submit-button-run="runCode"
+      v-on:profiler-toggle:update="profilerToggle = $event"
     />
       <div class="container environment is-hidden-touch">
         <div class="box editor">
@@ -25,6 +26,25 @@
             </div>
             <div v-if="runResponse.responseFromPhpInstance.version !== ''" class="column">
               PHP version: {{runResponse.responseFromPhpInstance.version}}
+              <a
+                class="is-pulled-right"
+                v-if="runResponse.responseDebugGUIUrl && runResponse.responseDebugGUIUrl !== ''"
+                @click="showProfilerModal = !showProfilerModal"
+              >
+                Show profiler
+              </a>
+              <div class="modal" :class="{'is-active': showProfilerModal, 'is-clipped': true}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Profiler</p>
+                    <button class="delete" aria-label="close" @click="showProfilerModal = !showProfilerModal"></button>
+                  </header>
+                  <section class="modal-card-body is-clipped" :style="styleProfilerHeight">
+                    <iframe :src="getUrlForProfilerFrame(runResponse.responseDebugGUIUrl)" width="100%" height="100%"></iframe>
+                  </section>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,6 +82,7 @@ import { settingsPhpModule } from '@/store/settings-php';
 export default class PhpSandbox extends Vue {
   private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
   private styleResultHeight = "height: " + (document.documentElement.clientHeight-160)/10*3 + "px;";
+  private styleProfilerHeight = "height: " + (document.documentElement.clientHeight-160)/10*8 + "px;";
   protected phpHubApiClient = new PhpHubApi();
   protected instanceList: PhpInstance[] | undefined = [];
   protected runResponse: RunResponseFromHub | undefined = {
@@ -77,6 +98,11 @@ export default class PhpSandbox extends Vue {
   protected loadInstances = true;
   protected loadCodeResult = false;
 
+  protected showProfilerModal = false;
+
+
+  protected profilerToggle = true;
+
   clearRunResult() {
     this.runResponse = {
       responseCodeFromPhpInstance: 0,
@@ -88,6 +114,10 @@ export default class PhpSandbox extends Vue {
         version: '',
       },
     };
+  }
+
+  getUrlForProfilerFrame(url: string) {
+    return process.env.VUE_APP_MAIN_HOST_URL + url
   }
 
   getInstanceList() {
@@ -108,13 +138,12 @@ export default class PhpSandbox extends Vue {
     const editor = this.$refs['editor'] as Editor;
     const code = editor.getCode();
     this.loadCodeResult = true;
-    this.phpHubApiClient.postCodeToRunner(instance.runUrl, code)
+    this.phpHubApiClient.postCodeToRunner(instance.runUrl, code, this.profilerToggle)
       .then((response) => {
         this.runResponse = response.data as RunResponseFromHub;
       })
       .catch((e) => {
         this.clearRunResult();
-        console.log(e);
         this.runResponse = {
           responseCodeFromPhpInstance: 500,
           responseFromPhpInstance: {
