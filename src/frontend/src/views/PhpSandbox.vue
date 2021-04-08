@@ -87,6 +87,7 @@ export default class PhpSandbox extends Vue {
   protected instanceList: PhpInstance[] | undefined = [];
   protected runResponse: RunResponseFromHub | undefined = {
     responseCodeFromPhpInstance: 0,
+    responseDebugGUIUrl: '',
     responseFromPhpInstance: {
       responseCode: 0,
       result: '',
@@ -106,6 +107,7 @@ export default class PhpSandbox extends Vue {
   clearRunResult() {
     this.runResponse = {
       responseCodeFromPhpInstance: 0,
+      responseDebugGUIUrl: '',
       responseFromPhpInstance: {
         responseCode: 0,
         result: '',
