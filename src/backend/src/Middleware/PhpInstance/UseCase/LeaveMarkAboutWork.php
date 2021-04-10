@@ -3,7 +3,7 @@
 namespace Middleware\PhpInstance\UseCase;
 
 use Doctrine\ORM\EntityManager;
-use Entity\PhpInstance;
+use Entity\Instance;
 use Exceptions\BadRequestException;
 use Exceptions\UnprocessableEntityExceptions\PhpInstanceAlreadyRegistered;
 use Middleware\InvokableMiddleware;
@@ -24,47 +24,50 @@ class LeaveMarkAboutWork extends InvokableMiddleware
     ) {
         $params = $this->getRequest()->getParsedBody();
 
-        $publicUrl = '';
-        if (array_key_exists('publicUrl', $params)) {
-            $publicUrl = $params['publicUrl'];
-        }
+        $publicUrl = $params['publicUrl'] ?? "";
+        $version = $params['version'] ?? "";
+        $lang = $params['lang'] ?? "";
 
-        $phpVersion = '';
-        if (array_key_exists('phpVersion', $params)) {
-            $phpVersion = $params['phpVersion'];
-        }
-
-        if (!$phpVersion) {
+        if (!$version) {
             throw BadRequestException::create([
-                'phpVersion' => [
-                    'isEmpty'
-                ]
+                'version' => [
+                    'isEmpty',
+                ],
+            ]);
+        }
+        if (!$lang) {
+            throw BadRequestException::create([
+                'lang' => [
+                    'isEmpty',
+                ],
             ]);
         }
 
         if (!$publicUrl) {
             throw BadRequestException::create([
                 'publicUrl' => [
-                    'isEmpty'
+                    'isEmpty',
                 ],
             ]);
         }
 
-        $phpInstance = $em->getRepository(PhpInstance::class)->findOneBy([
-            'phpVersion' => $phpVersion,
+        $phpInstance = $em->getRepository(Instance::class)->findOneBy([
+            'lang' => $lang,
+            'version' => $version,
             'publicUrl' => $publicUrl,
         ]);
 
-        if (!$phpInstance instanceof PhpInstance) {
-            $phpInstance = new PhpInstance();
+        if (!$phpInstance instanceof Instance) {
+            $phpInstance = new Instance();
         } else {
             throw PhpInstanceAlreadyRegistered::create();
         }
 
         $phpInstance->import([
-            'phpVersion' => $phpVersion,
+            'lang' => $lang,
+            'version' => $version,
             'publicUrl' => $publicUrl,
-            'status' => PhpInstance::STATUS_ACTIVE
+            'status' => Instance::STATUS_ACTIVE,
         ]);
 
         $em->persist($phpInstance);

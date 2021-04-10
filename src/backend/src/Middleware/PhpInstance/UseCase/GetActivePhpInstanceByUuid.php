@@ -4,7 +4,7 @@ namespace Middleware\PhpInstance\UseCase;
 
 use Core\DTO\ResponseData;
 use Doctrine\ORM\EntityManager;
-use Entity\PhpInstance;
+use Entity\Instance;
 use Exceptions\PhpInstanceNotFound;
 use Middleware\InvokableMiddleware;
 
@@ -21,14 +21,14 @@ class GetActivePhpInstanceByUuid extends InvokableMiddleware
     public function __invoke(
         EntityManager $em
     ) {
-        $phpInstanceUUID = $this->getRequest()->getAttribute('PhpInstanceUUID');
+        $phpInstanceUUID = $this->getRequest()->getAttribute('instanceUUID');
 
-        /** @var PhpInstance $phpInstance */
-        $phpInstance = $em->getRepository(PhpInstance::class)->findOneBy([
+        /** @var Instance $phpInstance */
+        $phpInstance = $em->getRepository(Instance::class)->findOneBy([
             'uuid' => $phpInstanceUUID
         ]);
 
-        if (!$phpInstance instanceof PhpInstance) {
+        if (!$phpInstance instanceof Instance) {
             throw PhpInstanceNotFound::create();
         }
 
