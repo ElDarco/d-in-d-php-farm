@@ -9,15 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
 use Entity\Mixin\DefaultFields;
 
 /**
- * @property string $phpVersion
+ * @property string $version
  * @property string $status
  * @property string $publicUrl
+ * @property string $lang
  *
  * @ORM\Entity()
- * @ORM\Table(name="php_instance")
+ * @ORM\Table(name="instance")
  * @ORM\HasLifecycleCallbacks
  */
-class PhpInstance extends TurnoverObject
+class Instance extends TurnoverObject
 {
     const STATUS_ACTIVE = 'activate';
     const STATUS_DEACTIVE = 'deactivate';
@@ -27,9 +28,9 @@ class PhpInstance extends TurnoverObject
     /**
      * @var string
      *
-     * @ORM\Column(name="php_version", type="string")
+     * @ORM\Column(name="version", type="string")
      */
-    protected string $phpVersion;
+    protected string $version;
 
     /**
      * @var string
@@ -45,17 +46,24 @@ class PhpInstance extends TurnoverObject
      */
     protected string $publicUrl;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lang", type="string")
+     */
+    protected string $lang;
+
     protected string $runUrl;
     protected string $shortVersion;
 
     public function getRunUrl(): string
     {
-        return '/php-instance/' . $this->uuid . '/run/';
+        return '/instance/' . $this->uuid . '/run/';
     }
 
     public function getShortVersion(): string
     {
-        $versionElements = explode('.', $this->phpVersion);
+        $versionElements = explode('.', $this->version);
         return $versionElements[0] . '.' . $versionElements[1];
     }
 }
