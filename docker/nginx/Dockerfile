@@ -1,3 +1,3 @@
-FROM nginx:1.13
+FROM nginx:1.19
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx-debug", "-g", "daemon off;"]

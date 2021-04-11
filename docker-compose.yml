@@ -3,11 +3,15 @@ services:
   nginx:
     container_name: $APP_COMPOSE_PROJECT_NAME-nginx
     build: docker/nginx
+    env_file: .env
     volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
+      - ./src/backend-php-hub:/var/www/backend-php-hub
+      - ./src/backend-mock-server:/var/www/backend-mock-server
+      - ./docker/nginx/templates:/etc/nginx/templates
       - ./docker/nginx/var/log/nginx:/var/log/nginx
     depends_on:
+      - mock-server
       - php-hub
       - php-fpm-53
       - php-fpm-54
@@ -27,16 +31,29 @@ services:
         aliases:
           - $APP_COMPOSE_PROJECT_NAME
       backend-network:
+  mock-server:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mock-server
+    build: docker/mock-server
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    env_file: .env
+    volumes:
+      - ./src/backend-mock-server:/var/www
+      - ./docker/mock-server/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./docker/mock-server/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
   php-hub:
     container_name: $APP_COMPOSE_PROJECT_NAME-php-hub
     build: docker/php-hub
-    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    #user: $APP_DOCKER_UID:$APP_DOCKER_GID
     env_file: .env
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./src/backend:/var/www
+      - ./src/backend-php-hub:/var/www
       - ./docker/php-hub/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./docker/php-hub/php.ini:/usr/local/etc/php/conf.d/00-php.ini
     working_dir: /var/www/

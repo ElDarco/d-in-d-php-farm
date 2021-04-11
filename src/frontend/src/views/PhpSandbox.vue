@@ -119,7 +119,7 @@ export default class PhpSandbox extends Vue {
   }
 
   getUrlForProfilerFrame(url: string) {
-    return process.env.VUE_APP_MAIN_HOST_URL + url
+    return process.env.VUE_APP_PROFILER_HOST_URL + url
   }
 
   getInstanceList() {

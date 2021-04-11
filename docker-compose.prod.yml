@@ -5,7 +5,7 @@ services:
     build: docker/nginx
     volumes:
       - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
-      - ./src/backend:/var/www/backend
+      - ./src/backend-php-hub:/var/www/backend-php-hub
       - ./src/frontend/dist:/var/www/frontend/dist
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
       - ./docker/nginx/var/log/nginx:/var/log/nginx
@@ -38,7 +38,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./src/backend:/var/www
+      - ./src/backend-php-hub:/var/www
       - ./docker/php-hub/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./docker/php-hub/php.ini:/usr/local/etc/php/conf.d/00-php.ini
     working_dir: /var/www/
