@@ -135,7 +135,7 @@ abstract class AbstractInvocableMiddleware implements InvokableMiddleware
      * @param RequestDecoratorInterface $request
      * @return AbstractMiddleware
      */
-    final private function setRequest(RequestDecoratorInterface $request)
+    private function setRequest(RequestDecoratorInterface $request)
     {
         $this->request = $request;
 
@@ -148,7 +148,7 @@ abstract class AbstractInvocableMiddleware implements InvokableMiddleware
      *
      * @return false|object
      */
-    final private function getDependency(string $className)
+    private function getDependency(string $className)
     {
         if ($this->container->has($className)) {
             return $this->container->get($className);
