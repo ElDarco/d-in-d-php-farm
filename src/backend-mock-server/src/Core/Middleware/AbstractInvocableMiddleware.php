@@ -87,27 +87,30 @@ abstract class AbstractInvocableMiddleware implements InvokableMiddleware
                 );
             }
             // Получим нужный класс
-            $class = $parameter->getClass()->getName();
-
-            if ($this->getRequest()->hasObject($class)) {
-                $argument = $this->getRequest()->getObject($class);
-                if (!$argument instanceof $class) {
-                    // если метод миддлвара позволяет параметру быть null
-                    if ($parameter->allowsNull()) {
+            $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
+                ? $parameter->getType()->getName()
+                : null;
+            if ($class) {
+                if ($this->getRequest()->hasObject($class)) {
+                    $argument = $this->getRequest()->getObject($class);
+                    if (!$argument instanceof $class) {
+                        // если метод миддлвара позволяет параметру быть null
+                        if ($parameter->allowsNull()) {
+                            $argument = null;
+                        } else {
+                            throw new MiddlewareException('emptyArgument_' . $parameter->getName());
+                        }
+                    }
+                } else {
+                    $containerDependency = $this->getDependency($class);
+                    if (false === $containerDependency && !$parameter->allowsNull()) {
+                        throw new MiddlewareException('emptyContainerArgument_' . $parameter->getName());
+                    }
+                    if (false === $containerDependency && $parameter->allowsNull()) {
                         $argument = null;
                     } else {
-                        throw new MiddlewareException('emptyArgument_' . $parameter->getName());
+                        $argument = $containerDependency;
                     }
-                }
-            } else {
-                $containerDependency = $this->getDependency($class);
-                if (false === $containerDependency && !$parameter->allowsNull()) {
-                    throw new MiddlewareException('emptyContainerArgument_' . $parameter->getName());
-                }
-                if (false === $containerDependency && $parameter->allowsNull()) {
-                    $argument = null;
-                } else {
-                    $argument = $containerDependency;
                 }
             }
 

@@ -35,7 +35,6 @@
     },
     "require-dev": {
         "laminas/laminas-development-mode": "^3.2",
-        "mezzio/mezzio-tooling": "^1.3",
         "phpspec/prophecy": "^1.10.3",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.3.7",
@@ -73,9 +72,6 @@
         "cs-fix": "phpcbf",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "migrate:run": "php vendor/bin/doctrine migrations:migrate -q",
-        "migrate:create": "vendor/bin/doctrine migrations:generate",
-        "migrate:diff": "vendor/bin/doctrine migrations:diff"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }

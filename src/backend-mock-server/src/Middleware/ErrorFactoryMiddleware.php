@@ -23,7 +23,7 @@ class ErrorFactoryMiddleware implements MiddlewareInterface
             }
 
             $additional = [];
-            if ($_ENV['APP_HUB_WORK_MODE'] === 'dev') {
+            if ($_ENV['APP_MOCK_SERVER_WORK_MODE'] === 'dev') {
                 $additional['trace'] = $e->getTraceAsString();
                 $additional['message'] = $e->getMessage();
                 $additional['code'] = $e->getCode();

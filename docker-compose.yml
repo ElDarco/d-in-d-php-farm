@@ -47,7 +47,7 @@ services:
   php-hub:
     container_name: $APP_COMPOSE_PROJECT_NAME-php-hub
     build: docker/php-hub
-    #user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
     env_file: .env
     depends_on:
       db:
@@ -204,6 +204,18 @@ services:
       - backend-network
     volumes:
       - ./database:/var/lib/mysql
+  mongo:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mongo
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${APP_MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${APP_MONGODB_PASSWORD}
+    networks:
+      - backend-network
+    volumes:
+      - ./db-mongo:/data/db
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
 networks:
   backend-network:
   outside-network:

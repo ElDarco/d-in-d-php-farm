@@ -12,7 +12,7 @@ return [
     ConfigAggregator::ENABLE_CACHE => true,
 
     // Enable debugging; typically used to provide debugging information within templates.
-    'debug' => false,
+    'debug' => $_ENV['APP_HUB_WORK_MODE'] === 'dev',
 
     'mezzio' => [
         // Provide templates for the error handling middleware to use when

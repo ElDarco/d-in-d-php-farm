@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if ! /usr/bin/env docker-compose exec -T mock-server /var/www/init.sh; then
+    echo "Running php init.sh failed"
+    exit 1;
+fi;
+
+
 if ! /usr/bin/env docker-compose exec -T php-hub /var/www/init.sh; then
     echo "Running php init.sh failed"
     exit 1;

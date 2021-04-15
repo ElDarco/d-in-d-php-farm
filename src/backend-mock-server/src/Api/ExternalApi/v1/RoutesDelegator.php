@@ -30,23 +30,7 @@ class RoutesDelegator
 
         $basePath   = '/api/v1';
 
-        $app->get($basePath . '/ping', [
-            \Middleware\SuccessMiddleware::class
-        ]);
-
-        $app->get($basePath . '/php-instances[/]', [
-            \Middleware\PhpInstance\UseCase\GetActivePhpInstances::class,
-            \Middleware\SuccessMiddleware::class
-        ]);
-
-        $app->post($basePath . '/php-instance/register[/]', [
-            \Middleware\PhpInstance\UseCase\LeaveMarkAboutWork::class,
-            \Middleware\SuccessMiddleware::class
-        ]);
-
-        $app->post($basePath . "/php-instance/{PhpInstanceUUID}/run[/]", [
-            \Middleware\PhpInstance\UseCase\GetActivePhpInstanceByUuid::class,
-            \Middleware\PhpInstance\UseCase\PhpInstanceRunQuery::class,
+        $app->get($basePath . '/ping[/]', [
             \Middleware\SuccessMiddleware::class
         ]);
 

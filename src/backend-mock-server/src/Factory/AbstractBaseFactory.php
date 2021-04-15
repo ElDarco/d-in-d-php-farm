@@ -38,14 +38,17 @@ abstract class AbstractBaseFactory implements AbstractFactoryInterface
         $dependencies = [];
         foreach ($parameters as $parameter) {
             // Получим нужный класс
-            $class = $parameter->getClass();
-
-            // Если просят сам контейнер - отдадим.
-            if ($class->getName() == ContainerInterface::class) {
-                $dependencies[] = $container;
-            } // иначе возьмем нужный класс из di контейнера
-            else {
-                $dependencies[] = $container->get($class->getName());
+            $name = $parameter->getType() && !$parameter->getType()->isBuiltin()
+                ? $parameter->getType()->getName()
+                : null;
+            if ($name) {
+                // Если просят сам контейнер - отдадим.
+                if ($name === ContainerInterface::class) {
+                    $dependencies[] = $container;
+                } // иначе возьмем нужный класс из di контейнера
+                else {
+                    $dependencies[] = $container->get($name);
+                }
             }
         }
 

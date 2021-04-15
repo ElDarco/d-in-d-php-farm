@@ -20,19 +20,24 @@ try {
      * Self-called anonymous function that creates its own scope and keeps the global namespace clean.
      */
     (function () {
-        /** @var \Psr\Container\ContainerInterface $container */
-        $container = require 'config/container.php';
+        try {
+            /** @var \Psr\Container\ContainerInterface $container */
+            $container = require 'config/container.php';
 
-        /** @var \Mezzio\Application $app */
-        $app = $container->get(\Mezzio\Application::class);
-        $factory = $container->get(\Mezzio\MiddlewareFactory::class);
+            /** @var \Mezzio\Application $app */
+            $app = $container->get(\Mezzio\Application::class);
+            $factory = $container->get(\Mezzio\MiddlewareFactory::class);
 
-        // Execute programmatic/declarative middleware pipeline and routing
-        // configuration statements
-        (require 'config/pipeline.php')($app, $factory, $container);
-        (require 'config/routes.php')($app, $factory, $container);
+            // Execute programmatic/declarative middleware pipeline and routing
+            // configuration statements
+            (require 'config/pipeline.php')($app, $factory, $container);
+            (require 'config/routes.php')($app, $factory, $container);
 
-        $app->run();
+            $app->run();
+        } catch (\Throwable $e) {
+            echo 'Catch error in runtime app' . PHP_EOL;
+            echo 'Message: ' . $e->getMessage() . PHP_EOL;
+        }
     })();
 } catch (\Throwable $e) {
     echo 'Catch error before run app' . PHP_EOL;

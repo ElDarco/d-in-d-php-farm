@@ -4,6 +4,7 @@
 .VERSION
 container-init.log
 database/*
+db-mongo/*
 !database/.gitkeep
 docker/sphinx/var/lib/*
 docker/sphinx/var/log/*
