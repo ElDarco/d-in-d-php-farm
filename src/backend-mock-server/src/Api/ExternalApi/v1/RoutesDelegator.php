@@ -6,6 +6,7 @@ namespace Api\ExternalApi\v1;
 
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
+use Middleware\Space\UseCase\GetNewNamespace;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -31,6 +32,11 @@ class RoutesDelegator
         $basePath   = '/api/v1';
 
         $app->get($basePath . '/ping[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->post($basePath . '/namespace[/]', [
+            \Middleware\Space\UseCase\GetNewNamespace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 

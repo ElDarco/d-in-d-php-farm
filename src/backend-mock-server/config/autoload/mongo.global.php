@@ -8,14 +8,10 @@ return [
         'password'   => $_ENV['APP_MONGODB_PASSWORD'] ?? null,
 
         'metadata'   => [
-            'database' => $_ENV['APP_MONGODB_DATABASE_METADATA'] ?? 'masuma-web-metadata',
+            'database' => $_ENV['APP_MONGODB_DATABASE'] ?? 'database',
             'collections' => [
-                'references' => 'metadata.references'
-            ],
-        ],
-
-        'references'  => [
-            'database' => $_ENV['APP_MONGODB_DATABASE_REFERENCES'] ?? 'masuma-web-data'
+                'settings' => 'settings'
+            ]
         ],
     ],
 ];

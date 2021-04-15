@@ -23,6 +23,9 @@ return [
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories'  => [
+            \MongoDB\Client::class  => \Factory\MongoFactory::class,
+            \MongoDB\Database::class  => \Factory\MongoDatabaseFactory::class,
+            \Core\Mongo\SettingsCollection::class => \Factory\SettingsCollectionFactory::class,
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             \GuzzleHttp\Client::class => \Factory\GuzzleFactory::class,
             \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class => \Mezzio\ProblemDetails\ProblemDetailsMiddlewareFactory::class,

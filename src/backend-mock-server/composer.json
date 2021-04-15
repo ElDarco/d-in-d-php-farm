@@ -44,7 +44,6 @@
         "psr-4": {
             "Api\\": "src/Api/",
             "Core\\": "src/Core/",
-            "Entity\\": "src/Entity/",
             "Middleware\\": "src/Middleware/",
             "Factory\\": "src/Factory/",
             "Exceptions\\": "src/Exceptions/"
