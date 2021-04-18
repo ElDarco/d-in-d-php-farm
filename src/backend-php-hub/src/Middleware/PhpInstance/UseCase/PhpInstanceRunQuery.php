@@ -5,7 +5,7 @@ namespace Middleware\PhpInstance\UseCase;
 use Core\DTO\ResponseData;
 use Doctrine\ORM\EntityManager;
 use Entity\PhpInstance;
-use Exceptions\PhpInstanceNotFound;
+use Exceptions\NamespaceNotFound;
 use Exceptions\ServerErrorExceptions\PhpInstanceBroken;
 use GuzzleHttp\Client;
 use Middleware\InvokableMiddleware;

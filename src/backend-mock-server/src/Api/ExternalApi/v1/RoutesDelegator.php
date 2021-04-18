@@ -6,7 +6,7 @@ namespace Api\ExternalApi\v1;
 
 use Mezzio\Application;
 use Mezzio\ProblemDetails\ProblemDetailsMiddleware;
-use Middleware\Space\UseCase\GetNewNamespace;
+use Middleware\Space\UseCase\GetNewNSpace;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -35,8 +35,43 @@ class RoutesDelegator
             \Middleware\SuccessMiddleware::class
         ]);
 
-        $app->post($basePath . '/namespace[/]', [
-            \Middleware\Space\UseCase\GetNewNamespace::class,
+
+        $app->post($basePath . '/nspace[/]', [
+            \Middleware\Space\UseCase\GetNewNSpace::class,
+            \Middleware\Space\Response\ReturnNSpace::class,
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->get($basePath . '/nspace/{nspaceId}/[/]', [
+            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\Space\Response\ReturnNSpace::class,
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->patch($basePath . '/nspace/{nspaceId}/[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->delete($basePath . '/nspace/{nspaceId}/[/]', [
+            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\Space\UseCase\DeleteNSpaceFromStorage::class,
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+
+        $app->post($basePath . '/nspace/{nspaceId}/settings[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->get($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->patch($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->delete($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
             \Middleware\SuccessMiddleware::class
         ]);
 

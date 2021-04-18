@@ -25,7 +25,7 @@ return [
         'factories'  => [
             \MongoDB\Client::class  => \Factory\MongoFactory::class,
             \MongoDB\Database::class  => \Factory\MongoDatabaseFactory::class,
-            \Core\Mongo\SettingsCollection::class => \Factory\SettingsCollectionFactory::class,
+            \Core\Mongo\SettingsCollectionProxy::class => \Factory\SettingsCollectionProxyFactory::class,
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             \GuzzleHttp\Client::class => \Factory\GuzzleFactory::class,
             \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class => \Mezzio\ProblemDetails\ProblemDetailsMiddlewareFactory::class,

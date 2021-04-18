@@ -12,11 +12,11 @@ class MongoFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $container->get(Config::class);
+        $config = $container->get('config');
 
-        return new \MongoDB\Client('mongodb://' . $config->mongo->host . '/?maxIdleTimeMS=60000', [
-            'username' => $config->mongo->username,
-            'password' => $config->mongo->password,
+        return new \MongoDB\Client('mongodb://' . $config['mongo']['host'] . '/?maxIdleTimeMS=60000', [
+            'username' => $config['mongo']['username'],
+            'password' => $config['mongo']['password'],
         ]);
     }
 }

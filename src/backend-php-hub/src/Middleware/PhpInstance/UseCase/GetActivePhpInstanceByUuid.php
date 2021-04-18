@@ -5,7 +5,7 @@ namespace Middleware\PhpInstance\UseCase;
 use Core\DTO\ResponseData;
 use Doctrine\ORM\EntityManager;
 use Entity\PhpInstance;
-use Exceptions\PhpInstanceNotFound;
+use Exceptions\NamespaceNotFound;
 use Middleware\InvokableMiddleware;
 
 /**
@@ -29,7 +29,7 @@ class GetActivePhpInstanceByUuid extends InvokableMiddleware
         ]);
 
         if (!$phpInstance instanceof PhpInstance) {
-            throw PhpInstanceNotFound::create();
+            throw NamespaceNotFound::create();
         }
 
         $this->getRequest()->withObject($phpInstance);

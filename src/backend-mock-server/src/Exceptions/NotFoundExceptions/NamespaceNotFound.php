@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Exceptions;
+namespace Exceptions\NotFoundExceptions;
 
+use Exceptions\NotFoundException;
 use Mezzio\ProblemDetails\Exception\CommonProblemDetailsExceptionTrait;
-use Mezzio\ProblemDetails\Exception\ProblemDetailsExceptionInterface;
 
-class PhpInstanceNotFound extends NotFoundException
+class NamespaceNotFound extends NotFoundException
 {
     use CommonProblemDetailsExceptionTrait;
 
     public static function create(
-        string $type = 'PhpInstanceNotFound',
-        string $title = 'PhpInstance Not Found',
+        string $type = 'NamespaceNotFound',
+        string $title = 'Namespace Not Found',
         array $additional = []
     ): NotFoundException {
         return parent::create($type, $title, $additional);

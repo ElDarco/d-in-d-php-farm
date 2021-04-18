@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --version 2.0.2 --install-dir=/usr/local/bin --filename=composer
 
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev pkg-config libssl-dev
+
 RUN pecl install mongodb \
     && docker-php-ext-enable mongodb
 
