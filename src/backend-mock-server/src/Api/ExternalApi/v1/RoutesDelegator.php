@@ -49,6 +49,9 @@ class RoutesDelegator
         ]);
 
         $app->patch($basePath . '/nspace/{nspaceId}/[/]', [
+            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\Space\UseCase\EditNSpaceInfoFromRequest::class,
+            \Middleware\Space\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
