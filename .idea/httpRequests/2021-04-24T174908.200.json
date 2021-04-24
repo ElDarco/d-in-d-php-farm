@@ -1,0 +1,13 @@
+{
+  "id": "6083c5a71a50a339d37a50d2",
+  "name": "somename_1619248551.4284",
+  "settings": [],
+  "requests": [
+    {
+      "uri": "test",
+      "method": "GET",
+      "body": "",
+      "queryString": "test=1"
+    }
+  ]
+}

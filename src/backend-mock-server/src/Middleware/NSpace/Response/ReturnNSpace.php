@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware\Space\Response;
+namespace Middleware\NSpace\Response;
 
 use Core\DTO\ResponseData;
 use Core\Mongo\SettingsCollectionProxy;
@@ -17,6 +17,7 @@ class ReturnNSpace extends InvokableMiddleware
         $responseData->id = $nSpace->getId();
         $responseData->name = $nSpace->getName();
         $responseData->settings = $nSpace->getSettings();
+        $responseData->requests = $nSpace->getRequests();
         $this->getRequest()->withAttribute(ResponseData::class, $responseData);
     }
 }

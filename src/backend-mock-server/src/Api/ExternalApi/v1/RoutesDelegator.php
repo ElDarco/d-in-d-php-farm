@@ -37,27 +37,27 @@ class RoutesDelegator
 
 
         $app->post($basePath . '/nspace[/]', [
-            \Middleware\Space\UseCase\GetNewNSpace::class,
-            \Middleware\Space\Response\ReturnNSpace::class,
+            \Middleware\NSpace\UseCase\GetNewNSpace::class,
+            \Middleware\NSpace\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->get($basePath . '/nspace/{nspaceId}/[/]', [
-            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\Space\Response\ReturnNSpace::class,
+            \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\NSpace\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->patch($basePath . '/nspace/{nspaceId}/[/]', [
-            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\Space\UseCase\EditNSpaceInfoFromRequest::class,
-            \Middleware\Space\Response\ReturnNSpace::class,
+            \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\NSpace\UseCase\EditNSpaceInfoFromRequest::class,
+            \Middleware\NSpace\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->delete($basePath . '/nspace/{nspaceId}/[/]', [
-            \Middleware\Space\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\Space\UseCase\DeleteNSpaceFromStorage::class,
+            \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
+            \Middleware\NSpace\UseCase\DeleteNSpaceFromStorage::class,
             \Middleware\SuccessMiddleware::class
         ]);
 

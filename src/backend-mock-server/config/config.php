@@ -30,6 +30,7 @@ $aggregator = new ConfigAggregator([
         : function(): array { return[]; },
 
     // Default App module config
+    Api\Root\ConfigProvider::class,
     Api\ExternalApi\v1\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings

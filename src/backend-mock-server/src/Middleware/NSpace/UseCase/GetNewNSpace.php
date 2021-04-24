@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware\Space\UseCase;
+namespace Middleware\NSpace\UseCase;
 
 use Core\Mongo\SettingsCollectionProxy;
 use DTO\NSpace;
@@ -18,6 +18,7 @@ class GetNewNSpace extends InvokableMiddleware
         }
         $persistObject = $settingsCollectionProxy->collection->insertOne([
             'settings' => [],
+            'requests' => [],
             'name' => $name
         ]);
 

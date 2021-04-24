@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware\Space\UseCase;
+namespace Middleware\NSpace\UseCase;
 
 use Core\Mongo\SettingsCollectionProxy;
 use DTO\NSpace;
@@ -25,7 +25,12 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
             throw NamespaceNotFound::create();
         }
 
+        $requests = [];
         $nSpace = new NSpace($namespaceId, $persistObject->name);
+        foreach ($persistObject->requests as $request) {
+            $requests[] = $request->getArrayCopy();
+        }
+        $nSpace->setRequests($requests);
         $nSpace->setSettings($persistObject->settings->getArrayCopy());
 
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);

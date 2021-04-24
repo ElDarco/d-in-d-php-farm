@@ -11,7 +11,8 @@ class NSpace extends TurnoverObject
     public function __construct(
         protected string $id,
         protected string $name,
-        protected array $settings = []
+        protected array $settings = [],
+        protected array $requests = []
     ) {}
 
     public function getId(): string
@@ -22,6 +23,11 @@ class NSpace extends TurnoverObject
     public function getSettings(): array
     {
         return $this->settings;
+    }
+
+    public function getRequests(): array
+    {
+        return $this->requests;
     }
 
     public function getName(): string
@@ -38,6 +44,12 @@ class NSpace extends TurnoverObject
     public function setSettings(array $settings): NSpace
     {
         $this->settings = $settings;
+        return $this;
+    }
+
+    public function setRequests(array $requests): NSpace
+    {
+        $this->requests = $requests;
         return $this;
     }
 

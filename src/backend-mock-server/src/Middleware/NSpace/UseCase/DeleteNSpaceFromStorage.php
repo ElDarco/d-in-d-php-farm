@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware\Space\UseCase;
+namespace Middleware\NSpace\UseCase;
 
 use Core\DTO\ResponseData;
 use Core\Mongo\SettingsCollectionProxy;

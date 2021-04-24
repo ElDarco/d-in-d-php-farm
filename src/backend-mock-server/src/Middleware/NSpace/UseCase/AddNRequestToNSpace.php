@@ -1,33 +1,29 @@
 <?php
 
-namespace Middleware\Space\UseCase;
+namespace Middleware\NSpace\UseCase;
 
+use Core\DTO\ResponseData;
 use Core\Mongo\SettingsCollectionProxy;
+use DTO\NRequest;
 use DTO\NSpace;
 use Exceptions\NotFoundExceptions\NamespaceNotFound;
 use Middleware\InvokableMiddleware;
 
-class EditNSpaceInfoFromRequest extends InvokableMiddleware
+class AddNRequestToNSpace extends InvokableMiddleware
 {
     public function __invoke(
-        NSpace $nSpace,
-        SettingsCollectionProxy $settingsCollectionProxy
+        NRequest $nRequest,
+        SettingsCollectionProxy $settingsCollectionProxy,
+        NSpace $nSpace
     ) {
-        $body = $this->getRequest()->getParsedBody() ?? [];
-        $name = $body['name'] ?? '';
-
-        if ($name) {
-            $nSpace->setName($name);
-        }
-
         /** @var \MongoDB\Model\BSONDocument $persistObject */
         $settingsCollectionProxy->collection->updateOne(
             [
                 '_id' =>  new \MongoDB\BSON\ObjectId($nSpace->getId())
             ],
             [
-                '$set' =>[
-                    'name' => $nSpace->getName()
+                '$push' =>[
+                    'requests' => $nRequest->toArray()
                 ]
             ]
         );
