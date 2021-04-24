@@ -33,6 +33,7 @@ class RoutesDelegator
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NRequest\UseCase\CreateNRequest::class,
             \Middleware\NSpace\UseCase\AddNRequestToNSpace::class,
+            \Middleware\NSettings\UseCase\FindSuitableNSetting::class,
             \Middleware\NSpace\Response\MockResponseMiddleware::class
         ]);
 

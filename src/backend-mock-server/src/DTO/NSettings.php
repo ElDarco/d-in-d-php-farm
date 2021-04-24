@@ -14,6 +14,7 @@ class NSettings extends TurnoverObject
         protected string $method,
         protected string $responseBody,
         protected int $responseCode,
+        protected string $queryString,
         protected array $headers
     ) {}
 
@@ -82,12 +83,24 @@ class NSettings extends TurnoverObject
         return $this;
     }
 
+    public function getQueryString(): string
+    {
+        return $this->queryString;
+    }
+
+    public function setQueryString(string $queryString): NRequest
+    {
+        $this->queryString = $queryString;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->getId(),
             'uri' => $this->getUri(),
             'method' => $this->getMethod(),
+            'queryString' => $this->getQueryString(),
             'responseBody' => $this->getResponseBody(),
             'responseCode' => $this->getResponseCode(),
             'headers' => $this->getHeaders(),
