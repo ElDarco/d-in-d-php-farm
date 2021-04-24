@@ -19,7 +19,7 @@ class AddNRequestToNSpace extends InvokableMiddleware
         /** @var \MongoDB\Model\BSONDocument $persistObject */
         $settingsCollectionProxy->collection->updateOne(
             [
-                '_id' =>  new \MongoDB\BSON\ObjectId($nSpace->getId())
+                'id' => $nSpace->getId()
             ],
             [
                 '$push' =>[

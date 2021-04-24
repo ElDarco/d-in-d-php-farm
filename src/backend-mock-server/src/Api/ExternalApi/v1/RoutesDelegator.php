@@ -62,7 +62,7 @@ class RoutesDelegator
         ]);
 
 
-        $app->post($basePath . '/nspace/{nspaceId}/settings[/]', [
+        $app->post($basePath . '/nspace/{nspaceId}/settings/add[/]', [
             \Middleware\SuccessMiddleware::class
         ]);
 
@@ -75,6 +75,10 @@ class RoutesDelegator
         ]);
 
         $app->delete($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
+            \Middleware\SuccessMiddleware::class
+        ]);
+
+        $app->post($basePath . '/nspace/{nspaceId}/settings/clear[/]', [
             \Middleware\SuccessMiddleware::class
         ]);
 

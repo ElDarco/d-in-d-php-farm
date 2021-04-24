@@ -5,6 +5,7 @@ namespace Middleware\NRequest\UseCase;
 use Core\Mongo\SettingsCollectionProxy;
 use DTO\NRequest;
 use DTO\NSpace;
+use Factory\DtoFactory;
 use Middleware\InvokableMiddleware;
 
 class CreateNRequest extends InvokableMiddleware
@@ -17,7 +18,7 @@ class CreateNRequest extends InvokableMiddleware
         $method = $this->getRequest()->getMethod();
         $queryString = $this->getRequest()->getUri()->getQuery();
 
-        $nRequest = new NRequest($uri, $method, $body, $queryString);
+        $nRequest = DtoFactory::createNRequest($uri, $method, $body, $queryString);
         $this->getRequest()->withAttribute(NRequest::class, $nRequest);
     }
 }

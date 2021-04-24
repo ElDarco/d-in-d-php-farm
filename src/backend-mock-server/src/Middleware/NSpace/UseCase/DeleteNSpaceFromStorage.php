@@ -17,7 +17,7 @@ class DeleteNSpaceFromStorage extends InvokableMiddleware
     ) {
         /** @var \MongoDB\Model\BSONDocument $persistObject */
         $settingsCollectionProxy->collection->deleteOne([
-            '_id' => new \MongoDB\BSON\ObjectId($nSpace->getId())
+            'id' => $nSpace->getId()
         ]);
 
         $responseData->isDelete = true;

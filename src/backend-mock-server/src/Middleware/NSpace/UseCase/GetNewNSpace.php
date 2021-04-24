@@ -4,6 +4,7 @@ namespace Middleware\NSpace\UseCase;
 
 use Core\Mongo\SettingsCollectionProxy;
 use DTO\NSpace;
+use Factory\DtoFactory;
 use Middleware\InvokableMiddleware;
 
 class GetNewNSpace extends InvokableMiddleware
@@ -11,22 +12,10 @@ class GetNewNSpace extends InvokableMiddleware
     public function __invoke(
         SettingsCollectionProxy $settingsCollectionProxy
     ) {
-        $body = $this->getRequest()->getParsedBody() ?? [];
-        $name = $body['name'] ?? '';
-        if (!$name) {
-            $name = 'somename_' . microtime(true);
-        }
-        $persistObject = $settingsCollectionProxy->collection->insertOne([
-            'settings' => [],
-            'requests' => [],
-            'name' => $name
-        ]);
+        $name = $this->getRequest()->getParsedBody()['name'] ?? '';
 
-        /** @var \MongoDB\BSON\ObjectId $mongoId */
-        $mongoId = $persistObject->getInsertedId();
-
-        $id = $mongoId->__toString();
-        $nSpace = new NSpace($id, $name);
+        $nSpace = DtoFactory::createNSpace($name);
+        $settingsCollectionProxy->collection->insertOne($nSpace->toArray());
 
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
     }

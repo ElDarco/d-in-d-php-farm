@@ -58,4 +58,14 @@ class NSpace extends TurnoverObject
         $this->name = $name;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'settings' => $this->getSettings(),
+            'requests' => $this->getRequests(),
+        ];
+    }
 }

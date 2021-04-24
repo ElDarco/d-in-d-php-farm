@@ -9,11 +9,23 @@ use Core\TurnoverObject\TurnoverObject;
 class NRequest extends TurnoverObject
 {
     public function __construct(
+        protected string $id,
         protected string $uri,
         protected string $method,
         protected string $body,
         protected string $queryString,
     ) {}
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function setId(string $id): NRequest
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getQueryString(): string
     {
@@ -62,6 +74,7 @@ class NRequest extends TurnoverObject
     public function toArray(): array
     {
         return [
+            'id' => $this->getId(),
             'uri' => $this->getUri(),
             'method' => $this->getMethod(),
             'body' => $this->getBody(),
