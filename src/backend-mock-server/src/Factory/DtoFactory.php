@@ -35,6 +35,6 @@ class DtoFactory
         int $responseCode,
         string $responseType = 'json'
     ): \DTO\NSettings {
-        return new NSettings((Uuid::uuid4())->toString(), $uri, $method, $responseBody, $responseCode, $responseType);
+        return new NSettings((Uuid::uuid4())->toString(), $uri, $method, $responseBody, $responseCode, []);
     }
 }

@@ -15,7 +15,11 @@ class MockResponseMiddleware extends InvokableMiddleware
         NSettings $nSettings = null
     ) {
         if ($nSettings) {
-            return new TextResponse($nSettings->getResponseBody(), $nSettings->getResponseCode());
+            $response = new TextResponse($nSettings->getResponseBody(), $nSettings->getResponseCode());
+            foreach ($nSettings->getHeaders() as $headerValue => $headerKey) {
+                $response->withHeader($headerKey, $headerValue);
+            }
+            return $response;
         }
         return new EmptyResponse(418);
     }

@@ -13,7 +13,8 @@ class NSettings extends TurnoverObject
         protected string $uri,
         protected string $method,
         protected string $responseBody,
-        protected int $responseCode
+        protected int $responseCode,
+        protected array $headers
     ) {}
 
     public function getId(): string
@@ -70,6 +71,16 @@ class NSettings extends TurnoverObject
         $this->responseCode = $responseCode;
         return $this;
     }
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function setHeaders(array $headers): NSettings
+    {
+        $this->headers = $headers;
+        return $this;
+    }
 
     public function toArray(): array
     {
@@ -79,6 +90,7 @@ class NSettings extends TurnoverObject
             'method' => $this->getMethod(),
             'responseBody' => $this->getResponseBody(),
             'responseCode' => $this->getResponseCode(),
+            'headers' => $this->getHeaders(),
         ];
     }
 }
