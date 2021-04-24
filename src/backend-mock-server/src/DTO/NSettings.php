@@ -13,7 +13,7 @@ class NSettings extends TurnoverObject
         protected string $uri,
         protected string $method,
         protected string $responseBody,
-        protected string $responseCode,
+        protected int $responseCode
     ) {}
 
     public function getId(): string
@@ -60,12 +60,12 @@ class NSettings extends TurnoverObject
         return $this;
     }
 
-    public function getResponseCode(): string
+    public function getResponseCode(): int
     {
         return $this->responseCode;
     }
 
-    public function setResponseCode(string $responseCode): NSettings
+    public function setResponseCode(int $responseCode): NSettings
     {
         $this->responseCode = $responseCode;
         return $this;
