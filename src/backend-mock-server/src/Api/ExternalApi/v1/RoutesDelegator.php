@@ -73,25 +73,29 @@ class RoutesDelegator
 
         $app->get($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\NSpace\Response\ReturnNSpace::class,
+            \Middleware\NSettings\UseCase\GetNSettingsByUuid::class,
+            \Middleware\NSpace\Response\ReturnNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->patch($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\NSpace\Response\ReturnNSpace::class,
+            \Middleware\NSettings\UseCase\GetNSettingsByUuid::class,
+            \Middleware\NSettings\UseCase\EditNSettings::class,
+            \Middleware\NSpace\Response\ReturnNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->delete($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\NSpace\Response\ReturnNSpace::class,
+            \Middleware\NSettings\UseCase\GetNSettingsByUuid::class,
+            \Middleware\NSettings\UseCase\DeleteNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
         $app->post($basePath . '/nspace/{nspaceId}/settings/clear[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
-            \Middleware\NSpace\Response\ReturnNSpace::class,
+            \Middleware\NSettings\UseCase\ClearNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
