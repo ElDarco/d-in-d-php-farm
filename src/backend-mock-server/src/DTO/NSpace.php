@@ -20,14 +20,34 @@ class NSpace extends TurnoverObject
         return $this->id;
     }
 
-    public function getSettings(): array
+    public function getSettingsObjects(): array
     {
         return $this->settings;
     }
 
-    public function getRequests(): array
+    public function getRequestsObjects(): array
     {
         return $this->requests;
+    }
+
+    public function getSettings(): array
+    {
+        $settingsArray = [];
+        foreach ($this->settings as $setting) {
+            if ($setting instanceof NSettings)
+                $settingsArray[] = $setting->toArray();
+        }
+        return $settingsArray;
+    }
+
+    public function getRequests(): array
+    {
+        $requestArray = [];
+        foreach ($this->requests as $request) {
+            if ($request instanceof NRequest)
+                $requestArray[] = $request->toArray();
+        }
+        return $requestArray;
     }
 
     public function getName(): string
@@ -41,15 +61,15 @@ class NSpace extends TurnoverObject
         return $this;
     }
 
-    public function setSettings(array $settings): NSpace
+    public function addSettings(NSettings $nSettings): NSpace
     {
-        $this->settings = $settings;
+        $this->settings[] = $nSettings;
         return $this;
     }
 
-    public function setRequests(array $requests): NSpace
+    public function addRequests(NRequest $nRequest): NSpace
     {
-        $this->requests = $requests;
+        $this->requests[] = $nRequest;
         return $this;
     }
 

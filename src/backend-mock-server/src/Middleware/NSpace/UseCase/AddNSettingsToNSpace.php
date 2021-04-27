@@ -29,6 +29,8 @@ class AddNSettingsToNSpace extends InvokableMiddleware
             ]
         );
 
+        $nSpace->addSettings($nSetting);
+
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
     }
 }

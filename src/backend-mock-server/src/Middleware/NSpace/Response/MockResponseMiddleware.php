@@ -4,9 +4,11 @@ namespace Middleware\NSpace\Response;
 
 use Core\DTO\ResponseData;
 use DTO\NSettings;
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\TextResponse;
+use Laminas\Diactoros\Stream;
 use Middleware\InvokableMiddleware;
 
 class MockResponseMiddleware extends InvokableMiddleware
@@ -15,9 +17,12 @@ class MockResponseMiddleware extends InvokableMiddleware
         NSettings $nSettings = null
     ) {
         if ($nSettings) {
-            $response = new TextResponse($nSettings->getResponseBody(), $nSettings->getResponseCode());
-            foreach ($nSettings->getHeaders() as $headerValue => $headerKey) {
-                $response->withHeader($headerKey, $headerValue);
+            $bodyRaw = $nSettings->getResponseBody();
+            $response = new Response(fopen($bodyRaw, 'rwb+'));
+            $response->getBody()->write($bodyRaw);
+            $response = $response->withStatus($nSettings->getResponseCode());
+            foreach ($nSettings->getHeaders() as $headerKey => $headerValue) {
+                $response = $response->withHeader($headerKey, $headerValue);
             }
             return $response;
         }

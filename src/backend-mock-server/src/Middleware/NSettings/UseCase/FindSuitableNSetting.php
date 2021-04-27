@@ -13,39 +13,19 @@ class FindSuitableNSetting extends InvokableMiddleware
 {
     public function __invoke(
         NRequest $nRequest,
+        NSpace $nSpace,
         SettingsCollectionProxy $settingsCollectionProxy
     ) {
-        $settingSearch = [];
-        if ($nRequest->getMethod()) {
-            $settingSearch['method'] = $nRequest->getMethod();
-        }
-        if ($nRequest->getUri()) {
-            $settingSearch['uri'] = $nRequest->getUri();
-        }
-        if ($nRequest->getUri()) {
-            $settingSearch['queryString'] = $nRequest->getQueryString();
-        }
-
-        /** @var \MongoDB\Model\BSONDocument $persistObject */
-        $persistObject = $settingsCollectionProxy->collection->findOne([
-            'settings' => $settingSearch
-        ]);
-
-        if ($persistObject) {
-            $headers = [];
-            foreach ($persistObject->headers as $header) {
-                $headers[] = $header->getArrayCopy();
+        /** @var NSettings $nSettings */
+        foreach ($nSpace->getSettingsObjects() as $nSettings) {
+            if (
+                $nSettings->getMethod() === $nRequest->getMethod()
+                && $nSettings->getUri() === $nRequest->getUri()
+                && $nSettings->getQueryString() === $nRequest->getQueryString()
+            ) {
+                $this->getRequest()->withAttribute(NSettings::class, $nSettings);
+                break;
             }
-            $nSettings = DtoFactory::createNSettings(
-                $persistObject->uri,
-                $persistObject->method,
-                $persistObject->body,
-                $persistObject->code,
-                $persistObject->queryString,
-                $headers
-            );
-
-            $this->getRequest()->withAttribute(NSettings::class, $nSettings);
         }
     }
 }

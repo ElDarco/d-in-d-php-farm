@@ -28,6 +28,8 @@ class AddNRequestToNSpace extends InvokableMiddleware
             ]
         );
 
+        $nSpace->addRequests($nRequest);
+
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
     }
 }

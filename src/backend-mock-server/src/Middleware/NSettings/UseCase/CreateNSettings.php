@@ -16,10 +16,10 @@ class CreateNSettings extends InvokableMiddleware
     ) {
         $body = $this->getRequest()->getParsedBody()['body'] ?? '';
         $uri = $this->getRequest()->getParsedBody()['uri'] ?? '';
-        $method = $this->getRequest()->getParsedBody()['methods'] ?? '';
-        $code = $this->getRequest()->getParsedBody()['code'] ?? '';
+        $method = $this->getRequest()->getParsedBody()['method'] ?? '';
+        $code = (int) ($this->getRequest()->getParsedBody()['code'] ?? 0);
         $headers = $this->getRequest()->getParsedBody()['headers'] ?? [];
-        $queryString = $this->getRequest()->getParsedBody()['queryString'] ?? [];
+        $queryString = $this->getRequest()->getParsedBody()['queryString'] ?? '';
 
         $nSettings = DtoFactory::createNSettings($uri, $method, $body, $code, $queryString, $headers);
         $this->getRequest()->withAttribute(NSettings::class, $nSettings);

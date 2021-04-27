@@ -28,21 +28,30 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
 
         $nSpace = DtoFactory::createNSpace();
 
-        $requests = [];
-        foreach ($persistObject->requests as $request) {
-            $requests[] = $request->getArrayCopy();
-        }
-
-        $settings = [];
-        foreach ($persistObject->settings as $setting) {
-            $settings[] = $setting->getArrayCopy();
-        }
-
         $nSpace->setId($namespaceId);
         $nSpace->setName($persistObject->name);
-        $nSpace->setRequests($requests);
-        $nSpace->setSettings($settings);
 
+        foreach ($persistObject->requests as $request) {
+            $nRequest = DtoFactory::createNRequest(
+                $request->uri,
+                $request->method,
+                $request->body,
+                $request->queryString
+            );
+            $nSpace->addRequests($nRequest);
+        }
+
+        foreach ($persistObject->settings as $setting) {
+            $nSettings = DtoFactory::createNSettings(
+                $setting->uri,
+                $setting->method,
+                $setting->responseBody,
+                $setting->responseCode,
+                $setting->queryString,
+                $setting->headers->getArrayCopy()
+            );
+            $nSpace->addSettings($nSettings);
+        }
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
     }
 }
