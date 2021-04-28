@@ -88,7 +88,7 @@ class NSettings extends TurnoverObject
         return $this->queryString;
     }
 
-    public function setQueryString(string $queryString): NRequest
+    public function setQueryString(string $queryString): NSettings
     {
         $this->queryString = $queryString;
         return $this;
