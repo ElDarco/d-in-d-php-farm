@@ -18,7 +18,7 @@ class MockResponseMiddleware extends InvokableMiddleware
     ) {
         if ($nSettings) {
             $bodyRaw = $nSettings->getResponseBody();
-            $response = new Response(fopen($bodyRaw, 'rwb+'));
+            $response = new Response();
             $response->getBody()->write($bodyRaw);
             $response = $response->withStatus($nSettings->getResponseCode());
             foreach ($nSettings->getHeaders() as $headerKey => $headerValue) {
