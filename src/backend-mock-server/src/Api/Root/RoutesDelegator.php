@@ -29,7 +29,7 @@ class RoutesDelegator
         /** @var $app Application */
         $app = $callback();
 
-        $app->any('/n/{nspaceId}/{uri}', [
+        $app->any('/n/{nspaceId}[/[{uri}]]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NRequest\UseCase\CreateNRequest::class,
             \Middleware\NSpace\UseCase\AddNRequestToNSpace::class,

@@ -14,7 +14,7 @@ class CreateNRequest extends InvokableMiddleware
         SettingsCollectionProxy $settingsCollectionProxy
     ) {
         $body = $this->getRequest()->getBody()->getContents();
-        $uri = $this->getRequest()->getRouteParam('uri');
+        $uri = $this->getRequest()->getRouteParam('uri') ?? '';
         $method = $this->getRequest()->getMethod();
         $queryString = $this->getRequest()->getUri()->getQuery();
 
