@@ -74,7 +74,7 @@ class RoutesDelegator
         $app->get($basePath . '/nspace/{nspaceId}/settings/{settingId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NSettings\UseCase\GetNSettingsByUuid::class,
-            \Middleware\NSpace\Response\ReturnNSettings::class,
+            \Middleware\NSettings\Response\ReturnNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
@@ -82,7 +82,7 @@ class RoutesDelegator
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NSettings\UseCase\GetNSettingsByUuid::class,
             \Middleware\NSettings\UseCase\EditNSettings::class,
-            \Middleware\NSpace\Response\ReturnNSettings::class,
+            \Middleware\NSettings\Response\ReturnNSettings::class,
             \Middleware\SuccessMiddleware::class
         ]);
 

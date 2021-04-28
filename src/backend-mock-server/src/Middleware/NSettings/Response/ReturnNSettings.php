@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware\NSpace\Response;
+namespace Middleware\NSettings\Response;
 
 use Core\DTO\ResponseData;
 use Core\Mongo\SettingsCollectionProxy;
