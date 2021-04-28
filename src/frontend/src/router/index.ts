@@ -22,24 +22,24 @@ const routes: Array<RouteConfig> = [
   //    ]
   //  }
   //},
-  //{
-  //  path: '/mock-server',
-  //  name: 'MockServer',
-  //  component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue'),
-  //  meta: {
-  //    title: 'CodeTry - MockServer',
-  //    metaTags: [
-  //      {
-  //        name: 'description',
-  //        content: 'This page need for create MockServer for your integration tests.'
-  //      },
-  //      {
-  //        property: 'og:description',
-  //        content: 'This page need for create MockServer for your integration tests.'
-  //      }
-  //    ]
-  //  }
-  //},
+  {
+    path: '/mock-server',
+    name: 'MockServer',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue'),
+    meta: {
+      title: 'CodeTry - MockServer',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'This page need for create MockServer for your integration tests.'
+        },
+        {
+          property: 'og:description',
+          content: 'This page need for create MockServer for your integration tests.'
+        }
+      ]
+    }
+  },
   {
     path: '/',
     component: () => import(/* webpackChunkName: "about" */ '../views/PhpSandbox.vue'),

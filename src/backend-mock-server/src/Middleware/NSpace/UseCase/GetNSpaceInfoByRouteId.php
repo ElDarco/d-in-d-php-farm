@@ -36,7 +36,8 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
                 $request->uri,
                 $request->method,
                 $request->body,
-                $request->queryString
+                $request->queryString,
+                $request->createdAt
             );
             $nSpace->addRequests($nRequest);
         }

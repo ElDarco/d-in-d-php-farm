@@ -14,7 +14,10 @@ class NRequest extends TurnoverObject
         protected string $method,
         protected string $body,
         protected string $queryString,
-    ) {}
+        protected \DateTimeInterface|string $createdAt,
+    ) {
+        $this->setCreatedAt($this->createdAt);
+    }
 
     public function getId(): string
     {
@@ -71,6 +74,20 @@ class NRequest extends TurnoverObject
         return $this;
     }
 
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface|string $createdAt): NRequest
+    {
+        if (is_string($createdAt)) {
+            $createdAt = new \DateTimeImmutable($createdAt);
+        }
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -79,6 +96,7 @@ class NRequest extends TurnoverObject
             'method' => $this->getMethod(),
             'body' => $this->getBody(),
             'queryString' => $this->getQueryString(),
+            'createdAt' => $this->getCreatedAt()->format('Y-m-d h:i:s')
         ];
     }
 }

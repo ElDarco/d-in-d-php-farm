@@ -23,9 +23,17 @@ class DtoFactory
         string $uri,
         string $method,
         string $body,
-        string $queryString
+        string $queryString,
+        \DateTimeInterface|string $createdAt
     ): \DTO\NRequest {
-        return new NRequest((Uuid::uuid4())->toString(), $uri, $method, $body, $queryString);
+        return new NRequest(
+            (Uuid::uuid4())->toString(),
+            $uri,
+            $method,
+            $body,
+            $queryString,
+            $createdAt
+        );
     }
 
     public static function createNSettings(
