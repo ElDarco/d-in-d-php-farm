@@ -8,6 +8,7 @@ services:
       - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
       - ./src/backend-php-hub:/var/www/backend-php-hub
       - ./src/backend-mock-server:/var/www/backend-mock-server
+      - ./src/frontend/dist:/var/www/frontend/dist
       - ./docker/nginx/templates:/etc/nginx/templates
       - ./docker/nginx/var/log/nginx:/var/log/nginx
     depends_on:
