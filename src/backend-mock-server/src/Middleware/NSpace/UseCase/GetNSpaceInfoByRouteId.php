@@ -39,6 +39,7 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
                 $request->queryString,
                 $request->createdAt
             );
+            $nRequest->setId($request->id);
             $nSpace->addRequests($nRequest);
         }
 
@@ -51,6 +52,7 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
                 $setting->queryString,
                 $setting->headers->getArrayCopy()
             );
+            $nSettings->setId($setting->id);
             $nSpace->addSettings($nSettings);
         }
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
