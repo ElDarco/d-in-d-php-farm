@@ -8,3 +8,4 @@ db-mongo/*
 !database/.gitkeep
 docker/sphinx/var/lib/*
 docker/sphinx/var/log/*
+docs/_build/*

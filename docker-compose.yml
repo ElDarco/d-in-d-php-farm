@@ -216,6 +216,16 @@ services:
     volumes:
       - ./db-mongo:/data/db
     user: $APP_DOCKER_UID:$APP_DOCKER_GID
+  doc-builder:
+    container_name: $APP_COMPOSE_PROJECT_NAME-doc-builder
+    build:
+      context: ./
+      dockerfile: docker/doc-builder/Dockerfile
+    working_dir: /usr/src/app/
+    networks:
+      - backend-network
+    volumes:
+      - ./:/usr/src/app/
 networks:
   backend-network:
   outside-network:
