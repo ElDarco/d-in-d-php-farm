@@ -144,7 +144,7 @@ export default class PhpSandbox extends Vue {
       .then((response) => {
         this.runResponse = response.data as RunResponseFromHub;
       })
-      .catch((e) => {
+      .catch(() => {
         this.clearRunResult();
         this.runResponse = {
           responseCodeFromPhpInstance: 500,

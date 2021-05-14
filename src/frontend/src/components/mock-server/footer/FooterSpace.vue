@@ -40,9 +40,8 @@
             For support project:
           </p>
           <div class="support-logos">
-            <a href="https://www.buymeacoffee.com/codetryclub" target="_blank">
-              <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee">
-            </a>
+            <a href="https://www.patreon.com/bePatron?u=14190862" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+            <script type="application/javascript" async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
           </div>
         </div>
       </div>

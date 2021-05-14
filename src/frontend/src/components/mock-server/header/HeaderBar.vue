@@ -15,12 +15,6 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <div class="navbar-item is-disabled">
-            <span class="has-tooltip-bottom has-tooltip-info"
-              data-tooltip="(Ctrl/Alt + Enter or Ctrl + S)">
-              <i class="fas fa-question-circle"></i>
-            </span>
-          </div>
         </div>
 
         <div class="navbar-end">
