@@ -27,5 +27,15 @@ class FindSuitableNSetting extends InvokableMiddleware
                 break;
             }
         }
+        foreach ($nSpace->getSettingsObjects() as $nSettings) {
+            if (
+                $nSettings->getQueryString() === ""
+                && $nSettings->getMethod() === $nRequest->getMethod()
+                && $nSettings->getUri() === $nRequest->getUri()
+            ) {
+                $this->getRequest()->withAttribute(NSettings::class, $nSettings);
+                break;
+            }
+        }
     }
 }

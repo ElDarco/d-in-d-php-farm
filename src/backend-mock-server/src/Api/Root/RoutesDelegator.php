@@ -17,6 +17,9 @@ use Psr\Container\ContainerInterface;
  */
 class RoutesDelegator
 {
+    const UUID_REGEXP = "[a-f0-9\-]{36}";
+    const OTHER_PATH_REGEXP = ".*";
+
     // @codingStandardsIgnoreStart
     /**
      * @param ContainerInterface $container
@@ -29,7 +32,10 @@ class RoutesDelegator
         /** @var $app Application */
         $app = $callback();
 
-        $app->any('/n/{nspaceId}[/[{uri}]]', [
+        $uuidRegexp = self::UUID_REGEXP;
+        $otherPathRegexp = self::OTHER_PATH_REGEXP;
+
+        $app->any("/n/{nspaceId:{$uuidRegexp}}}[/[{uri:{$otherPathRegexp}}]]", [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NRequest\UseCase\CreateNRequest::class,
             \Middleware\NSpace\UseCase\AddNRequestToNSpace::class,
