@@ -16,19 +16,22 @@ class AddNRequestToNSpace extends InvokableMiddleware
         SettingsCollectionProxy $settingsCollectionProxy,
         NSpace $nSpace
     ) {
+        $nSpace->addRequests($nRequest);
+        $nRequestArrayToPersist = [];
+        foreach ($nSpace->sliceRequests() as $nRequestObject) {
+            $nRequestArrayToPersist[] = $nRequestObject->toArray();
+        }
         /** @var \MongoDB\Model\BSONDocument $persistObject */
         $settingsCollectionProxy->collection->updateOne(
             [
                 'id' => $nSpace->getId()
             ],
             [
-                '$push' =>[
-                    'requests' => $nRequest->toArray()
+                '$set' => [
+                    'requests' => $nRequestArrayToPersist
                 ]
             ]
         );
-
-        $nSpace->addRequests($nRequest);
 
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);
     }

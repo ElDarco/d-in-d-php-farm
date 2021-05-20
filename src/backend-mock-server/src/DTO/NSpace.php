@@ -73,6 +73,12 @@ class NSpace extends TurnoverObject
         return $this;
     }
 
+    public function sliceRequests(): array
+    {
+        $this->requests = array_slice($this->requests, -20, 20);
+        return $this->requests;
+    }
+
     public function setName(string $name): NSpace
     {
         $this->name = $name;
