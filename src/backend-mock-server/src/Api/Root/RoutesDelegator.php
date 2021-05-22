@@ -35,7 +35,7 @@ class RoutesDelegator
         $uuidRegexp = self::UUID_REGEXP;
         $otherPathRegexp = self::OTHER_PATH_REGEXP;
 
-        $app->any("/n/{nspaceId:{$uuidRegexp}}}[/[{uri:{$otherPathRegexp}}]]", [
+        $app->any("/n/{nspaceId:{$uuidRegexp}}[{uri:{$otherPathRegexp}}]", [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NRequest\UseCase\CreateNRequest::class,
             \Middleware\NSpace\UseCase\AddNRequestToNSpace::class,
