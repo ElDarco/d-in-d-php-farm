@@ -30,6 +30,11 @@
     <template v-else>
       <p class="other-style">{{row.prefix}}</p><p class="t-o">{{row.title}}</p>
     </template>
+    <button v-if="isDeleted" class="button is-small is-pulled-right" @click="onClickToDelete(row)">
+      <span class="icon is-small">
+        <i class="fas fa-trash-alt"></i>
+      </span>
+    </button>
   </div>
 </template>
 
@@ -39,6 +44,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class RowPanelBlock extends Vue {
   @Prop({ default: {} as RowPanelBlockObject })
   protected row: RowPanelBlockObject | undefined;
+  @Prop({default: false})
+  protected isDeleted = false;
+
+  onClickToDelete (row: RowPanelBlockObject) {
+    this.$emit('clicked-to-delete', row)
+  }
 }
 </script>
 
@@ -52,6 +63,7 @@ export default class RowPanelBlock extends Vue {
   background-color: whitesmoke;
 }
 .t-o {
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

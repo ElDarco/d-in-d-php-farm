@@ -23,15 +23,15 @@ class AccessControl implements MiddlewareInterface
             );
 
         if (
-            !array_key_exists('APP_HUB_ACCESS_CONTROL_ALLOW_ORIGIN', $_ENV)
-            || !$_ENV['APP_HUB_ACCESS_CONTROL_ALLOW_ORIGIN']
-            || $_ENV['APP_HUB_ACCESS_CONTROL_ALLOW_ORIGIN'] === '*'
+            !array_key_exists('APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN', $_ENV)
+            || !$_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN']
+            || $_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN'] === '*'
         ) {
             return $response
                 ->withHeader('Access-Control-Allow-Origin', '*');
         }
 
-        $allowedOrigins = explode(",", $_ENV['APP_HUB_ACCESS_CONTROL_ALLOW_ORIGIN'] ?? '');
+        $allowedOrigins = explode(",", $_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN'] ?? '');
         $requestOrigin  = $request->getHeaderLine('Origin');
 
         if (!empty($allowedOrigins)) {

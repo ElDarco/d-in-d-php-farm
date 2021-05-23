@@ -1,4 +1,4 @@
-import HttpClient from "@/providers/http-client";
+import HttpClient from "@/providers/clients/http-client";
 import {AxiosRequestConfig} from "axios";
 
 export class PhpHubApi extends HttpClient {

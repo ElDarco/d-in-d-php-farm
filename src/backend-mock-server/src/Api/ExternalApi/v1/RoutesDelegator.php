@@ -43,20 +43,20 @@ class RoutesDelegator
             \Middleware\SuccessMiddleware::class
         ]);
 
-        $app->get($basePath . '/nspace/{nspaceId}/[/]', [
+        $app->get($basePath . '/nspace/{nspaceId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NSpace\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
-        $app->patch($basePath . '/nspace/{nspaceId}/[/]', [
+        $app->patch($basePath . '/nspace/{nspaceId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NSpace\UseCase\EditNSpaceInfoFromRequest::class,
             \Middleware\NSpace\Response\ReturnNSpace::class,
             \Middleware\SuccessMiddleware::class
         ]);
 
-        $app->delete($basePath . '/nspace/{nspaceId}/[/]', [
+        $app->delete($basePath . '/nspace/{nspaceId}[/]', [
             \Middleware\NSpace\UseCase\GetNSpaceInfoByRouteId::class,
             \Middleware\NSpace\UseCase\DeleteNSpaceFromStorage::class,
             \Middleware\SuccessMiddleware::class

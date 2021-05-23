@@ -1,6 +1,18 @@
 <template>
   <div>
-    <panel-block type="full" title="NSpace" :list-row='getListRow' @clicked-to-row="clickByRow">
+    <panel-block
+        type="full"
+        title="NSpace"
+        :list-row='getListRow'
+        @clicked-to-row="clickByRow"
+        @clicked-to-delete="clickByDelete"
+    >
+      <button class="button is-link is-outlined is-fullwidth" @click="refresh">
+        <span class="icon">
+          <i class="fas fa-sync-alt"></i>
+        </span>
+        Refresh
+      </button>
       <button class="button is-link is-outlined is-fullwidth" @click="addNewNSpace">
         Get new NSpace
       </button>
@@ -13,9 +25,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import PanelBlock from "@/components/mock-server/content/widget/PanelBlock.vue";
 import {settingsMockServerModule} from "@/store/settings-mock-server";
-import Cookies from 'js-cookie'
-import {MockServerApi} from "@/providers/mock-server-api";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
+import {MockServerProvider} from "@/providers/gateway/mock-server-provider";
+import {AxiosResponse} from "axios";
 @Component({
   components: {
     SpinnerComponent,
@@ -23,7 +35,7 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
   }
 })
 export default class NSpacePanelBlock extends Vue {
-  protected mockServerApi = new MockServerApi();
+  protected mockServerProvider = new MockServerProvider();
 
   protected loadNSpacesIndicator = false;
 
@@ -41,51 +53,45 @@ export default class NSpacePanelBlock extends Vue {
   }
   clickByRow(row: RowPanelBlockObject) {
     const nSpace = settingsMockServerModule.getters.getNSpaceByID(row.id)
-    console.log(this.isNSpace(nSpace));
     if (this.isNSpace(nSpace)) {
       settingsMockServerModule.mutations.useNSpace(nSpace)
     }
   }
+  clickByDelete(row: RowPanelBlockObject) {
+    const nSpace = settingsMockServerModule.getters.getNSpaceByID(row.id)
+    if (this.isNSpace(nSpace)) {
+      console.log('delete ' + nSpace.id)
+    }
+  }
+  /* eslint-disable */
   isNSpace(arg: any): arg is NSpace {
     return arg && arg.id && typeof(arg.id) == 'string';
   }
+  /* eslint-enable */
   addNewNSpace() {
     this.loadNSpacesIndicator = true;
-    this.mockServerApi.createNSpace()
-      .then((response) => {
-        settingsMockServerModule.mutations.addNSpace(response.data as NSpace);
-        Cookies.set('nspaces', settingsMockServerModule.state.nSpaces)
-      })
-      .finally(() => {
-        this.loadNSpacesIndicator = false;
-      });
+    this.mockServerProvider.createNewNSpace(
+        async (response: AxiosResponse) => {
+          settingsMockServerModule.mutations.addNSpace(response.data as NSpace)
+          await settingsMockServerModule.actions.persistNSpaceToCache();
+        },
+        undefined,
+        () => {
+          this.loadNSpacesIndicator = false
+        }
+    )
+  }
+  async refresh() {
+    this.loadNSpacesIndicator = true;
+    await settingsMockServerModule.actions.restoreNSpaceFromCache(() => {
+      this.loadNSpacesIndicator = false
+    });
   }
   mounted() {
-    const rawNSpace = JSON.parse(Cookies.get('nspaces') ?? '[]') as NSpace[];
-    rawNSpace.forEach((element) => {
-      settingsMockServerModule.mutations.addNSpace(element);
-    })
+    this.refresh()
   }
 }
 </script>
 
 <style lang="scss">
-.full-height-panel {
-  min-height: 100%;
-}
-.middle-height-panel {
-  min-height: 48.8%;
-}
-.full-scrollable-body {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 825px;
-  max-height: 825px;
-}
-.middle-scrollable-body {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 313px;
-  max-height: 313px;
-}
 </style>

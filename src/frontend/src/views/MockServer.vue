@@ -7,7 +7,8 @@
           <n-space-panel-block/>
         </div>
         <div class="column is-one-fifth">
-          <nav class="panel middle-height-panel">
+          <n-request-panel-block/>
+          <!--<nav class="panel middle-height-panel">
             <p class="panel-heading">
               NRequests
             </p>
@@ -19,13 +20,6 @@
             </span>
               </p>
             </div>
-            <!--<p class="panel-tabs">
-              <a class="is-active">All</a>
-              <a>Public</a>
-              <a>Private</a>
-              <a>Sources</a>
-              <a>Forks</a>
-            </p>-->
             <div class="middle-scrollable-body">
               <a class="panel-block">
                 <span class="panel-icon">
@@ -64,7 +58,7 @@
                 <p class="other-style">OTHER</p><p class="t-o">/v1.3/fines/any</p>
               </a>
             </div>
-          </nav>
+          </nav>-->
           <nav class="panel middle-height-panel">
             <p class="panel-heading">
               NSettings
@@ -106,9 +100,21 @@
               <p>NSpace</p>
               <p>{{this.getSelectedNSpace.id}}</p>
               <p>{{this.getSelectedNSpace.name}}</p>
+              <p>{{this.urlToMock}}</p>
+              <p></p>
+            </template>
+            <template v-else-if="getSelectedEntityType === 'nrequest'">
+              <p>NRequest</p>
+              <p>{{this.getSelectedNRequest.id}}</p>
+              <p>{{this.getSelectedNRequest.uri}}</p>
+              <p>{{this.getSelectedNRequest.method}}</p>
+              <p>{{this.getSelectedNRequest.body}}</p>
+              <p>{{this.getSelectedNRequest.queryString}}</p>
+              <p>{{this.getSelectedNRequest.createdAt}}</p>
+              <p></p>
             </template>
             <template v-else>
-              Third column
+              Please, selected interesting section by left
             </template>
           </div>
         </div>
@@ -127,9 +133,11 @@ import FooterSpace from "@/components/mock-server/footer/FooterSpace.vue";
 import PanelBlock from "@/components/mock-server/content/widget/PanelBlock.vue";
 import NSpacePanelBlock from "@/components/mock-server/content/component/NSpacePanelBlock.vue";
 import {settingsMockServerModule} from "@/store/settings-mock-server";
+import NRequestPanelBlock from "@/components/mock-server/content/component/NRequestPanelBlock.vue";
 
 @Component({
   components: {
+    NRequestPanelBlock,
     NSpacePanelBlock,
     PanelBlock,
     MockServerLayout,
@@ -139,11 +147,21 @@ import {settingsMockServerModule} from "@/store/settings-mock-server";
   },
 })
 export default class MockServer extends Vue {
+  protected selectedNSpace: NSpace | undefined;
+  protected selectedNRequest: NRequest | undefined;
+  protected urlToMock: string | undefined;
+
   get getSelectedEntityType(): string {
     return settingsMockServerModule.getters.getSelectedEntityType();
   }
   get getSelectedNSpace(): NSpace {
-    return settingsMockServerModule.getters.getSelectedNSpaces();
+    this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
+    this.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + this.selectedNSpace.id
+    return this.selectedNSpace;
+  }
+  get getSelectedNRequest(): NRequest {
+    this.selectedNRequest = settingsMockServerModule.getters.getSelectedNRequest();
+    return this.selectedNRequest;
   }
 }
 </script>

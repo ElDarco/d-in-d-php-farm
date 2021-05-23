@@ -67,7 +67,7 @@ import Editor from '@/components/php-sandbox/content/Editor.vue';
 import HeaderBar from "@/components/php-sandbox/header/HeaderBar.vue";
 import FooterSpace from "@/components/php-sandbox/footer/FooterSpace.vue";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
-import {PhpHubApi} from "@/providers/php-hub-api";
+import {PhpHubApi} from "@/providers/clients/php-hub-api";
 import { settingsPhpModule } from '@/store/settings-php';
 
 @Component({

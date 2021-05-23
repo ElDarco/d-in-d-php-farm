@@ -1,6 +1,6 @@
 interface NSpace {
     id: string;
     name: string;
-    settings: [];
-    request: [];
+    settings: NSettings[];
+    requests: NRequest[];
 }

@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="panel full-height-panel"
+    class="panel"
     v-bind:class="{ 'full-height-panel': type === 'full', 'middle-height-panel': type === 'middle' }"
   >
     <p class="panel-heading">
@@ -19,10 +19,10 @@
       v-bind:class="{ 'full-scrollable-body': type === 'full', 'middle-scrollable-body': type === 'middle' }"
     >
       <div v-for="(row, index) in listRow" :key="index" @click="onClickToRow(row)">
-        <row-panel-block :row='row' />
+        <row-panel-block :row='row' @clicked-to-delete="onClickToDelete(row)"/>
       </div>
     </div>
-    <div class="panel-block">
+    <div class="panel-block panel-buttons">
       <slot></slot>
     </div>
   </nav>
@@ -47,6 +47,9 @@ export default class PanelBlock extends Vue {
   onClickToRow (row: RowPanelBlockObject) {
     this.$emit('clicked-to-row', row)
   }
+  onClickToDelete (row: RowPanelBlockObject) {
+    this.$emit('clicked-to-delete', row)
+  }
 }
 </script>
 
@@ -55,7 +58,8 @@ export default class PanelBlock extends Vue {
   min-height: 100%;
 }
 .middle-height-panel {
-  min-height: 48.8%;
+  min-height: 50%;
+  margin-bottom: 20px;
 }
 .full-scrollable-body {
   overflow-y: auto;
@@ -68,5 +72,8 @@ export default class PanelBlock extends Vue {
   overflow-x: hidden;
   height: 313px;
   max-height: 313px;
+}
+.panel-buttons {
+  flex-wrap: wrap;
 }
 </style>
