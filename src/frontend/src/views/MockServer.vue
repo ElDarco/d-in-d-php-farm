@@ -27,6 +27,7 @@
               <p class="is-size-6"><b>Created At:</b> {{ this.getSelectedNRequest.createdAt }}</p>
               <p></p>
             </template>
+            <template v-else-if="getSelectedEntityType === 'whiteboard'"></template>
             <template v-else>
               Please, selected interesting section by left
             </template>

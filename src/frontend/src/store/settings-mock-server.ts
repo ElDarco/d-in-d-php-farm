@@ -10,9 +10,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     nSpaces: [] as NSpace[],
     nRequests: [] as NRequest[],
     nSettings: [] as NSettings[],
-    selectedNSpace: null as unknown as NSpace,
-    selectedNRequest: null as unknown as NRequest,
-    selectedNSettings: null as unknown as NSettings,
+    selectedNSpace: undefined as NSpace | undefined,
+    selectedNRequest: undefined as NRequest | undefined,
+    selectedNSettings: undefined as NSettings | undefined,
     selectedEntityType: ''
   },
   actions: {
@@ -34,6 +34,10 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
       }
     },
     async refreshSingleNSpace(state, object) {
+      settingsMockServerModule.mutations.clearNRequests();
+      settingsMockServerModule.mutations.clearNSetting();
+      settingsMockServerModule.mutations.clearSelectedNRequests();
+      settingsMockServerModule.mutations.clearSelectedEntityType();
       const mockServerProvider: MockServerProvider = new MockServerProvider();
       await mockServerProvider.syncNSpace(object.nSpace, (response: AxiosResponse) => {
         const index = settingsMockServerModule.state.nSpaces.findIndex((element: NSpace) => {
@@ -68,7 +72,10 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
       state.nRequests = [];
     },
     clearSelectedEntityType(state) {
-      state.selectedEntityType = '';
+      state.selectedEntityType = 'whiteboard';
+    },
+    clearSelectedNRequests(state) {
+      state.selectedNRequest = undefined;
     },
     useNSpace(state, payload: NSpace) {
       state.selectedEntityType = 'nspace';

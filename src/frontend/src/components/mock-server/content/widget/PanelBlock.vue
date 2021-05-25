@@ -19,7 +19,7 @@
       v-bind:class="{ 'full-scrollable-body': type === 'full', 'middle-scrollable-body': type === 'middle' }"
     >
       <div v-for="(row, index) in listRow" :key="index" @click="onClickToRow(row)">
-        <row-panel-block v-if="((selected !== undefined) && (selected !== null)) && (row.id = selected.id)" is-active="true" :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block v-if="getWhoIsActive(row)" is-active="true" :row='row' @clicked-to-delete="onClickToDelete(row)"/>
         <row-panel-block v-else :row='row' @clicked-to-delete="onClickToDelete(row)"/>
       </div>
     </div>
@@ -53,6 +53,14 @@ export default class PanelBlock extends Vue {
   onClickToDelete (row: RowPanelBlockObject) {
     this.$emit('clicked-to-delete', row)
   }
+  getWhoIsActive(row: RowPanelBlockObject) {
+    return (this.isNObject(this.selected)) && (row.id === this.selected.id)
+  }
+  /* eslint-disable */
+  isNObject(arg: any): arg is NObject {
+    return arg && arg.id && typeof(arg.id) == 'string';
+  }
+  /* eslint-enable */
 }
 </script>
 

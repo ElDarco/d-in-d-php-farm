@@ -1,7 +1,8 @@
 <template>
   <div>
+    <spinner-component :visible="loadNRequestIndicator"/>
     <panel-block type="middle" title="NRequest" :selected="getSelectedNRequest" :list-row='getListRow' @clicked-to-row="clickByRow">
-      <button class="button is-link is-outlined is-fullwidth" @click="refresh">
+      <button class="button is-fullwidth" @click="refresh">
         <span class="icon">
           <i class="fas fa-sync-alt"></i>
         </span>
@@ -10,7 +11,6 @@
         </span>
       </button>
     </panel-block>
-    <spinner-component :visible="loadNRequestIndicator"/>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default class NRequestPanelBlock extends Vue {
         "id": element.id,
         "type": 'nrequest',
         "prefix": element.method,
-        "title": element.uri
+        "title": element.uri + element.queryString
       } as RowPanelBlockObject)
     })
     return listRow;
