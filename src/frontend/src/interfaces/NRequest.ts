@@ -1,4 +1,4 @@
-interface NRequest {
+interface NRequest extends NObject {
     id: string;
     uri: string;
     method: string;

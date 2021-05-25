@@ -1,16 +1,14 @@
 <template>
   <div>
-    <panel-block type="middle" title="NRequest" :selected="getSelectedNRequest" :list-row='getListRow' @clicked-to-row="clickByRow">
-      <button class="button is-link is-outlined is-fullwidth" @click="refresh">
+    <panel-block type="middle" title="NSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
+      <button class="button is-link is-outlined is-fullwidth">
         <span class="icon">
-          <i class="fas fa-sync-alt"></i>
+          <i class="fas fa-plus"></i>
         </span>
-        <span>
-          Refresh
-        </span>
+        <span>Add NSettings</span>
       </button>
     </panel-block>
-    <spinner-component :visible="loadNRequestIndicator"/>
+    <spinner-component :visible="loadNSettingsIndicator"/>
   </div>
 </template>
 
@@ -26,33 +24,20 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
     PanelBlock
   }
 })
-export default class NRequestPanelBlock extends Vue {
+export default class NSettingsPanelBlock extends Vue {
   protected mockServerApi = new MockServerApi();
-  protected loadNRequestIndicator = false;
-
+  protected loadNSettingsIndicator = false;
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
-    settingsMockServerModule.state.nRequests.forEach((element) => {
+    settingsMockServerModule.state.nSettings.forEach((element) => {
       listRow.push({
         "id": element.id,
-        "type": 'nrequest',
+        "type": 'nsettings',
         "prefix": element.method,
         "title": element.uri
       } as RowPanelBlockObject)
     })
     return listRow;
-  }
-  async refresh() {
-    const currentNSpace = settingsMockServerModule.state.selectedNSpace;
-    if (this.isNSpace(currentNSpace)) {
-      this.loadNRequestIndicator = true;
-      await settingsMockServerModule.actions.refreshSingleNSpace({
-        'nSpace' : currentNSpace,
-        'doneCallback': () => {
-          this.loadNRequestIndicator = false;
-        }
-      });
-    }
   }
   clickByRow(row: RowPanelBlockObject) {
     const nRequest = settingsMockServerModule.getters.getNRequestByID(row.id)
@@ -60,12 +45,8 @@ export default class NRequestPanelBlock extends Vue {
       settingsMockServerModule.mutations.useNRequest(nRequest)
     }
   }
-  get getSelectedNRequest(): NRequest {
-    this.selectedNRequest = settingsMockServerModule.getters.getSelectedNRequest();
-    return this.selectedNRequest;
-  }
   /* eslint-disable */
-  isNRequest(arg: any): arg is NRequest {
+  isNSettings(arg: any): arg is NSettings {
     return arg && arg.id && typeof(arg.id) == 'string';
   }
   /* eslint-enable */
@@ -79,4 +60,7 @@ export default class NRequestPanelBlock extends Vue {
 </script>
 
 <style lang="scss">
+.modal-card-medium {
+  width: 50%;
+}
 </style>

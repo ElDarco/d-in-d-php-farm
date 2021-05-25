@@ -1,0 +1,3 @@
+interface NObject {
+    id: string;
+}

@@ -3,12 +3,15 @@ import {AxiosRequestConfig} from "axios";
 
 export class MockServerApi extends HttpClient {
   public createNSpace(
+    name: string,
     successCallback: Function | undefined = undefined,
     failureCallback: Function | undefined = undefined,
     doneCallback: Function | undefined = undefined
   ) {
     return new Promise((resolve, reject) => {
-      this.post('/api/v1/nspace')
+      this.post('/api/v1/nspace', {
+        "name": name
+      })
         .then((response) => {
           if (successCallback !== undefined) {
             successCallback(response)

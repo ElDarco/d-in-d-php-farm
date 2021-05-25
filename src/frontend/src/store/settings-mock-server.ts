@@ -25,6 +25,7 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
       settingsMockServerModule.mutations.clearSelectedEntityType();
       for (const element of rawNSpace) {
         await mockServerProvider.syncNSpace(element, (response: AxiosResponse) => {
+          response.data.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + response.data.id
           settingsMockServerModule.mutations.addNSpace(response.data as NSpace);
         });
       }
@@ -72,7 +73,7 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     useNSpace(state, payload: NSpace) {
       state.selectedEntityType = 'nspace';
       state.selectedNSpace = payload;
-      state.nRequests = payload.requests.reverse();
+      state.nRequests = payload.requests;
       state.nSettings = payload.settings;
     },
     useNRequest(state, payload: NRequest) {
@@ -82,6 +83,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     useNSettings(state, payload: NSettings) {
       state.selectedEntityType = 'nsettings';
       state.selectedNSettings = payload;
+    },
+    useCreateNSpace(state) {
+      state.selectedEntityType = 'createnspace'
     }
   },
   getters: {

@@ -4,18 +4,26 @@
         type="full"
         title="NSpace"
         :list-row='getListRow'
+        :selected='getSelectedNSpace'
         @clicked-to-row="clickByRow"
         @clicked-to-delete="clickByDelete"
     >
-      <button class="button is-link is-outlined is-fullwidth" @click="refresh">
-        <span class="icon">
-          <i class="fas fa-sync-alt"></i>
-        </span>
-        Refresh
-      </button>
-      <button class="button is-link is-outlined is-fullwidth" @click="addNewNSpace">
-        Get new NSpace
-      </button>
+      <div class="buttons is-fullwidth">
+        <button class="button is-fullwidth" @click="refresh">
+          <span class="icon">
+            <i class="fas fa-sync-alt"></i>
+          </span>
+          <span>
+            Refresh
+          </span>
+        </button>
+        <button class="button is-fullwidth" @click="clickOnCreate">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Get new NSpace</span>
+        </button>
+      </div>
     </panel-block>
     <spinner-component :visible="loadNSpacesIndicator"/>
   </div>
@@ -39,6 +47,10 @@ export default class NSpacePanelBlock extends Vue {
 
   protected loadNSpacesIndicator = false;
 
+  get getSelectedNSpace(): NSpace {
+    this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
+    return this.selectedNSpace;
+  }
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
     settingsMockServerModule.state.nSpaces.forEach((element) => {
@@ -63,6 +75,9 @@ export default class NSpacePanelBlock extends Vue {
       console.log('delete ' + nSpace.id)
     }
   }
+  clickOnCreate() {
+    settingsMockServerModule.mutations.useCreateNSpace();
+  }
   /* eslint-disable */
   isNSpace(arg: any): arg is NSpace {
     return arg && arg.id && typeof(arg.id) == 'string';
@@ -71,13 +86,14 @@ export default class NSpacePanelBlock extends Vue {
   addNewNSpace() {
     this.loadNSpacesIndicator = true;
     this.mockServerProvider.createNewNSpace(
+        this.nSpaceName,
         async (response: AxiosResponse) => {
           settingsMockServerModule.mutations.addNSpace(response.data as NSpace)
           await settingsMockServerModule.actions.persistNSpaceToCache();
         },
         undefined,
         () => {
-          this.loadNSpacesIndicator = false
+          this.loadNSpacesIndicator = false;
         }
     )
   }
@@ -94,4 +110,10 @@ export default class NSpacePanelBlock extends Vue {
 </script>
 
 <style lang="scss">
+.modal-card-small {
+  width: 30%;
+}
+.buttons.is-fullwidth {
+  width: 100%;
+}
 </style>

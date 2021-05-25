@@ -1,4 +1,4 @@
-interface NSettings {
+interface NSettings extends NObject {
     id: string;
     uri: string;
     method: string;

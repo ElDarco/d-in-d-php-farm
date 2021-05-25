@@ -1,5 +1,9 @@
 <template>
-  <div class="pointer panel-block" :title="row.title">
+  <div
+    class="pointer panel-block panel-block-without-radius"
+    :class="{'is-active': isActive}"
+    :title="row.title"
+  >
     <span v-if="row.type === 'nspace'" class="panel-icon">
       <i class="fas fa-folder" aria-hidden="true"></i>
     </span>
@@ -35,6 +39,11 @@
         <i class="fas fa-trash-alt"></i>
       </span>
     </button>
+    <button v-if="isHolded" class="button is-small is-pulled-right" @click="onClickToHold(row)">
+      <span class="icon is-small">
+        <i class="fas fa-snowflake"></i>
+      </span>
+    </button>
   </div>
 </template>
 
@@ -45,10 +54,17 @@ export default class RowPanelBlock extends Vue {
   @Prop({ default: {} as RowPanelBlockObject })
   protected row: RowPanelBlockObject | undefined;
   @Prop({default: false})
+  protected isActive = false;
+  @Prop({default: false})
   protected isDeleted = false;
+  @Prop({default: false})
+  protected isHolded = false;
 
   onClickToDelete (row: RowPanelBlockObject) {
     this.$emit('clicked-to-delete', row)
+  }
+  onClickToHold (row: RowPanelBlockObject) {
+    this.$emit('clicked-to-hold', row)
   }
 }
 </script>
@@ -58,8 +74,12 @@ export default class RowPanelBlock extends Vue {
 .pointer {
   cursor: pointer;
 }
+.panel-block-without-radius:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 .pointer:hover {
-  border-bottom: 1px solid #ededed;
+  margin-bottom: 0;
   background-color: whitesmoke;
 }
 .t-o {

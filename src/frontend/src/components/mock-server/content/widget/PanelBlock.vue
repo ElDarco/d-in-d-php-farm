@@ -19,7 +19,8 @@
       v-bind:class="{ 'full-scrollable-body': type === 'full', 'middle-scrollable-body': type === 'middle' }"
     >
       <div v-for="(row, index) in listRow" :key="index" @click="onClickToRow(row)">
-        <row-panel-block :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block v-if="((selected !== undefined) && (selected !== null)) && (row.id = selected.id)" is-active="true" :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block v-else :row='row' @clicked-to-delete="onClickToDelete(row)"/>
       </div>
     </div>
     <div class="panel-block panel-buttons">
@@ -41,6 +42,8 @@ export default class PanelBlock extends Vue {
   protected title: string | undefined;
   @Prop({ default: 'middle' })
   protected type: string | undefined;
+  @Prop({ default: undefined })
+  protected selected: NObject | undefined;
   @Prop()
   protected listRow: RowPanelBlockObject[] | undefined;
 
@@ -64,14 +67,14 @@ export default class PanelBlock extends Vue {
 .full-scrollable-body {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 825px;
-  max-height: 825px;
+  height: 718px;
+  max-height: 718px;
 }
 .middle-scrollable-body {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 313px;
-  max-height: 313px;
+  height: 289px;
+  max-height: 289px;
 }
 .panel-buttons {
   flex-wrap: wrap;
