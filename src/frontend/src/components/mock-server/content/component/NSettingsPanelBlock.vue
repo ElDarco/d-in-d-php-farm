@@ -1,7 +1,7 @@
 <template>
   <div>
     <panel-block type="middle" title="NSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
-      <button class="button is-link is-outlined is-fullwidth">
+      <button class="button is-fullwidth" @click="clickOnCreate">
         <span class="icon">
           <i class="fas fa-plus"></i>
         </span>
@@ -44,6 +44,9 @@ export default class NSettingsPanelBlock extends Vue {
     if (this.isNRequest(nRequest)) {
       settingsMockServerModule.mutations.useNRequest(nRequest)
     }
+  }
+  clickOnCreate() {
+    settingsMockServerModule.mutations.useCreateNSettings();
   }
   /* eslint-disable */
   isNSettings(arg: any): arg is NSettings {

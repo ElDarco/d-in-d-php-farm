@@ -29,6 +29,7 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
           settingsMockServerModule.mutations.addNSpace(response.data as NSpace);
         });
       }
+      settingsMockServerModule.mutations.defaultSelectedEntityType();
       if (doneCallback != undefined) {
         doneCallback();
       }
@@ -43,6 +44,7 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
         const index = settingsMockServerModule.state.nSpaces.findIndex((element: NSpace) => {
           return element.id === object.nSpace.id;
         });
+        response.data.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + response.data.id
         settingsMockServerModule.state.nSpaces[index] = response.data as NSpace
         settingsMockServerModule.mutations.useNSpace(response.data as NSpace)
       });
@@ -74,14 +76,22 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     clearSelectedEntityType(state) {
       state.selectedEntityType = 'whiteboard';
     },
+    defaultSelectedEntityType(state) {
+      state.selectedEntityType = '';
+    },
     clearSelectedNRequests(state) {
       state.selectedNRequest = undefined;
+    },
+    clearSelectedNSettings(state) {
+      state.selectedNSettings = undefined;
     },
     useNSpace(state, payload: NSpace) {
       state.selectedEntityType = 'nspace';
       state.selectedNSpace = payload;
       state.nRequests = payload.requests;
       state.nSettings = payload.settings;
+      state.selectedNRequest = undefined;
+      state.selectedNSettings = undefined;
     },
     useNRequest(state, payload: NRequest) {
       state.selectedEntityType = 'nrequest';
@@ -93,6 +103,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     useCreateNSpace(state) {
       state.selectedEntityType = 'createnspace'
+    },
+    useCreateNSettings(state) {
+      state.selectedEntityType = 'creatensettings'
     }
   },
   getters: {

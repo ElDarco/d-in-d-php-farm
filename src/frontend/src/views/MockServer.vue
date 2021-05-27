@@ -27,6 +27,15 @@
               <p class="is-size-6"><b>Created At:</b> {{ this.getSelectedNRequest.createdAt }}</p>
               <p></p>
             </template>
+            <template v-else-if="getSelectedEntityType === 'nsettings'">
+              <p class="is-size-5"><b>NSettings</b></p>
+            </template>
+            <template v-else-if="getSelectedEntityType === 'createnspace'">
+              <create-n-space-view/>
+            </template>
+            <template v-else-if="getSelectedEntityType === 'creatensettings'">
+              <create-n-settings-view/>
+            </template>
             <template v-else-if="getSelectedEntityType === 'whiteboard'"></template>
             <template v-else>
               Please, selected interesting section by left
@@ -51,9 +60,13 @@ import {settingsMockServerModule} from "@/store/settings-mock-server";
 import NRequestPanelBlock from "@/components/mock-server/content/component/NRequestPanelBlock.vue";
 import NSettingsPanelBlock from "@/components/mock-server/content/component/NSettingsPanelBlock.vue";
 import NSpaceView from "@/components/mock-server/content/component/NSpaceView.vue";
+import CreateNSpaceView from "@/components/mock-server/content/component/CreateNSpaceView.vue";
+import CreateNSettingsView from "@/components/mock-server/content/component/CreateNSettingsView.vue";
 
 @Component({
   components: {
+    CreateNSettingsView,
+    CreateNSpaceView,
     NSpaceView,
     NSettingsPanelBlock,
     NRequestPanelBlock,

@@ -1,7 +1,7 @@
 <template>
   <div
     class="pointer panel-block panel-block-without-radius"
-    :class="{'is-active': isActive}"
+    :class="{'is-active': isActiveValue}"
     :title="row.title"
   >
     <span v-if="row.type === 'nspace'" class="panel-icon">
@@ -59,6 +59,11 @@ export default class RowPanelBlock extends Vue {
   protected isDeleted = false;
   @Prop({default: false})
   protected isHolded = false;
+
+  get isActiveValue(): boolean
+  {
+    return this.isActive;
+  }
 
   onClickToDelete (row: RowPanelBlockObject) {
     this.$emit('clicked-to-delete', row)

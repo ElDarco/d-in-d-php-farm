@@ -19,8 +19,8 @@
       v-bind:class="{ 'full-scrollable-body': type === 'full', 'middle-scrollable-body': type === 'middle' }"
     >
       <div v-for="(row, index) in listRow" :key="index" @click="onClickToRow(row)">
-        <row-panel-block v-if="getWhoIsActive(row)" is-active="true" :row='row' @clicked-to-delete="onClickToDelete(row)"/>
-        <row-panel-block v-else :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block v-if="getWhoIsActive(row)" :is-active='true' :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block v-else :is-active='false' :row='row' @clicked-to-delete="onClickToDelete(row)"/>
       </div>
     </div>
     <div class="panel-block panel-buttons">

@@ -83,20 +83,6 @@ export default class NSpacePanelBlock extends Vue {
     return arg && arg.id && typeof(arg.id) == 'string';
   }
   /* eslint-enable */
-  addNewNSpace() {
-    this.loadNSpacesIndicator = true;
-    this.mockServerProvider.createNewNSpace(
-        this.nSpaceName,
-        async (response: AxiosResponse) => {
-          settingsMockServerModule.mutations.addNSpace(response.data as NSpace)
-          await settingsMockServerModule.actions.persistNSpaceToCache();
-        },
-        undefined,
-        () => {
-          this.loadNSpacesIndicator = false;
-        }
-    )
-  }
   async refresh() {
     this.loadNSpacesIndicator = true;
     await settingsMockServerModule.actions.restoreNSpaceFromCache(() => {

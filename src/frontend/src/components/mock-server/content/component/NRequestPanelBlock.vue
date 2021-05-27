@@ -33,11 +33,15 @@ export default class NRequestPanelBlock extends Vue {
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
     settingsMockServerModule.state.nRequests.forEach((element) => {
+      let queryString = '';
+      if (element.queryString != '') {
+        queryString = '?' + element.queryString;
+      }
       listRow.push({
         "id": element.id,
         "type": 'nrequest',
         "prefix": element.method,
-        "title": element.uri + element.queryString
+        "title": element.uri + queryString
       } as RowPanelBlockObject)
     })
     return listRow;
