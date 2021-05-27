@@ -18,15 +18,15 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Url to proxy</label>
+          <label class="label">Url to proxy <span>(without trailing slash)</span></label>
           <div class="control">
-            <input class="input" type="text" placeholder="https://to-proxy.url">
+            <input class="input" v-model="nSpaceUrlToProxy" type="text" placeholder="https://to-proxy.url">
           </div>
         </div>
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox">
+              <input type="checkbox" v-model="nSpaceUseProxy">
               Enable proxy
             </label>
           </div>
@@ -66,14 +66,19 @@ export default class NSpaceView extends Vue {
   protected selectedNSpace: NSpace | undefined;
   protected copied = false;
   protected nSpaceName = '';
+  protected nSpaceUrlToProxy = '';
+  protected nSpaceUseProxy = false;
 
   get getSelectedNSpace(): NSpace {
     this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
     this.nSpaceName = this.selectedNSpace.name;
+    this.nSpaceUrlToProxy = this.selectedNSpace.proxyToUrl;
+    this.nSpaceUseProxy = this.selectedNSpace.useProxy;
     return this.selectedNSpace;
   }
 
-  copyTextToBuffer (text) {
+  /* eslint-disable */
+  copyTextToBuffer (text: string) {
     this.copied = true;
     setTimeout(() => {
       this.copied = false;
@@ -89,6 +94,7 @@ export default class NSpaceView extends Vue {
     document.body.removeChild(tmp) // Удаляем временный input
     focus.focus() // Возвращаем фокус туда, где был
   }
+  /* eslint-enable */
 }
 </script>
 

@@ -5,4 +5,5 @@ interface NRequest extends NObject {
     queryString: string;
     body: string;
     createdAt: string;
+    proxyResponse: NProxyResponse|[];
 }

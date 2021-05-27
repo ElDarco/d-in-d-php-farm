@@ -30,14 +30,32 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
 
         $nSpace->setId($namespaceId);
         $nSpace->setName($persistObject->name);
+        $nSpace->setUseProxy($persistObject->useProxy ?? false);
+        $nSpace->setProxyToUrl($persistObject->proxyToUrl ?? '');
 
         foreach ($persistObject->requests as $request) {
+            $nProxyResponse = null;
+            if ($request->offsetExists('proxyResponse')) {
+                $proxyResponseArray = $request->proxyResponse->getArrayCopy();
+                if ($proxyResponseArray) {
+                    $headers = [];
+                    foreach ($proxyResponseArray['headers'] as $key => $header) {
+                        $headers[$key] = $header->getArrayCopy()[0];
+                    }
+                    $nProxyResponse = DtoFactory::createNProxyResponse(
+                        $proxyResponseArray['responseBody'],
+                        $proxyResponseArray['responseCode'],
+                        $headers
+                    );
+                }
+            }
             $nRequest = DtoFactory::createNRequest(
                 $request->uri,
                 $request->method,
                 $request->body,
                 $request->queryString,
-                $request->createdAt
+                $request->createdAt,
+                $nProxyResponse
             );
             $nRequest->setId($request->id);
             $nSpace->addRequests($nRequest);

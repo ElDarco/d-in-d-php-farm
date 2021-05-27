@@ -15,6 +15,7 @@ class NRequest extends TurnoverObject
         protected string $body,
         protected string $queryString,
         protected \DateTimeInterface|string $createdAt,
+        protected ?NProxyResponse $proxyResponse = null,
     ) {
         $this->setCreatedAt($this->createdAt);
     }
@@ -88,15 +89,26 @@ class NRequest extends TurnoverObject
         return $this;
     }
 
+    public function addNProxyResponse(NProxyResponse $proxyResponse): NRequest
+    {
+        $this->proxyResponse = $proxyResponse;
+        return $this;
+    }
+
     public function toArray(): array
     {
+        $proxyResponse = [];
+        if ($this->proxyResponse) {
+            $proxyResponse = $this->proxyResponse->toArray();
+        }
         return [
             'id' => $this->getId(),
             'uri' => $this->getUri(),
             'method' => $this->getMethod(),
             'body' => $this->getBody(),
             'queryString' => $this->getQueryString(),
-            'createdAt' => $this->getCreatedAt()->format('Y-m-d h:i:s')
+            'createdAt' => $this->getCreatedAt()->format('Y-m-d h:i:s'),
+            'proxyResponse' => $proxyResponse
         ];
     }
 }

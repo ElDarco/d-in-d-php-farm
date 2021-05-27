@@ -3,5 +3,6 @@ interface NSpace extends NObject {
     name: string;
     settings: NSettings[];
     requests: NRequest[];
-    urlToMock: string;
+    proxyToUrl: string;
+    useProxy: boolean;
 }

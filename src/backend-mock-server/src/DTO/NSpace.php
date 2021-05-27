@@ -12,7 +12,9 @@ class NSpace extends TurnoverObject
         protected string $id,
         protected string $name,
         protected array $settings = [],
-        protected array $requests = []
+        protected array $requests = [],
+        protected bool $useProxy = false,
+        protected string $proxyToUrl = ''
     ) {}
 
     public function getId(): string
@@ -55,6 +57,16 @@ class NSpace extends TurnoverObject
         return $this->name;
     }
 
+    public function isUseProxy(): bool
+    {
+        return $this->useProxy;
+    }
+
+    public function getProxyToUrl(): string
+    {
+        return $this->proxyToUrl;
+    }
+
     public function setId(string $id): NSpace
     {
         $this->id = $id;
@@ -85,6 +97,18 @@ class NSpace extends TurnoverObject
         return $this;
     }
 
+    public function setUseProxy(bool $useProxy): NSpace
+    {
+        $this->useProxy = $useProxy;
+        return $this;
+    }
+
+    public function setProxyToUrl(string $proxyToUrl): NSpace
+    {
+        $this->proxyToUrl = $proxyToUrl;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -92,6 +116,8 @@ class NSpace extends TurnoverObject
             'name' => $this->getName(),
             'settings' => $this->getSettings(),
             'requests' => $this->getRequests(),
+            'useProxy' => $this->isUseProxy(),
+            'proxyToUrl' => $this->getProxyToUrl(),
         ];
     }
 }

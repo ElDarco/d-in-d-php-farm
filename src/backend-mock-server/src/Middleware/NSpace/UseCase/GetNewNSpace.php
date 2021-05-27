@@ -13,8 +13,10 @@ class GetNewNSpace extends InvokableMiddleware
         SettingsCollectionProxy $settingsCollectionProxy
     ) {
         $name = $this->getRequest()->getParsedBody()['name'] ?? '';
+        $useProxy = $this->getRequest()->getParsedBody()['useProxy'] ?? false;
+        $proxyToUrl = $this->getRequest()->getParsedBody()['proxyToUrl'] ?? '';
 
-        $nSpace = DtoFactory::createNSpace($name);
+        $nSpace = DtoFactory::createNSpace($name, $useProxy, $proxyToUrl);
         $settingsCollectionProxy->collection->insertOne($nSpace->toArray());
 
         $this->getRequest()->withAttribute(NSpace::class, $nSpace);

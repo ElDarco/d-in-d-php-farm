@@ -15,9 +15,17 @@ class EditNSpaceInfoFromRequest extends InvokableMiddleware
     ) {
         $body = $this->getRequest()->getParsedBody() ?? [];
         $name = $body['name'] ?? '';
+        $useProxy = $body['useProxy'] ?? false;
+        $proxyToUrl = $body['proxyToUrl'] ?? '';
 
         if ($name) {
             $nSpace->setName($name);
+        }
+        if ($useProxy) {
+            $nSpace->setUseProxy($useProxy);
+        }
+        if ($proxyToUrl) {
+            $nSpace->setProxyToUrl($proxyToUrl);
         }
 
         /** @var \MongoDB\Model\BSONDocument $persistObject */
@@ -27,7 +35,9 @@ class EditNSpaceInfoFromRequest extends InvokableMiddleware
             ],
             [
                 '$set' =>[
-                    'name' => $nSpace->getName()
+                    'name' => $nSpace->getName(),
+                    'useProxy' => $nSpace->isUseProxy(),
+                    'proxyToUrl' => $nSpace->getProxyToUrl(),
                 ]
             ]
         );

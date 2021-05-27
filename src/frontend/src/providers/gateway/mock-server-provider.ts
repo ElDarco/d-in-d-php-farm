@@ -5,11 +5,13 @@ export class MockServerProvider {
 
   public createNewNSpace(
     name: string,
+    proxyToUrl: string,
+    useProxy: boolean,
     successCallback: Function | undefined = undefined,
     failureCallback: Function | undefined = undefined,
     doneCallback: Function | undefined = undefined
   ) {
-    return this.mockServerApi.createNSpace(name, successCallback, failureCallback, doneCallback)
+    return this.mockServerApi.createNSpace(name, proxyToUrl, useProxy, successCallback, failureCallback, doneCallback)
   }
 
   public async syncNSpace(
