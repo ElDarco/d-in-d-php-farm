@@ -40,7 +40,7 @@ class CreateMockResponse extends InvokableMiddleware
 
             $client = new Client(['http_errors' => false]);
             $response = $client->send($request);
-
+// TODO Нет заголовков на http://localhost:18081/mock-server/n/d73039c5-647a-447e-be83-9ae917b1574b/123 https://google.com
             $nProxyResponse = DtoFactory::createNProxyResponse($response->getBody()->getContents(), $response->getStatusCode(), $response->getHeaders());
             $nRequest->addNProxyResponse($nProxyResponse);
 

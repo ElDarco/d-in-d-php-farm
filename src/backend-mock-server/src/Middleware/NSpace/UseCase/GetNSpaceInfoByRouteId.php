@@ -37,10 +37,19 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
             $nProxyResponse = null;
             if ($request->offsetExists('proxyResponse')) {
                 $proxyResponseArray = $request->proxyResponse->getArrayCopy();
-                if ($proxyResponseArray) {
+                if (is_array($proxyResponseArray) &&
+                    array_key_exists('headers', $proxyResponseArray) &&
+                    array_key_exists('responseBody', $proxyResponseArray) &&
+                    array_key_exists('responseCode', $proxyResponseArray)
+                ) {
                     $headers = [];
                     foreach ($proxyResponseArray['headers'] as $key => $header) {
-                        $headers[$key] = $header->getArrayCopy()[0];
+                        if (is_string($header)) {
+                            $headers[$key] = $header;
+                        }
+                        if (is_array($header)) {
+                            $headers[$key] = $header->getArrayCopy()[0];
+                        }
                     }
                     $nProxyResponse = DtoFactory::createNProxyResponse(
                         $proxyResponseArray['responseBody'],
@@ -60,7 +69,6 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
             $nRequest->setId($request->id);
             $nSpace->addRequests($nRequest);
         }
-
         foreach ($persistObject->settings as $setting) {
             $nSettings = DtoFactory::createNSettings(
                 $setting->uri,

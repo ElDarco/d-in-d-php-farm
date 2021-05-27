@@ -16,16 +16,7 @@
               <n-space-view/>
             </template>
             <template v-else-if="getSelectedEntityType === 'nrequest'">
-              <p class="is-size-5"><b>NRequest</b></p>
-              <hr>
-              <p class="is-size-6"><b>UUID:</b> {{ this.getSelectedNRequest.id }}</p>
-              <p class="is-size-6"><b>Method:</b> {{ this.getSelectedNRequest.method }}</p>
-              <p class="is-size-6"><b>URI:</b> {{ this.getSelectedNRequest.uri }}</p>
-              <p class="is-size-6"><b>Query String:</b> {{ this.getSelectedNRequest.queryString }}</p>
-              <p class="is-size-6"><b>Body:</b> {{ this.getSelectedNRequest.body }}</p>
-              <p></p>
-              <p class="is-size-6"><b>Created At:</b> {{ this.getSelectedNRequest.createdAt }}</p>
-              <p></p>
+              <n-request-view/>
             </template>
             <template v-else-if="getSelectedEntityType === 'nsettings'">
               <p class="is-size-5"><b>NSettings</b></p>
@@ -62,9 +53,11 @@ import NSettingsPanelBlock from "@/components/mock-server/content/component/NSet
 import NSpaceView from "@/components/mock-server/content/component/NSpaceView.vue";
 import CreateNSpaceView from "@/components/mock-server/content/component/CreateNSpaceView.vue";
 import CreateNSettingsView from "@/components/mock-server/content/component/CreateNSettingsView.vue";
+import NRequestView from "@/components/mock-server/content/component/NRequestView.vue";
 
 @Component({
   components: {
+    NRequestView,
     CreateNSettingsView,
     CreateNSpaceView,
     NSpaceView,
@@ -79,14 +72,9 @@ import CreateNSettingsView from "@/components/mock-server/content/component/Crea
   },
 })
 export default class MockServer extends Vue {
-  protected selectedNRequest: NRequest | undefined;
 
   get getSelectedEntityType(): string {
     return settingsMockServerModule.getters.getSelectedEntityType();
-  }
-  get getSelectedNRequest(): NRequest {
-    this.selectedNRequest = settingsMockServerModule.getters.getSelectedNRequest();
-    return this.selectedNRequest;
   }
 }
 </script>
