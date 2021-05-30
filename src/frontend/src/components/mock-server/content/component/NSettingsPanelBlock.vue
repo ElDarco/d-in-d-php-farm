@@ -1,12 +1,20 @@
 <template>
   <div>
     <panel-block type="middle" title="NSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
-      <button class="button is-fullwidth" @click="clickOnCreate">
-        <span class="icon">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span>Add NSettings</span>
-      </button>
+      <div class="buttons is-fullwidth">
+        <button class="button is-fullwidth" @click="clickOnCreate" :disabled="getSelectedNSpace === undefined">
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>Add NSettings</span>
+        </button>
+        <button class="button is-fullwidth" @click="clickOnCreate" :disabled="getSelectedNSpace === undefined">
+          <span class="icon">
+            <i class="fas fa-trash"></i>
+          </span>
+          <span>Clear NSettings</span>
+        </button>
+      </div>
     </panel-block>
     <spinner-component :visible="loadNSettingsIndicator"/>
   </div>
@@ -27,6 +35,7 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
 export default class NSettingsPanelBlock extends Vue {
   protected mockServerApi = new MockServerApi();
   protected loadNSettingsIndicator = false;
+  protected selectedNSpace: NSpace | undefined;
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
     settingsMockServerModule.state.nSettings.forEach((element) => {
@@ -40,10 +49,14 @@ export default class NSettingsPanelBlock extends Vue {
     return listRow;
   }
   clickByRow(row: RowPanelBlockObject) {
-    const nRequest = settingsMockServerModule.getters.getNRequestByID(row.id)
-    if (this.isNRequest(nRequest)) {
-      settingsMockServerModule.mutations.useNRequest(nRequest)
+    const nSettings = settingsMockServerModule.getters.getNSettingsByID(row.id)
+    if (this.isNSettings(nSettings)) {
+      settingsMockServerModule.mutations.useNSettings(nSettings)
     }
+  }
+  get getSelectedNSpace(): NSpace {
+    this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
+    return this.selectedNSpace;
   }
   clickOnCreate() {
     settingsMockServerModule.mutations.useCreateNSettings();

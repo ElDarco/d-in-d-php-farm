@@ -46,6 +46,7 @@ export default class NSpacePanelBlock extends Vue {
   protected mockServerProvider = new MockServerProvider();
 
   protected loadNSpacesIndicator = false;
+  protected selectedNSpace: NSpace | undefined;
 
   get getSelectedNSpace(): NSpace {
     this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();

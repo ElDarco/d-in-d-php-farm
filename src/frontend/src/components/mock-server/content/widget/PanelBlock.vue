@@ -75,8 +75,8 @@ export default class PanelBlock extends Vue {
 .full-scrollable-body {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 718px;
-  max-height: 718px;
+  height: 766px;
+  max-height: 766px;
 }
 .middle-scrollable-body {
   overflow-y: auto;

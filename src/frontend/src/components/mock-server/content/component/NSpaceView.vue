@@ -83,8 +83,8 @@ export default class NSpaceView extends Vue {
     setTimeout(() => {
       this.copied = false;
     }, 2000);
-    const tmp = document.createElement('INPUT') // Создаём новый текстовой input
-    const focus = document.activeElement // Получаем ссылку на элемент в фокусе (чтобы не терять фокус)
+    const tmp = document.createElement('INPUT') as HTMLInputElement // Создаём новый текстовой input
+    const focus = document.activeElement as HTMLInputElement // Получаем ссылку на элемент в фокусе (чтобы не терять фокус)
 
     tmp.value = text // Временному input вставляем текст для копирования
 

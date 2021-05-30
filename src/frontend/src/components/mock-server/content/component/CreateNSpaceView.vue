@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Url to proxy</label>
+          <label class="label">Url to proxy (without traling slash)</label>
           <div class="control">
             <input class="input" v-model="nSpaceUrlToProxy" type="text" placeholder="https://to-proxy.url">
           </div>

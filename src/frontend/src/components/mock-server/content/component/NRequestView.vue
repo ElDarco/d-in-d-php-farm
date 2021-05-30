@@ -9,7 +9,7 @@
     <p class="is-size-6"><b>Body:</b> {{ this.getSelectedNRequest.body }}</p>
     <p class="is-size-6"><b>Created At:</b> {{ this.getSelectedNRequest.createdAt }}</p>
     <hr>
-    <div class="box mb-3" v-if="this.getSelectedNRequest.proxyResponse !== []">
+    <div class="box mb-3" v-if="this.getSelectedNRequest.proxyResponse.responseCode">
       <p class="is-size-5"><b>NProxyResponse</b></p>
       <hr>
       <p class="is-size-6"><b>ResponseCode:</b> {{ this.getSelectedNRequest.proxyResponse.responseCode }}</p>

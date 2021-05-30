@@ -6,32 +6,54 @@
     <div class="columns">
       <div class="column">
         <div class="field">
-          <label class="label">Name</label>
+          <label class="label">Method</label>
           <div class="control">
-            <input class="input" :class="{'is-danger': nSpaceNameFailure}" v-model="nSpaceName" type="text" placeholder="Some name for NSpace">
+            <input class="input" :class="{'is-danger': nSettingsMethodFailure}" v-model="nSettingsMethod" type="text" placeholder="Method for mock">
           </div>
         </div>
         <div class="field">
-          <label class="label">Url to proxy</label>
+          <label class="label">Uri (with first slash)</label>
           <div class="control">
-            <input class="input" type="text" placeholder="https://to-proxy.url">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox">
-              Enable proxy
-            </label>
+            <input class="input" :class="{'is-danger': nSettingsUriFailure}" v-model="nSettingsUri" type="text" placeholder="Uri for mock">
           </div>
         </div>
       </div>
-      <div class="column"></div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Query string (without first char ?)</label>
+          <div class="control">
+            <input class="input" :class="{'is-danger': nSettingsQueryStringFailure}" v-model="nSettingsQueryString" type="text" placeholder="Query string">
+          </div>
+        </div>
+      </div>
     </div>
     <hr>
     <div class="columns">
       <div class="column">
-        <button class="button">
+        <div class="field">
+          <label class="label">Return status code</label>
+          <div class="control">
+            <input class="input" :class="{'is-danger': nSettingsStatusCodeFailure}" v-model="nSettingsStatusCode" type="text" placeholder="Status code for return">
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Headers (coming soon)</label>
+        </div>
+      </div>
+    </div>
+    <hr>
+      <div class="field">
+        <label class="label">Response body</label>
+      </div>
+      <div>
+        <monaco-editor :style="styleEditorHeight" v-model="nSettingsResponseBody" :language="getNSettingsEditorLand"></monaco-editor>
+      </div>
+    <hr>
+    <div class="columns">
+      <div class="column">
+        <button class="button" @click="addNewNSettings">
           <span class="icon">
             <i class="fas fa-save"></i>
           </span>
@@ -49,22 +71,51 @@ import {settingsMockServerModule} from "@/store/settings-mock-server";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
 import {MockServerProvider} from "@/providers/gateway/mock-server-provider";
 import {AxiosResponse} from "axios";
+import MonacoEditor from 'vue-monaco'
 
 @Component({
   components: {
-    SpinnerComponent
+    SpinnerComponent,
+    MonacoEditor
   }
 })
 export default class CreateNSettingsView extends Vue {
   protected mockServerProvider = new MockServerProvider();
   protected loadCreateNSettingsIndicator = false;
-  protected nSpaceName = '';
-  protected nSpaceNameFailure = false;
+  protected nSettingsEditorLand = 'json';
 
-  /*addNewNSpace() {
+  private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
+
+  protected nSettingsResponseBody = '';
+
+  protected nSettingsMethod = '';
+  protected nSettingsMethodFailure = false;
+
+  protected nSettingsUri = '';
+  protected nSettingsUriFailure = false;
+
+  protected nSettingsQueryString = '';
+  protected nSettingsQueryStringFailure = false;
+
+  protected nSettingsStatusCode = '200';
+  protected nSettingsStatusCodeFailure = false;
+
+
+  get getNSettingsEditorLand(): string {
+    this.nSettingsEditorLand = settingsMockServerModule.getters.getNSettingsEditorLand();
+    return this.nSettingsEditorLand;
+  }
+
+  addNewNSettings() {
+    const selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
     this.loadCreateNSettingsIndicator = true;
-    this.mockServerProvider.createNewNSpace(
-        this.nSpaceName,
+    this.mockServerProvider.createNSettings(
+        selectedNSpace,
+        this.nSettingsResponseBody,
+        this.nSettingsUri,
+        this.nSettingsMethod,
+        this.nSettingsStatusCode,
+        this.nSettingsQueryString,
         async (response: AxiosResponse) => {
           response.data.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + response.data.id
           settingsMockServerModule.mutations.addNSpace(response.data as NSpace)
@@ -76,7 +127,7 @@ export default class CreateNSettingsView extends Vue {
           this.loadCreateNSettingsIndicator = false;
         }
     )
-  }*/
+  }
 }
 </script>
 

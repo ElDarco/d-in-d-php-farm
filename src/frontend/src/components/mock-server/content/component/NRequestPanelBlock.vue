@@ -2,7 +2,7 @@
   <div>
     <spinner-component :visible="loadNRequestIndicator"/>
     <panel-block type="middle" title="NRequest" :selected="getSelectedNRequest" :list-row='getListRow' @clicked-to-row="clickByRow">
-      <button class="button is-fullwidth" @click="refresh">
+      <button class="button is-fullwidth" @click="refresh" :disabled="getSelectedNSpace === undefined">
         <span class="icon">
           <i class="fas fa-sync-alt"></i>
         </span>
@@ -29,6 +29,8 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
 export default class NRequestPanelBlock extends Vue {
   protected mockServerApi = new MockServerApi();
   protected loadNRequestIndicator = false;
+  protected selectedNRequest: NRequest | undefined;
+  protected selectedNSpace: NSpace | undefined;
 
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
@@ -67,6 +69,10 @@ export default class NRequestPanelBlock extends Vue {
   get getSelectedNRequest(): NRequest {
     this.selectedNRequest = settingsMockServerModule.getters.getSelectedNRequest();
     return this.selectedNRequest;
+  }
+  get getSelectedNSpace(): NSpace {
+    this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
+    return this.selectedNSpace;
   }
   /* eslint-disable */
   isNRequest(arg: any): arg is NRequest {

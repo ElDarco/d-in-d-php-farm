@@ -13,7 +13,8 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     selectedNSpace: undefined as NSpace | undefined,
     selectedNRequest: undefined as NRequest | undefined,
     selectedNSettings: undefined as NSettings | undefined,
-    selectedEntityType: ''
+    selectedEntityType: '',
+    nSettingsEditorLanguage: 'json',
   },
   actions: {
     async restoreNSpaceFromCache(state, doneCallback: Function | undefined = undefined) {
@@ -106,6 +107,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     useCreateNSettings(state) {
       state.selectedEntityType = 'creatensettings'
+    },
+    switchNSettingsEditorToLang(state, payload: string) {
+      state.nSettingsEditorLanguage = payload
     }
   },
   getters: {
@@ -116,6 +120,11 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     getNRequestByID(state) {
       return (id: string) => state.nRequests.find((element: NRequest) => {
+        return element.id === id;
+      });
+    },
+    getNSettingsByID(state) {
+      return (id: string) => state.nSettings.find((element: NSettings) => {
         return element.id === id;
       });
     },
@@ -133,6 +142,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     getSelectedEntityType(state) {
       return () => state.selectedEntityType;
+    },
+    getNSettingsEditorLand(state) {
+      return () => state.nSettingsEditorLanguage;
     },
   },
 })

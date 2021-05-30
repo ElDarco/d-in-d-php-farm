@@ -22,4 +22,18 @@ export class MockServerProvider {
   ) {
     return await this.mockServerApi.getNSpaceInfo(nSpace, successCallback, failureCallback, doneCallback);
   }
+
+  public async createNSettings(
+    nspace: NSpace|NSpaceInCache,
+    body: string,
+    uri: string,
+    method: string,
+    code: string,
+    queryString: string,
+    successCallback: Function | undefined = undefined,
+    failureCallback: Function | undefined = undefined,
+    doneCallback: Function | undefined = undefined
+  ) {
+    return await this.mockServerApi.createNSettings(nspace, body, uri, method, code, queryString, successCallback, failureCallback, doneCallback);
+  }
 }
