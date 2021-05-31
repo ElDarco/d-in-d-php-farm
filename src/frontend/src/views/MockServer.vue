@@ -19,7 +19,7 @@
               <n-request-view/>
             </template>
             <template v-else-if="getSelectedEntityType === 'nsettings'">
-              <p class="is-size-5"><b>NSettings</b></p>
+              <n-settings-view/>
             </template>
             <template v-else-if="getSelectedEntityType === 'createnspace'">
               <create-n-space-view/>
@@ -54,9 +54,11 @@ import NSpaceView from "@/components/mock-server/content/component/NSpaceView.vu
 import CreateNSpaceView from "@/components/mock-server/content/component/CreateNSpaceView.vue";
 import CreateNSettingsView from "@/components/mock-server/content/component/CreateNSettingsView.vue";
 import NRequestView from "@/components/mock-server/content/component/NRequestView.vue";
+import NSettingsView from "@/components/mock-server/content/component/NSettingsView.vue";
 
 @Component({
   components: {
+    NSettingsView,
     NRequestView,
     CreateNSettingsView,
     CreateNSpaceView,

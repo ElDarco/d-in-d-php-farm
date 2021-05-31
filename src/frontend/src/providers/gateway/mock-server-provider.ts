@@ -24,16 +24,25 @@ export class MockServerProvider {
   }
 
   public async createNSettings(
-    nspace: NSpace|NSpaceInCache,
+    nSpace: NSpace|NSpaceInCache,
     body: string,
     uri: string,
     method: string,
-    code: string,
+    code: number,
     queryString: string,
     successCallback: Function | undefined = undefined,
     failureCallback: Function | undefined = undefined,
     doneCallback: Function | undefined = undefined
   ) {
-    return await this.mockServerApi.createNSettings(nspace, body, uri, method, code, queryString, successCallback, failureCallback, doneCallback);
+    return await this.mockServerApi.createNSettings(nSpace, body, uri, method, code, queryString, successCallback, failureCallback, doneCallback);
+  }
+
+  public async clearNSettings(
+    nSpace: NSpace | NSpaceInCache,
+    successCallback: Function | undefined = undefined,
+    failureCallback: Function | undefined = undefined,
+    doneCallback: Function | undefined = undefined
+  ) {
+    return await this.mockServerApi.clearNSettings(nSpace, successCallback, failureCallback, doneCallback);
   }
 }

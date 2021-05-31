@@ -10,7 +10,7 @@
     <span v-else-if="row.type === 'nrequest'" class="panel-icon">
       <i class="fas fa-level-down-alt" aria-hidden="true"></i>
     </span>
-    <span v-else-if="row.type === 'nsetting'" class="panel-icon">
+    <span v-else-if="row.type === 'nsettings'" class="panel-icon">
       <i class="fas fa-cog" aria-hidden="true"></i>
     </span>
     <span v-else class="panel-icon">

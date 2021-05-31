@@ -17,7 +17,7 @@ class ReturnNSpace extends InvokableMiddleware
         $responseData->id = $nSpace->getId();
         $responseData->name = $nSpace->getName();
         $responseData->settings = $nSpace->getSettings();
-        $responseData->requests = $nSpace->getRequests();
+        $responseData->requests = array_reverse($nSpace->getRequests());
         $responseData->useProxy = $nSpace->isUseProxy();
         $responseData->proxyToUrl = $nSpace->getProxyToUrl();
         $this->getRequest()->withAttribute(ResponseData::class, $responseData);

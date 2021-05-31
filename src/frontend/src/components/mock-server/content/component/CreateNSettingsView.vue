@@ -3,65 +3,20 @@
     <spinner-component :visible="loadCreateNSettingsIndicator"/>
     <p class="is-size-5"><b>Create NSettings</b></p>
     <hr>
-    <div class="columns">
-      <div class="column">
-        <div class="field">
-          <label class="label">Method</label>
-          <div class="control">
-            <input class="input" :class="{'is-danger': nSettingsMethodFailure}" v-model="nSettingsMethod" type="text" placeholder="Method for mock">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Uri (with first slash)</label>
-          <div class="control">
-            <input class="input" :class="{'is-danger': nSettingsUriFailure}" v-model="nSettingsUri" type="text" placeholder="Uri for mock">
-          </div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Query string (without first char ?)</label>
-          <div class="control">
-            <input class="input" :class="{'is-danger': nSettingsQueryStringFailure}" v-model="nSettingsQueryString" type="text" placeholder="Query string">
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="columns">
-      <div class="column">
-        <div class="field">
-          <label class="label">Return status code</label>
-          <div class="control">
-            <input class="input" :class="{'is-danger': nSettingsStatusCodeFailure}" v-model="nSettingsStatusCode" type="text" placeholder="Status code for return">
-          </div>
-        </div>
-      </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Headers (coming soon)</label>
-        </div>
-      </div>
-    </div>
-    <hr>
-      <div class="field">
-        <label class="label">Response body</label>
-      </div>
-      <div>
-        <monaco-editor :style="styleEditorHeight" v-model="nSettingsResponseBody" :language="getNSettingsEditorLand"></monaco-editor>
-      </div>
-    <hr>
-    <div class="columns">
-      <div class="column">
-        <button class="button" @click="addNewNSettings">
+    <n-settings-editor ref="n-settings-editor" :n-settings="getTemplateForNSettings">
+      <hr>
+      <div class="columns">
+        <div class="column">
+          <button class="button" @click="addNewNSettings">
           <span class="icon">
             <i class="fas fa-save"></i>
           </span>
-          <span>Save</span>
-        </button>
+            <span>Save</span>
+          </button>
+        </div>
+        <div class="column"></div>
       </div>
-      <div class="column"></div>
-    </div>
+    </n-settings-editor>
   </div>
 </template>
 
@@ -72,9 +27,11 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
 import {MockServerProvider} from "@/providers/gateway/mock-server-provider";
 import {AxiosResponse} from "axios";
 import MonacoEditor from 'vue-monaco'
+import NSettingsEditor from "@/components/mock-server/content/widget/NSettingsEditor.vue";
 
 @Component({
   components: {
+    NSettingsEditor,
     SpinnerComponent,
     MonacoEditor
   }
@@ -82,49 +39,32 @@ import MonacoEditor from 'vue-monaco'
 export default class CreateNSettingsView extends Vue {
   protected mockServerProvider = new MockServerProvider();
   protected loadCreateNSettingsIndicator = false;
-  protected nSettingsEditorLand = 'json';
+  protected templateForNSettings: NSettings | undefined
 
-  private styleEditorHeight = "height: " + (document.documentElement.clientHeight-160)/10*4 + "px;";
-
-  protected nSettingsResponseBody = '';
-
-  protected nSettingsMethod = '';
-  protected nSettingsMethodFailure = false;
-
-  protected nSettingsUri = '';
-  protected nSettingsUriFailure = false;
-
-  protected nSettingsQueryString = '';
-  protected nSettingsQueryStringFailure = false;
-
-  protected nSettingsStatusCode = '200';
-  protected nSettingsStatusCodeFailure = false;
-
-
-  get getNSettingsEditorLand(): string {
-    this.nSettingsEditorLand = settingsMockServerModule.getters.getNSettingsEditorLand();
-    return this.nSettingsEditorLand;
+  get getTemplateForNSettings(): NSettings | undefined {
+    this.templateForNSettings = settingsMockServerModule.getters.getNSettingsTemplate();
+    return this.templateForNSettings;
   }
 
   addNewNSettings() {
+    const editor: NSettingsEditor = this.$refs['n-settings-editor'] as NSettingsEditor;
     const selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
     this.loadCreateNSettingsIndicator = true;
     this.mockServerProvider.createNSettings(
         selectedNSpace,
-        this.nSettingsResponseBody,
-        this.nSettingsUri,
-        this.nSettingsMethod,
-        this.nSettingsStatusCode,
-        this.nSettingsQueryString,
+        editor.getNSettingsResponseBody(),
+        editor.getNSettingsUri(),
+        editor.getNSettingsMethod(),
+        editor.getNSettingsStatusCode(),
+        editor.getNSettingsQueryString(),
         async (response: AxiosResponse) => {
           response.data.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + response.data.id
-          settingsMockServerModule.mutations.addNSpace(response.data as NSpace)
-          await settingsMockServerModule.actions.persistNSpaceToCache();
-          settingsMockServerModule.mutations.useNSpace(response.data as NSpace)
+          await settingsMockServerModule.actions.refreshSingleNSpace({nSpace: response.data as NSpace});
         },
         undefined,
         () => {
           this.loadCreateNSettingsIndicator = false;
+          settingsMockServerModule.mutations.clearTemplateNSettings()
         }
     )
   }
@@ -132,4 +72,7 @@ export default class CreateNSettingsView extends Vue {
 </script>
 
 <style lang="scss">
+.method-input {
+  text-transform: uppercase;
+}
 </style>

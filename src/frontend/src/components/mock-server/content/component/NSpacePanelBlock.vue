@@ -35,7 +35,6 @@ import PanelBlock from "@/components/mock-server/content/widget/PanelBlock.vue";
 import {settingsMockServerModule} from "@/store/settings-mock-server";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
 import {MockServerProvider} from "@/providers/gateway/mock-server-provider";
-import {AxiosResponse} from "axios";
 @Component({
   components: {
     SpinnerComponent,

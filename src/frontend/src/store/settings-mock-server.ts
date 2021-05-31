@@ -13,6 +13,7 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     selectedNSpace: undefined as NSpace | undefined,
     selectedNRequest: undefined as NRequest | undefined,
     selectedNSettings: undefined as NSettings | undefined,
+    templateNSettings: undefined as NSettings | undefined,
     selectedEntityType: '',
     nSettingsEditorLanguage: 'json',
   },
@@ -97,10 +98,18 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     useNRequest(state, payload: NRequest) {
       state.selectedEntityType = 'nrequest';
       state.selectedNRequest = payload;
+      state.selectedNSettings = undefined;
     },
     useNSettings(state, payload: NSettings) {
       state.selectedEntityType = 'nsettings';
       state.selectedNSettings = payload;
+      state.selectedNRequest = undefined;
+    },
+    addTemplateNSettings(state, payload: NSettings) {
+      state.templateNSettings = payload;
+    },
+    clearTemplateNSettings(state) {
+      state.templateNSettings = undefined;
     },
     useCreateNSpace(state) {
       state.selectedEntityType = 'createnspace'
@@ -145,6 +154,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     getNSettingsEditorLand(state) {
       return () => state.nSettingsEditorLanguage;
+    },
+    getNSettingsTemplate(state) {
+      return () => state.templateNSettings;
     },
   },
 })

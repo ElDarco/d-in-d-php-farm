@@ -65,18 +65,18 @@ export class MockServerApi extends HttpClient {
   }
 
   public createNSettings(
-    nspace: NSpace | NSpaceInCache,
+    nSpace: NSpace | NSpaceInCache,
     body: string,
     uri: string,
     method: string,
-    code: string,
+    code: number,
     queryString: string,
     successCallback: Function | undefined = undefined,
     failureCallback: Function | undefined = undefined,
     doneCallback: Function | undefined = undefined
   ) {
     return new Promise((resolve, reject) => {
-      this.post('/api/v1/nspace/' + nspace.id + '/settings/add', {
+      this.post('/api/v1/nspace/' + nSpace.id + '/settings/add', {
         "body": body,
         "uri": uri,
         "method": method,
@@ -84,6 +84,34 @@ export class MockServerApi extends HttpClient {
         "headers": {},
         "queryString": queryString
       })
+        .then((response) => {
+          if (successCallback !== undefined) {
+            successCallback(response)
+          }
+          resolve(response)
+        })
+        .catch((error) => {
+          if (failureCallback !== undefined) {
+            failureCallback(error)
+          }
+          reject(error)
+        })
+        .finally(() => {
+          if (doneCallback !== undefined) {
+            doneCallback()
+          }
+        });
+    })
+  }
+
+  public clearNSettings(
+    nSpace: NSpace | NSpaceInCache,
+    successCallback: Function | undefined = undefined,
+    failureCallback: Function | undefined = undefined,
+    doneCallback: Function | undefined = undefined
+  ) {
+    return new Promise((resolve, reject) => {
+      this.post('/api/v1/nspace/' + nSpace.id + '/settings/clear')
         .then((response) => {
           if (successCallback !== undefined) {
             successCallback(response)

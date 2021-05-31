@@ -1,6 +1,6 @@
 <template>
   <div>
-    <panel-block type="middle" title="NSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
+    <panel-block type="middle" title="NSettings" :selected="getSelectedNSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
       <div class="buttons is-fullwidth">
         <button class="button is-fullwidth" @click="clickOnCreate" :disabled="getSelectedNSpace === undefined">
           <span class="icon">
@@ -8,7 +8,7 @@
           </span>
           <span>Add NSettings</span>
         </button>
-        <button class="button is-fullwidth" @click="clickOnCreate" :disabled="getSelectedNSpace === undefined">
+        <button class="button is-fullwidth" @click="clickOnClear" :disabled="getSelectedNSpace === undefined">
           <span class="icon">
             <i class="fas fa-trash"></i>
           </span>
@@ -24,8 +24,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import PanelBlock from "@/components/mock-server/content/widget/PanelBlock.vue";
 import {settingsMockServerModule} from "@/store/settings-mock-server";
-import {MockServerApi} from "@/providers/clients/mock-server-api";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
+import {MockServerProvider} from "@/providers/gateway/mock-server-provider";
+import {AxiosResponse} from "axios";
 @Component({
   components: {
     SpinnerComponent,
@@ -33,9 +34,10 @@ import SpinnerComponent from "@/components/SpinnerComponent.vue";
   }
 })
 export default class NSettingsPanelBlock extends Vue {
-  protected mockServerApi = new MockServerApi();
+  protected mockServerProvider = new MockServerProvider();
   protected loadNSettingsIndicator = false;
   protected selectedNSpace: NSpace | undefined;
+  protected selectedNSettings: NSettings | undefined;
   get getListRow() {
     const listRow = [] as RowPanelBlockObject[];
     settingsMockServerModule.state.nSettings.forEach((element) => {
@@ -58,8 +60,30 @@ export default class NSettingsPanelBlock extends Vue {
     this.selectedNSpace = settingsMockServerModule.getters.getSelectedNSpace();
     return this.selectedNSpace;
   }
-  clickOnCreate() {
+  get getSelectedNSettings(): NSettings {
+    this.selectedNSettings = settingsMockServerModule.getters.getSelectedNSettings();
+    return this.selectedNSettings;
+  }
+  async clickOnCreate() {
+    await settingsMockServerModule.mutations.clearTemplateNSettings();
+    settingsMockServerModule.mutations.clearSelectedEntityType();
     settingsMockServerModule.mutations.useCreateNSettings();
+  }
+  clickOnClear() {
+    if (this.selectedNSpace !== undefined) {
+      this.loadNSettingsIndicator = true;
+      this.mockServerProvider.clearNSettings(
+          this.selectedNSpace,
+          async (response: AxiosResponse) => {
+            response.data.urlToMock = process.env.VUE_APP_MOCK_SERVER_HOST_URL + '/n/' + response.data.id
+            await settingsMockServerModule.actions.refreshSingleNSpace({nSpace: this.selectedNSpace});
+          },
+          undefined,
+          () => {
+            this.loadNSettingsIndicator = false;
+          }
+      )
+    }
   }
   /* eslint-disable */
   isNSettings(arg: any): arg is NSettings {
