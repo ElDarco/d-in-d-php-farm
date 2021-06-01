@@ -45,4 +45,13 @@ export class MockServerProvider {
   ) {
     return await this.mockServerApi.clearNSettings(nSpace, successCallback, failureCallback, doneCallback);
   }
+
+  public async deleteNSpace(
+    nSpace: NSpace | NSpaceInCache,
+    successCallback: Function | undefined = undefined,
+    failureCallback: Function | undefined = undefined,
+    doneCallback: Function | undefined = undefined
+  ) {
+    return await this.mockServerApi.deleteNSpace(nSpace, successCallback, failureCallback, doneCallback);
+  }
 }

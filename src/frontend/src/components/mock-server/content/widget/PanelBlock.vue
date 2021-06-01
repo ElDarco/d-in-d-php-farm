@@ -19,8 +19,22 @@
       v-bind:class="{ 'full-scrollable-body': type === 'full', 'middle-scrollable-body': type === 'middle' }"
     >
       <div v-for="(row, index) in listRow" :key="index" @click="onClickToRow(row)">
-        <row-panel-block v-if="getWhoIsActive(row)" :is-active='true' :row='row' @clicked-to-delete="onClickToDelete(row)"/>
-        <row-panel-block v-else :is-active='false' :row='row' @clicked-to-delete="onClickToDelete(row)"/>
+        <row-panel-block
+            v-if="getWhoIsActive(row)"
+            :is-deleted="isDeletable"
+            :is-holded="isHoldable"
+            :is-active='true'
+            :row='row'
+            @clicked-to-delete="onClickToDelete(row)"
+        />
+        <row-panel-block
+            v-else
+            :is-active='false'
+            :is-deleted="isDeletable"
+            :is-holded="isHoldable"
+            :row='row'
+            @clicked-to-delete="onClickToDelete(row)"
+        />
       </div>
     </div>
     <div class="panel-block panel-buttons">
@@ -46,6 +60,10 @@ export default class PanelBlock extends Vue {
   protected selected: NObject | undefined;
   @Prop()
   protected listRow: RowPanelBlockObject[] | undefined;
+  @Prop({})
+  protected isDeletable = false;
+  @Prop({})
+  protected isHoldable = false;
 
   onClickToRow (row: RowPanelBlockObject) {
     this.$emit('clicked-to-row', row)

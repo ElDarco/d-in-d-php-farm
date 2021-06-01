@@ -5,6 +5,7 @@
         title="NSpace"
         :list-row='getListRow'
         :selected='getSelectedNSpace'
+        :is-deletable="true"
         @clicked-to-row="clickByRow"
         @clicked-to-delete="clickByDelete"
     >
@@ -69,10 +70,23 @@ export default class NSpacePanelBlock extends Vue {
       settingsMockServerModule.mutations.useNSpace(nSpace)
     }
   }
-  clickByDelete(row: RowPanelBlockObject) {
+  async clickByDelete(row: RowPanelBlockObject) {
+    this.loadNSpacesIndicator = true;
     const nSpace = settingsMockServerModule.getters.getNSpaceByID(row.id)
     if (this.isNSpace(nSpace)) {
-      console.log('delete ' + nSpace.id)
+      await this.mockServerProvider.deleteNSpace(
+          nSpace,
+          () => {
+            settingsMockServerModule.mutations.deleteNSpace(nSpace);
+            settingsMockServerModule.mutations.clearSelectedNSpace();
+            settingsMockServerModule.mutations.clearSelectedEntityType();
+            settingsMockServerModule.actions.persistNSpaceToCache();
+          },
+          undefined,
+          () => {
+            this.loadNSpacesIndicator = false;
+          }
+      );
     }
   }
   clickOnCreate() {

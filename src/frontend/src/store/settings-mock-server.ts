@@ -66,6 +66,13 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     addNSpace(state, payload: NSpace) {
       state.nSpaces.push(payload);
     },
+    deleteNSpace(state, payload: NSpace) {
+      const int = state.nSpaces.findIndex((element: NSpace) => {
+        return element.id === payload.id;
+      });
+      state.nSpaces.splice(int, 1);
+      settingsMockServerModule.mutations.clearSelectedNSettings();
+    },
     clearNSpaces(state) {
       state.nSpaces = [];
     },
@@ -86,6 +93,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     },
     clearSelectedNSettings(state) {
       state.selectedNSettings = undefined;
+    },
+    clearSelectedNSpace(state) {
+      state.selectedNSpace = undefined;
     },
     useNSpace(state, payload: NSpace) {
       state.selectedEntityType = 'nspace';

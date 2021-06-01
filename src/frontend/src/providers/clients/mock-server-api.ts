@@ -132,6 +132,34 @@ export class MockServerApi extends HttpClient {
     })
   }
 
+  public deleteNSpace(
+    nSpace: NSpace | NSpaceInCache,
+    successCallback: Function | undefined = undefined,
+    failureCallback: Function | undefined = undefined,
+    doneCallback: Function | undefined = undefined
+  ) {
+    return new Promise((resolve, reject) => {
+      this.delete('/api/v1/nspace/' + nSpace.id + '/')
+        .then((response) => {
+          if (successCallback !== undefined) {
+            successCallback(response)
+          }
+          resolve(response)
+        })
+        .catch((error) => {
+          if (failureCallback !== undefined) {
+            failureCallback(error)
+          }
+          reject(error)
+        })
+        .finally(() => {
+          if (doneCallback !== undefined) {
+            doneCallback()
+          }
+        });
+    })
+  }
+
   protected beforeRequest(config: AxiosRequestConfig): AxiosRequestConfig {
     config.baseURL = process.env.VUE_APP_MOCK_SERVER_HOST_URL;
 

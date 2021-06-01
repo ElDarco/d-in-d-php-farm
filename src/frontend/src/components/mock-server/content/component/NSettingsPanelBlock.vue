@@ -1,6 +1,12 @@
 <template>
   <div>
-    <panel-block type="middle" title="NSettings" :selected="getSelectedNSettings" :list-row='getListRow' @clicked-to-row="clickByRow">
+    <panel-block
+      type="middle"
+      title="NSettings"
+      :selected="getSelectedNSettings"
+      :list-row='getListRow'
+      @clicked-to-row="clickByRow"
+    >
       <div class="buttons is-fullwidth">
         <button class="button is-fullwidth" @click="clickOnCreate" :disabled="getSelectedNSpace === undefined">
           <span class="icon">
@@ -66,6 +72,7 @@ export default class NSettingsPanelBlock extends Vue {
   }
   async clickOnCreate() {
     await settingsMockServerModule.mutations.clearTemplateNSettings();
+    settingsMockServerModule.mutations.clearSelectedNSettings();
     settingsMockServerModule.mutations.clearSelectedEntityType();
     settingsMockServerModule.mutations.useCreateNSettings();
   }
