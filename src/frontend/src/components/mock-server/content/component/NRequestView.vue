@@ -64,7 +64,7 @@ export default class NRequestView extends Vue {
       responseBody: responseBody,
       responseCode: responseCode
     } as NSettings)
-    settingsMockServerModule.mutations.useCreateNSettings();
+    settingsMockServerModule.mutations.useCreateNSettingsFromTemplate();
   }
 
   /* eslint-disable */

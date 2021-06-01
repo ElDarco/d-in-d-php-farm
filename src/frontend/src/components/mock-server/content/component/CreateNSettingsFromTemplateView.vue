@@ -1,9 +1,9 @@
 <template>
   <div>
     <spinner-component :visible="loadCreateNSettingsIndicator"/>
-    <p class="is-size-5"><b>Create NSettings</b></p>
+    <p class="is-size-5"><b>Create NSettings From Template</b></p>
     <hr>
-    <n-settings-editor ref="n-settings-editor">
+    <n-settings-editor ref="n-settings-editor" :n-settings="getTemplateForNSettings">
       <hr>
       <div class="columns">
         <div class="column">
@@ -36,7 +36,7 @@ import NSettingsEditor from "@/components/mock-server/content/widget/NSettingsEd
     MonacoEditor
   }
 })
-export default class CreateNSettingsView extends Vue {
+export default class CreateNSettingsFromTemplateView extends Vue {
   protected mockServerProvider = new MockServerProvider();
   protected loadCreateNSettingsIndicator = false;
   protected templateForNSettings: NSettings | undefined

@@ -27,6 +27,9 @@
             <template v-else-if="getSelectedEntityType === 'creatensettings'">
               <create-n-settings-view/>
             </template>
+            <template v-else-if="getSelectedEntityType === 'creatensettingsfromtemplate'">
+              <create-n-settings-from-template-view/>
+            </template>
             <template v-else-if="getSelectedEntityType === 'whiteboard'"></template>
             <template v-else>
               Please, selected interesting section by left
@@ -55,9 +58,12 @@ import CreateNSpaceView from "@/components/mock-server/content/component/CreateN
 import CreateNSettingsView from "@/components/mock-server/content/component/CreateNSettingsView.vue";
 import NRequestView from "@/components/mock-server/content/component/NRequestView.vue";
 import NSettingsView from "@/components/mock-server/content/component/NSettingsView.vue";
+import CreateNSettingsFromTemplateView
+  from "@/components/mock-server/content/component/CreateNSettingsFromTemplateView.vue";
 
 @Component({
   components: {
+    CreateNSettingsFromTemplateView,
     NSettingsView,
     NRequestView,
     CreateNSettingsView,

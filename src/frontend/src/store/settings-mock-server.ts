@@ -127,6 +127,9 @@ export const settingsMockServerModule = createModule(store, 'settings-mock-serve
     useCreateNSettings(state) {
       state.selectedEntityType = 'creatensettings'
     },
+    useCreateNSettingsFromTemplate(state) {
+      state.selectedEntityType = 'creatensettingsfromtemplate'
+    },
     switchNSettingsEditorToLang(state, payload: string) {
       state.nSettingsEditorLanguage = payload
     }

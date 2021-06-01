@@ -82,10 +82,6 @@ export default class NSettingsEditor extends Vue {
     this.initNSettings()
   }
 
-  updated() {
-    this.initNSettings()
-  }
-
   initNSettings() {
     if (this.nSettings !== undefined) {
       this.nSettingsResponseBody = this.nSettings.responseBody;

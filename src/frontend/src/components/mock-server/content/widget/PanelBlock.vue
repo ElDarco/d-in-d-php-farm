@@ -26,6 +26,7 @@
             :is-active='true'
             :row='row'
             @clicked-to-delete="onClickToDelete(row)"
+            @clicked-to-hold="onClickToHold(row)"
         />
         <row-panel-block
             v-else
@@ -34,6 +35,7 @@
             :is-holded="isHoldable"
             :row='row'
             @clicked-to-delete="onClickToDelete(row)"
+            @clicked-to-hold="onClickToHold(row)"
         />
       </div>
     </div>
@@ -60,16 +62,19 @@ export default class PanelBlock extends Vue {
   protected selected: NObject | undefined;
   @Prop()
   protected listRow: RowPanelBlockObject[] | undefined;
-  @Prop({})
-  protected isDeletable = false;
-  @Prop({})
-  protected isHoldable = false;
+  @Prop({default: false})
+  protected isDeletable: boolean | undefined;
+  @Prop({default: false})
+  protected isHoldable: boolean | undefined;
 
   onClickToRow (row: RowPanelBlockObject) {
     this.$emit('clicked-to-row', row)
   }
   onClickToDelete (row: RowPanelBlockObject) {
     this.$emit('clicked-to-delete', row)
+  }
+  onClickToHold (row: RowPanelBlockObject) {
+    this.$emit('clicked-to-hold', row)
   }
   getWhoIsActive(row: RowPanelBlockObject) {
     return (this.isNObject(this.selected)) && (row.id === this.selected.id)

@@ -1,7 +1,13 @@
 <template>
   <div>
     <spinner-component :visible="loadNRequestIndicator"/>
-    <panel-block type="middle" title="NRequest" :selected="getSelectedNRequest" :list-row='getListRow' @clicked-to-row="clickByRow">
+    <panel-block
+      type="middle"
+      title="NRequest"
+      :selected="getSelectedNRequest"
+      :list-row='getListRow'
+      @clicked-to-row="clickByRow"
+    >
       <button class="button is-fullwidth" @click="refresh" :disabled="getSelectedNSpace === undefined">
         <span class="icon">
           <i class="fas fa-sync-alt"></i>

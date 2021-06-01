@@ -56,9 +56,9 @@ export default class RowPanelBlock extends Vue {
   @Prop({default: false})
   protected isActive = false;
   @Prop({default: false})
-  protected isDeleted = false;
+  protected isDeleted: boolean | undefined;
   @Prop({default: false})
-  protected isHolded = false;
+  protected isHolded: boolean | undefined;
 
   get isActiveValue(): boolean
   {
