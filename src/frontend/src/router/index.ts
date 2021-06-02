@@ -25,7 +25,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/mock-server',
     name: 'MockServer',
-    component: () => import(/* webpackChunkName: "about" */ '../views/MockServer.vue'),
+    component: () => import(/* webpackChunkName: "mockserver" */ '../views/MockServer.vue'),
     meta: {
       title: 'CodeTry - MockServer',
       metaTags: [
@@ -42,7 +42,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PhpSandbox.vue'),
+    component: () => import(/* webpackChunkName: "sandbox" */ '../views/PhpSandbox.vue'),
     meta: {
       title: 'CodeTry - PHP Sandbox',
       metaTags: [
