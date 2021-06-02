@@ -380,11 +380,18 @@ server {
         proxy_pass http://codetry-php-fpm-53/;
     }
 
-    location = /mock-server {
-        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/mock-server/;
+    location = /mock-server/n/ {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/mock-server/n/;
     }
-    location /mock-server/ {
-        proxy_pass http://codetry-mock-server/;
+    location /mock-server/n/ {
+        proxy_pass http://codetry-mock-server/n/;
+    }
+
+    location = /mock-server/api/ {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/mock-server/api/;
+    }
+    location /mock-server/api/ {
+        proxy_pass http://codetry-mock-server/api/;
     }
 
     location = /php-hub {
