@@ -67,7 +67,7 @@ import Editor from '@/components/php-sandbox/content/Editor.vue';
 import HeaderBar from "@/components/php-sandbox/header/HeaderBar.vue";
 import FooterSpace from "@/components/php-sandbox/footer/FooterSpace.vue";
 import SpinnerComponent from "@/components/SpinnerComponent.vue";
-import {PhpHubApi} from "@/providers/php-hub-api";
+import {PhpHubApi} from "@/providers/clients/php-hub-api";
 import { settingsPhpModule } from '@/store/settings-php';
 
 @Component({
@@ -119,7 +119,7 @@ export default class PhpSandbox extends Vue {
   }
 
   getUrlForProfilerFrame(url: string) {
-    return process.env.VUE_APP_MAIN_HOST_URL + url
+    return process.env.VUE_APP_PROFILER_HOST_URL + url
   }
 
   getInstanceList() {
@@ -144,7 +144,7 @@ export default class PhpSandbox extends Vue {
       .then((response) => {
         this.runResponse = response.data as RunResponseFromHub;
       })
-      .catch((e) => {
+      .catch(() => {
         this.clearRunResult();
         this.runResponse = {
           responseCodeFromPhpInstance: 500,

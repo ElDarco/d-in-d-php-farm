@@ -1,23 +1,18 @@
 version: '2.2'
 services:
-  nginx:
-    container_name: $APP_COMPOSE_PROJECT_NAME-nginx
-    build: docker/nginx
+  entrypoint:
+    container_name: $APP_COMPOSE_PROJECT_NAME-entrypoint
+    image: eldarco/code-try:entrypoint-base
+    env_file: .env
     volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
-      - ./docker/nginx/var/log/nginx:/var/log/nginx
+      - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
+      - ./src/backend-php-hub:/var/www/backend-php-hub
+      - ./src/backend-mock-server:/var/www/backend-mock-server
+      - ./docker/entrypoint/base/templates:/etc/nginx/templates
+      - ./docker/entrypoint/base/var/log/nginx:/var/log/nginx
     depends_on:
+      - mock-server
       - php-hub
-      - php-fpm-53
-      - php-fpm-54
-      - php-fpm-55
-      - php-fpm-56
-      - php-fpm-70
-      - php-fpm-71
-      - php-fpm-72
-      - php-fpm-73
-      - php-fpm-74
       - php-fpm-80
     restart: always
     ports:
@@ -27,137 +22,45 @@ services:
         aliases:
           - $APP_COMPOSE_PROJECT_NAME
       backend-network:
+  mock-server:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mock-server
+    image: eldarco/code-try:mock-server-base
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    env_file: .env
+    volumes:
+      - ./src/backend-mock-server:/var/www
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
   php-hub:
     container_name: $APP_COMPOSE_PROJECT_NAME-php-hub
-    build: docker/php-hub
+    image: eldarco/code-try:php-hub-base
     user: $APP_DOCKER_UID:$APP_DOCKER_GID
     env_file: .env
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./src/backend:/var/www
-      - ./docker/php-hub/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-hub/php.ini:/usr/local/etc/php/conf.d/00-php.ini
+      - ./src/backend-php-hub:/var/www
     working_dir: /var/www/
     restart: always
     networks:
       - backend-network
   php-fpm-80:
     container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-80
-    build: docker/php-fpm-80
+    image: eldarco/code-try:php-sandbox-80-base
     volumes:
       - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-80/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-80/php.ini:/usr/local/etc/php/conf.d/00-php.ini
     working_dir: /var/www/
     restart: always
     networks:
       - backend-network
-  php-fpm-74:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-74
-    build: docker/php-fpm-74
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-74/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-74/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-73:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-73
-    build: docker/php-fpm-73
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-73/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-73/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-72:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-72
-    build: docker/php-fpm-72
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-72/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-72/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-71:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-71
-    build: docker/php-fpm-71
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-71/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-71/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-70:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-70
-    build: docker/php-fpm-70
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-70/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-70/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-56:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-56
-    build: docker/php-fpm-56
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-56/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-56/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-55:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-55
-    build: docker/php-fpm-55
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-55/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-55/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-54:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-54
-    build: docker/php-fpm-54
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-54/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-54/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  php-fpm-53:
-    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-53
-    build: docker/php-fpm-53
-    volumes:
-      - ./src/backend-php-sandbox:/var/www
-      - ./docker/php-fpm-53/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./docker/php-fpm-53/php.ini:/usr/local/etc/php/conf.d/00-php.ini
-    working_dir: /var/www/
-    restart: always
-    networks:
-      - backend-network
-  nodejs:
-    container_name: $APP_COMPOSE_PROJECT_NAME-nodejs-runner
+  nodejs-serve:
+    container_name: $APP_COMPOSE_PROJECT_NAME-nodejs-serve
     build:
       context: ./
-      dockerfile: docker/nodejs-runner/Dockerfile
+      dockerfile: docker/nodejs-serve/only-dev/Dockerfile
     working_dir: /home/node
     env_file: .env
     volumes:
@@ -187,6 +90,18 @@ services:
       - backend-network
     volumes:
       - ./database:/var/lib/mysql
+  mongo:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mongo
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${APP_MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${APP_MONGODB_PASSWORD}
+    networks:
+      - backend-network
+    volumes:
+      - ./db-mongo:/data/db
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
 networks:
   backend-network:
   outside-network:

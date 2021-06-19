@@ -1,0 +1,426 @@
+server {
+    listen      8001 default_server;
+    server_name codetry-php-fpm-80;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-80:9000;
+    }
+}
+server {
+    listen      8002 default_server;
+    server_name codetry-php-fpm-74;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-74:9000;
+    }
+}
+server {
+    listen      8003 default_server;
+    server_name codetry-php-fpm-73;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-73:9000;
+    }
+}
+server {
+    listen      8004 default_server;
+    server_name codetry-php-fpm-72;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-72:9000;
+    }
+}
+server {
+    listen      8005 default_server;
+    server_name codetry-php-fpm-71;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-71:9000;
+    }
+}
+server {
+    listen      8006 default_server;
+    server_name codetry-php-fpm-70;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-70:9000;
+    }
+}
+server {
+    listen      8007 default_server;
+    server_name codetry-php-fpm-56;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-56:9000;
+    }
+}
+server {
+    listen      8008 default_server;
+    server_name codetry-php-fpm-55;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-55:9000;
+    }
+}
+server {
+    listen      8009 default_server;
+    server_name codetry-php-fpm-54;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-54:9000;
+    }
+}
+server {
+    listen      8010 default_server;
+    server_name codetry-php-fpm-53;
+    root /var/www/backend-php-sandbox;
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location ~ \.php$ {
+        root /var/www;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-fpm-53:9000;
+    }
+}
+server {
+    listen      8011 default_server;
+    server_name codetry-mock-server;
+    root /var/www/backend-mock-server/public;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        root /var/www/public;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass mock-server:9000;
+    }
+}
+server {
+    listen      8012 default_server;
+    server_name codetry-php-hub;
+    root /var/www/backend-php-hub/public;
+    index index.php;
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        root /var/www/public;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-hub:9000;
+    }
+}
+server {
+    listen      8013 default_server;
+    server_name codetry-profiler;
+    root /var/www/backend-php-hub/profiler/xhprof_html;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        root /var/www/profiler/xhprof_html;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        #fastcgi_param REMOTE_ADDR $http_x_real_ip;
+        fastcgi_pass php-hub:9000;
+    }
+}
+
+upstream codetry-php-fpm-80 {
+    server 127.0.0.1:8001;
+}
+upstream codetry-php-fpm-74 {
+    server 127.0.0.1:8002;
+}
+upstream codetry-php-fpm-73 {
+    server 127.0.0.1:8003;
+}
+upstream codetry-php-fpm-72 {
+    server 127.0.0.1:8004;
+}
+upstream codetry-php-fpm-71 {
+    server 127.0.0.1:8005;
+}
+upstream codetry-php-fpm-70 {
+    server 127.0.0.1:8006;
+}
+upstream codetry-php-fpm-56 {
+    server 127.0.0.1:8007;
+}
+upstream codetry-php-fpm-55 {
+    server 127.0.0.1:8008;
+}
+upstream codetry-php-fpm-54 {
+    server 127.0.0.1:8009;
+}
+upstream codetry-php-fpm-53 {
+    server 127.0.0.1:8010;
+}
+upstream codetry-mock-server {
+    server 127.0.0.1:8011;
+}
+upstream codetry-php-hub {
+    server 127.0.0.1:8012;
+}
+upstream codetry-profiler {
+    server 127.0.0.1:8013;
+}
+
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80; ## listen for ipv4
+
+    server_name codetry;
+    index       index.php;
+    root        /var/www;
+
+    server_tokens off;
+    error_log   /var/log/nginx/error.log debug;
+
+    location = /php-fpm-80 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-80/;
+    }
+    location /php-fpm-80/ {
+        proxy_pass http://codetry-php-fpm-80/;
+    }
+
+    location = /php-fpm-74 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-74/;
+    }
+    location /php-fpm-74/ {
+        proxy_pass http://codetry-php-fpm-74/;
+    }
+
+    location = /php-fpm-73 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-73/;
+    }
+    location /php-fpm-73/ {
+        proxy_pass http://codetry-php-fpm-73/;
+    }
+
+    location = /php-fpm-72 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-72/;
+    }
+    location /php-fpm-72/ {
+        proxy_pass http://codetry-php-fpm-72/;
+    }
+
+    location = /php-fpm-71 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-71/;
+    }
+    location /php-fpm-71/ {
+        proxy_pass http://codetry-php-fpm-71/;
+    }
+
+    location = /php-fpm-70 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-70/;
+    }
+    location /php-fpm-70/ {
+        proxy_pass http://codetry-php-fpm-70/;
+    }
+
+    location = /php-fpm-56 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-56/;
+    }
+    location /php-fpm-56/ {
+        proxy_pass http://codetry-php-fpm-56/;
+    }
+
+    location = /php-fpm-55 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-55/;
+    }
+    location /php-fpm-55/ {
+        proxy_pass http://codetry-php-fpm-55/;
+    }
+
+    location = /php-fpm-54 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-54/;
+    }
+    location /php-fpm-54/ {
+        proxy_pass http://codetry-php-fpm-54/;
+    }
+
+    location = /php-fpm-53 {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-fpm-53/;
+    }
+    location /php-fpm-53/ {
+        proxy_pass http://codetry-php-fpm-53/;
+    }
+
+    location = /mock-server/n/ {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/mock-server/n/;
+    }
+    location /mock-server/n/ {
+        proxy_pass http://codetry-mock-server/n/;
+    }
+
+    location = /mock-server/api/ {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/mock-server/api/;
+    }
+    location /mock-server/api/ {
+        proxy_pass http://codetry-mock-server/api/;
+    }
+
+    location = /php-hub {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/php-hub/;
+    }
+    location /php-hub/ {
+        proxy_pass http://codetry-php-hub/;
+    }
+
+    location = /profiler {
+        return 302 ${APP_SANDBOX_MAIN_HOST_URL}/profiler/;
+    }
+    location /profiler/ {
+        proxy_set_header Accept-Encoding "";
+        proxy_pass http://codetry-profiler/;
+        sub_filter '<link href="/'  '<link href="${VUE_APP_PROFILER_HOST_URL}/';
+        sub_filter '<script src="/'  '<script src="${VUE_APP_PROFILER_HOST_URL}/';
+        sub_filter '<a href="/'  '<a href="${VUE_APP_PROFILER_HOST_URL}/';
+        sub_filter "<link href='/"  "<link href='${VUE_APP_PROFILER_HOST_URL}/";
+        sub_filter "<script src='/"  "<script src='${VUE_APP_PROFILER_HOST_URL}/";
+        sub_filter "<a href='/"  "<a href='${VUE_APP_PROFILER_HOST_URL}/";
+        sub_filter_once off;
+    }
+
+    location / {
+        proxy_pass http://${$APP_COMPOSE_PROJECT_NAME}-frontend/;
+    }
+
+    location ~ /\.(ht|svn|git) {
+        deny all;
+    }
+}

@@ -16,7 +16,7 @@ if (!empty($publicUrl)) {
     curl_setopt( $curl, CURLOPT_POSTFIELDS, $payload );
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://codetry-nginx/api/v1/php-instance/register",
+        CURLOPT_URL => "http://codetry-nginx/php-hub/api/v1/php-instance/register",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,

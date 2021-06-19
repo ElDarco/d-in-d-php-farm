@@ -3,8 +3,8 @@
 .env.custom
 .VERSION
 container-init.log
-docker-compose.yml
 database/*
+db-mongo/*
 !database/.gitkeep
 docker/sphinx/var/lib/*
 docker/sphinx/var/log/*

@@ -1,0 +1,144 @@
+version: '2.2'
+services:
+  entrypoint:
+    container_name: $APP_COMPOSE_PROJECT_NAME-entrypoint
+    image: eldarco/code-try:entrypoint-latest
+    env_file: .env
+    depends_on:
+      - mock-server
+      - php-hub
+      - php-fpm-53
+      - php-fpm-54
+      - php-fpm-55
+      - php-fpm-56
+      - php-fpm-70
+      - php-fpm-71
+      - php-fpm-72
+      - php-fpm-73
+      - php-fpm-74
+      - php-fpm-80
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      outside-network:
+        aliases:
+          - $APP_COMPOSE_PROJECT_NAME
+      backend-network:
+  mock-server:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mock-server
+    image: eldarco/code-try:mock-server-latest
+    env_file: .env
+    restart: always
+    networks:
+      - backend-network
+  php-hub:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-hub
+    image: eldarco/code-try:php-hub-latest
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-80:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-80
+    image: eldarco/code-try:php-sandbox-80-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-74:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-74
+    image: eldarco/code-try:php-sandbox-74-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-73:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-73
+    image: eldarco/code-try:php-sandbox-73-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-72:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-72
+    image: eldarco/code-try:php-sandbox-72-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-71:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-71
+    image: eldarco/code-try:php-sandbox-71-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-70:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-70
+    image: eldarco/code-try:php-sandbox-70-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-56:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-56
+    image: eldarco/code-try:php-sandbox-56-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-55:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-55
+    image: eldarco/code-try:php-sandbox-55-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-54:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-54
+    image: eldarco/code-try:php-sandbox-54-latest
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-53:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-53
+    image: eldarco/code-try:php-sandbox-53-latest
+    restart: always
+    networks:
+      - backend-network
+  frontend:
+    container_name: $APP_COMPOSE_PROJECT_NAME-frontend
+    image: eldarco/code-try:frontend-latest
+    networks:
+      - backend-network
+  db:
+    container_name: $APP_COMPOSE_PROJECT_NAME-db
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;'
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${APP_DB_DATABASE}
+      - MYSQL_USER=${APP_DB_USER}
+      - MYSQL_PASSWORD=${APP_DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${APP_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "${APP_DB_USER}", "-p${APP_DB_PASSWORD}"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - backend-network
+    volumes:
+      - ./database:/var/lib/mysql
+  mongo:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mongo
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${APP_MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${APP_MONGODB_PASSWORD}
+    networks:
+      - backend-network
+    volumes:
+      - ./db-mongo:/data/db
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+networks:
+  backend-network:
+  outside-network:
+    external:
+      name: $APP_SERVICE_NETWORK_NAME

@@ -1,0 +1,6 @@
+{
+  "title": "Namespace Not Found",
+  "type": "NamespaceNotFound",
+  "status": 404,
+  "detail": "Exceptions\\NotFoundException"
+}
