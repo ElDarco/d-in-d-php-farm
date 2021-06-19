@@ -1,0 +1,109 @@
+version: '2.2'
+services:
+  entrypoint:
+    container_name: $APP_COMPOSE_PROJECT_NAME-entrypoint
+    image: eldarco/code-try:entrypoint-base
+    env_file: .env
+    volumes:
+      - ./src/backend-php-sandbox:/var/www/backend-php-sandbox
+      - ./src/backend-php-hub:/var/www/backend-php-hub
+      - ./src/backend-mock-server:/var/www/backend-mock-server
+      - ./docker/entrypoint/base/templates:/etc/nginx/templates
+      - ./docker/entrypoint/base/var/log/nginx:/var/log/nginx
+    depends_on:
+      - mock-server
+      - php-hub
+      - php-fpm-80
+    restart: always
+    ports:
+      - 18081:80
+    networks:
+      outside-network:
+        aliases:
+          - $APP_COMPOSE_PROJECT_NAME
+      backend-network:
+  mock-server:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mock-server
+    image: eldarco/code-try:mock-server-base
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    env_file: .env
+    volumes:
+      - ./src/backend-mock-server:/var/www
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-hub:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-hub
+    image: eldarco/code-try:php-hub-base
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src/backend-php-hub:/var/www
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  php-fpm-80:
+    container_name: $APP_COMPOSE_PROJECT_NAME-php-fpm-80
+    image: eldarco/code-try:php-sandbox-80-base
+    volumes:
+      - ./src/backend-php-sandbox:/var/www
+    working_dir: /var/www/
+    restart: always
+    networks:
+      - backend-network
+  nodejs-serve:
+    container_name: $APP_COMPOSE_PROJECT_NAME-nodejs-serve
+    build:
+      context: ./
+      dockerfile: docker/nodejs-serve/only-dev/Dockerfile
+    working_dir: /home/node
+    env_file: .env
+    volumes:
+      - ./src/frontend:/home/node
+      - ./src/frontend/dev-entrypoint.sh:/entripont.sh
+    ports:
+      - 18080:8080
+    networks:
+      - backend-network
+  db:
+    container_name: $APP_COMPOSE_PROJECT_NAME-db
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --init-connect='SET NAMES UTF8;'
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${APP_DB_DATABASE}
+      - MYSQL_USER=${APP_DB_USER}
+      - MYSQL_PASSWORD=${APP_DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${APP_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "${APP_DB_USER}", "-p${APP_DB_PASSWORD}"]
+      timeout: 20s
+      retries: 10
+    ports:
+      - 13306:3306
+    networks:
+      - backend-network
+    volumes:
+      - ./database:/var/lib/mysql
+  mongo:
+    container_name: $APP_COMPOSE_PROJECT_NAME-mongo
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${APP_MONGODB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${APP_MONGODB_PASSWORD}
+    networks:
+      - backend-network
+    volumes:
+      - ./db-mongo:/data/db
+    user: $APP_DOCKER_UID:$APP_DOCKER_GID
+networks:
+  backend-network:
+  outside-network:
+    external:
+      name: $APP_SERVICE_NETWORK_NAME

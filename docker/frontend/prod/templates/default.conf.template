@@ -1,0 +1,25 @@
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80; ## listen for ipv4
+
+    server_name codetry;
+    index       index.php;
+    root        /var/www;
+
+    server_tokens off;
+    error_log   /var/log/nginx/error.log;
+
+    #front block
+    location / {
+        root /var/www/frontend/dist;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+    #front block end
+
+    location ~ /\.(ht|svn|git) {
+        deny all;
+    }
+}

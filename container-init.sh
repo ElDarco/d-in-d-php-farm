@@ -14,9 +14,8 @@ fi;
 versions=(54 55 56 70 71 72 73 74 80)
 for v in "${versions[@]}"
 do
-  if ! /usr/bin/env docker-compose exec -T php-fpm-"$v" php install.php http://codetry-nginx/php-fpm-"$v"/index.php; then
+  if ! /usr/bin/env docker-compose exec -T php-fpm-"$v" php install.php http://codetry-entrypoint/php-fpm-"$v"/index.php; then
       echo "Running php-fpm-$v php install.php failed"
-      exit 1;
   fi;
 done
 
