@@ -1,5 +1,5 @@
 {
-  "name": "dromru/gu-api-client",
+  "name": "codetry/mock-server-sdk",
   "description": "Клиент для json api Мок-сервера https://codetry.club",
   "type": "library",
   "keywords": [
