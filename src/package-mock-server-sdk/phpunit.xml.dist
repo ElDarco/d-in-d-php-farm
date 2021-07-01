@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    bootstrap                   = "vendor/autoload.php">
+    <testsuites>
+        <testsuite name="GOSUSLUGI.RU API Client Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log
+                type="coverage-html"
+                target="build/coverage"
+                lowUpperBound="35"
+                highLowerBound="70" />
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="junit" target="build/logs/junit.xml"/>
+        <log type="coverage-text" target="php://stdout" />
+    </logging>
+
+    <php>
+        <ini name="default_charset" value="utf-8"/>
+    </php>
+
+</phpunit>
