@@ -14,9 +14,16 @@ RUN mkdir -p /var/log/php-fpm
 RUN ln -sf /dev/stdout /var/log/php-fpm/access.log
 RUN ln -sf /dev/stderr /var/log/php-fpm/error.log
 
-COPY php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
-COPY php.ini /usr/local/etc/php/conf.d/00-php.ini
+COPY docker/mock-server/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/mock-server/php.ini /usr/local/etc/php/conf.d/00-php.ini
+
+COPY src/backend-mock-server /var/www
 
 WORKDIR /var/www
+
+#clear vendor if exist
+RUN rm -rf vendor
+
+RUN composer install
 
 CMD ["php-fpm"]

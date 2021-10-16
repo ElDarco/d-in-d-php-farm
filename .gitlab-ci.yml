@@ -10,7 +10,7 @@ variables:
   BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST: codetry/backend-mock-server-php:latest
   BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED: codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}
 
-build_docker_php_image:
+build_backend_mock_server_image:
   tags:
     - fines
   stage: build
@@ -25,5 +25,5 @@ build_docker_php_image:
   script:
     - echo "$DOCKER_PASS" | docker login "$DOCKER_REGISTRY" -u $DOCKER_USER --password-stdin
     #- docker pull $BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
-    - docker build -t ${BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED} -f docker/php/rancher.Dockerfile  .
+    - docker build -t ${BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED} -f docker/mock-server/Dockerfile .
     - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
