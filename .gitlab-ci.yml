@@ -25,8 +25,10 @@ build_backend_mock_server_image:
   script:
     - echo "$DOCKER_PASS" | docker login "$DOCKER_REGISTRY" -u $DOCKER_USER --password-stdin
     - docker pull $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
-    - BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST="codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}"
-    - docker build -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST -f docker/mock-server/Dockerfile .
+    - BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED="codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}"
+    - docker build -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED -f docker/mock-server/Dockerfile .
+    - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
+    - docker tag $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
     - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
 
 .deploy-to-ks8: &deploy-to-ks8

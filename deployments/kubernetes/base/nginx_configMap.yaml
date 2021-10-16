@@ -12,19 +12,20 @@ data:
       listen *:80 default_server;
       error_log  /var/log/nginx/error.log;
       access_log off;
-      root /usr/src/myapp;
+      root /var/www/public;
       charset utf-8;
 
       location / {
-        rewrite ^ /index.php last;
-      }
-
-      location ~ \.(js|htc|ico|gif|jpg|png|css)$ {
+          try_files $uri $uri/ /index.php?$args;
       }
 
       location ~ \.php$ {
-        fastcgi_pass localhost:9000;
-        fastcgi_param SCRIPT_FILENAME $document_root/public$fastcgi_script_name;
-        include fastcgi_params;
+          include fastcgi_params;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_pass localhost:9000;
+      }
+
+      location ~ \.(js|htc|ico|gif|jpg|png|css)$ {
       }
     }
