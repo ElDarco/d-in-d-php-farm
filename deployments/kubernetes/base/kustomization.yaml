@@ -5,3 +5,4 @@ resources:
   - deployment-back.yaml
   - service-nginx.yaml
   - nginx_configMap.yaml
+  - pvc-mongo-dynamic.yaml
