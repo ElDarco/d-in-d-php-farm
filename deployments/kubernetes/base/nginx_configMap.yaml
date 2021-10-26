@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  labels:
+    tier: backend
+data:
+  config : |
+    server {
+      server_name _;
+
+      listen *:80 default_server;
+      error_log  /var/log/nginx/error.log;
+      access_log off;
+      root /var/www/public;
+      charset utf-8;
+
+      location / {
+        rewrite ^ /index.php last;
+      }
+
+      location ~ \.php$ {
+          include fastcgi_params;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_pass localhost:9000;
+      }
+
+      location ~ \.(js|htc|ico|gif|jpg|png|css)$ {
+      }
+    }

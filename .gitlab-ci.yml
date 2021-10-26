@@ -1,0 +1,60 @@
+cache:
+  paths:
+    - vendor/
+  key: "${CI_PROJECT_PATH_SLUG}"
+
+stages:
+  - build
+  - staging
+
+variables:
+  BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST: codetry/backend-mock-server-php:latest
+  BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED: codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}
+
+build_backend_mock_server_image:
+  tags:
+    - fines
+  stage: build
+  image: "$DOCKER_REGISTRY/library/gitlab-runner-image:with-git"
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - docker/mock-server/*
+      - src/backend-mock-server/*
+  script:
+    - echo "$DOCKER_PASS" | docker login "$DOCKER_REGISTRY" -u $DOCKER_USER --password-stdin
+    - docker pull $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
+    - docker build -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST -f docker/mock-server/Dockerfile .
+    - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
+    - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
+
+.deploy-to-ks8: &deploy-to-ks8
+  image: "$DOCKER_REGISTRY/library/deployer:1.3"
+  tags:
+    - fines
+  when: manual
+  script:
+    - kubectl vaultlogin secret/data/codetry/$OVERLAY/kubectl
+    - cp .env.orig deployments/kubernetes/overlays/$OVERLAY/.env.orig
+    - cd deployments/kubernetes/overlays/$OVERLAY
+    - awk -F= '!a[$1]++' .env.staging.orig .env.orig  > .env.staging
+    - vault2dotenv -p secret/data/codetry/$OVERLAY/env > .secret.env
+    - kustomize edit set image $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
+    - kustomize build . | kubectl apply -f - --record
+    - kubectl -n $NAMESPACE rollout restart deployments/codetry-deployment
+
+deploy_to_k8s_staging:
+  stage: staging
+  when: manual
+  needs:
+    - build_backend_mock_server_image
+  only:
+    - merge_requests
+    - master
+  variables:
+    OVERLAY: staging
+    NAMESPACE: codetry-staging
+    VAULT_ROLE: codetry-staging
+  <<: *deploy-to-ks8

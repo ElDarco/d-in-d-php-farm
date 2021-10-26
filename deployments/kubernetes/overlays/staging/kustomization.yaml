@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: codetry-staging
+bases:
+  - ../../base
+
+resources:
+  - ingress.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: codetry-configmap
+    envs:
+      - .env.staging
+
+secretGenerator:
+  - name: codetry-secret
+    type: Opaque
+    envs:
+      - .secret.env
+
+patchesStrategicMerge:
+  - deployment-back.yaml

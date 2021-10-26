@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codetry-deployment
+  labels:
+    app: codetry
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codetry
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: codetry
+        tier: backend
+    spec:
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+            items:
+              - key: config
+                path: site.conf
+      containers:
+        - name: php
+          image: harbor.drom.ru/codetry/backend-mock-server-php:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: codetry-configmap
+            - secretRef:
+                name: codetry-secret
+          resources:
+            limits:
+              cpu: "500m"
+              ephemeral-storage: 200Mi
+              memory: 128Mi
+            requests:
+              cpu: "100m"
+              ephemeral-storage: 200Mi
+              memory: 128Mi
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 10
+            initialDelaySeconds: 10
+          ports:
+            - containerPort: 9000
+              name: php
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh","-c","/bin/sleep 1; kill -QUIT 1" ]
+        - name: nginx
+          image: harbor.drom.ru/proxy_cache/library/nginx:1.15.10-alpine
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+          resources:
+            limits:
+              cpu: "50m"
+              ephemeral-storage: 200Mi
+              memory: 64Mi
+            requests:
+              cpu: "50m"
+              ephemeral-storage: 200Mi
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /api/v1/ping
+            timeoutSeconds: 10
+          ports:
+            - containerPort: 80
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit

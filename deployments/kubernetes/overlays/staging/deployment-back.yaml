@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: codetry
+    tier: backend
+  name: codetry-deployment
+spec:
+  strategy:
+    type: RollingUpdate
+  template:
+    spec:
+      containers:
+        - name: php
+          resources:
+            limits:
+              cpu: "400m"
+              memory: 129Mi
+            requests:
+              cpu: "10m"
+              memory: 127Mi
+        - name: nginx
+          resources:
+            limits:
+              cpu: "10m"
+              memory: 63Mi
+            requests:
+              cpu: "10m"
+              memory: 63Mi

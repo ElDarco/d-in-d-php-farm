@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      volumes:
+        - name: pv-mongo-dynamic-storage
+          persistentVolumeClaim:
+            claimName: pvc-mongo-dynamic
+      containers:
+        - name: mongo
+          image: harbor.drom.ru/proxy_cache/library/mongo:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: codetry-configmap
+          resources:
+            limits:
+              cpu: "25m"
+              memory: 300Mi
+            requests:
+              cpu: "25m"
+              memory: 270Mi
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          ports:
+            - containerPort: 27017
+              name: mongo
+          volumeMounts:
+            - mountPath: "/data/db"
+              name: pv-mongo-dynamic-storage
