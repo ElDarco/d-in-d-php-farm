@@ -37,9 +37,10 @@ build_backend_mock_server_image:
   when: manual
   script:
     - kubectl vaultlogin secret/data/codetry/$OVERLAY/kubectl
+    - cp .env.orig deployments/kubernetes/overlays/$OVERLAY/.env.orig
     - cd deployments/kubernetes/overlays/$OVERLAY
+    - awk -F= '!a[$1]++' .env.staging.orig .env.orig  > .env.staging
     - vault2dotenv -p secret/data/codetry/$OVERLAY/env > .secret.env
-    - if [ $RELEASE_OVERWRITE = 1 ]; then echo -e "\nRELEASE_VERSION=$CI_PIPELINE_IID" >> .env.$OVERLAY; fi;
     - kustomize edit set image $BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
     - kustomize build . | kubectl apply -f - --record
     - kubectl -n $NAMESPACE rollout restart deployments/codetry-deployment
