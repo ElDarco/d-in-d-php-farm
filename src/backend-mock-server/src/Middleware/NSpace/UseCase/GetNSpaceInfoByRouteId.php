@@ -32,6 +32,7 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
         $nSpace->setName($persistObject->name);
         $nSpace->setUseProxy($persistObject->useProxy ?? false);
         $nSpace->setProxyToUrl($persistObject->proxyToUrl ?? '');
+        $nSpace->setSpeedResponseMS($persistObject->speedResponseMS ?? 0);
 
         foreach ($persistObject->requests as $request) {
             $nProxyResponse = null;

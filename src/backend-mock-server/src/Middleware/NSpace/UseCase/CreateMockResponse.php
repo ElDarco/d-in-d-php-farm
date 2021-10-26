@@ -20,6 +20,11 @@ class CreateMockResponse extends InvokableMiddleware
         NRequest $nRequest,
         NSettings $nSettings = null
     ) {
+        $speedResponseMs = $nSpace->getSpeedResponseMS();
+        if ($speedResponseMs > 0) {
+          usleep($speedResponseMs);
+        }
+
         if ($nSettings) {
             $bodyRaw = $nSettings->getResponseBody();
             $response = new Response();

@@ -12,12 +12,16 @@ use Ramsey\Uuid\Uuid;
 
 class DtoFactory
 {
-    public static function createNSpace(string $name = '', bool $useProxy = false, string $proxyToUrl = ''): \DTO\NSpace
-    {
+    public static function createNSpace(
+        string $name = '',
+        bool $useProxy = false,
+        string $proxyToUrl = '',
+        int $speedResponse = 0
+    ): \DTO\NSpace {
         if (!$name) {
             $name = 'somename_' . time();
         }
-        return new NSpace((Uuid::uuid4())->toString(), $name, [], [], $useProxy, $proxyToUrl);
+        return new NSpace((Uuid::uuid4())->toString(), $name, [], [], $useProxy, $proxyToUrl, $speedResponse);
     }
 
     public static function createNRequest(

@@ -21,8 +21,8 @@ build_backend_mock_server_image:
       - merge_requests
       - master
     changes:
-      - docker/mock-server/*
-      - src/backend-mock-server/*
+      - docker/mock-server/**/*
+      - src/backend-mock-server/**/*
   script:
     - echo "$DOCKER_PASS" | docker login "$DOCKER_REGISTRY" -u $DOCKER_USER --password-stdin
     - docker pull $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
