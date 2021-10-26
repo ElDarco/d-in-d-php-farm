@@ -22,6 +22,9 @@ spec:
         - name: mongo
           image: harbor.drom.ru/proxy_cache/library/mongo:latest
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: codetry-configmap
           resources:
             limits:
               cpu: "25m"
