@@ -9,6 +9,7 @@ stages:
 
 variables:
   BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST: codetry/backend-mock-server-php:latest
+  BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED: codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}
 
 build_backend_mock_server_image:
   tags:
@@ -25,7 +26,6 @@ build_backend_mock_server_image:
   script:
     - echo "$DOCKER_PASS" | docker login "$DOCKER_REGISTRY" -u $DOCKER_USER --password-stdin
     - docker pull $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
-    - BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED="codetry/backend-mock-server-php:${CI_PIPELINE_IID}-${CI_COMMIT_REF_NAME}"
     - docker build -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED -t $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST -f docker/mock-server/Dockerfile .
     - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
     - docker push $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
@@ -41,7 +41,7 @@ build_backend_mock_server_image:
     - cd deployments/kubernetes/overlays/$OVERLAY
     - awk -F= '!a[$1]++' .env.staging.orig .env.orig  > .env.staging
     - vault2dotenv -p secret/data/codetry/$OVERLAY/env > .secret.env
-    - kustomize edit set image $BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
+    - kustomize edit set image $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
     - kustomize build . | kubectl apply -f - --record
     - kubectl -n $NAMESPACE rollout restart deployments/codetry-deployment
 
