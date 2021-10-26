@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: nginx
   labels:
-    app: fines
+    app: codetry
     tier: backend
 spec:
   selector:
-    app: fines
+    app: codetry
     tier: backend
   type: ClusterIP
   ports:

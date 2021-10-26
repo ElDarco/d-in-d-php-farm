@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: codetry-deployment
   labels:
-    app: fines
+    app: codetry
     tier: backend
 spec:
   replicas: 1
