@@ -36,6 +36,10 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
 
         foreach ($persistObject->requests as $request) {
             $nProxyResponse = null;
+            $nRequestHeaders = [];
+            if ($request->offsetExists('headers')) {
+                $nRequestHeaders = $request->headers->getArrayCopy();
+            }
             if ($request->offsetExists('proxyResponse')) {
                 $proxyResponseArray = $request->proxyResponse->getArrayCopy();
                 if (is_array($proxyResponseArray) &&
@@ -65,7 +69,8 @@ class GetNSpaceInfoByRouteId extends InvokableMiddleware
                 $request->body,
                 $request->queryString,
                 $request->createdAt,
-                $nProxyResponse
+                $nProxyResponse,
+                $nRequestHeaders
             );
             $nRequest->setId($request->id);
             $nSpace->addRequests($nRequest);

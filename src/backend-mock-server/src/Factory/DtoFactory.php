@@ -31,6 +31,7 @@ class DtoFactory
         string $queryString,
         \DateTimeInterface|string $createdAt,
         ?NProxyResponse $proxyResponse = null,
+        array $headers = [],
     ): \DTO\NRequest {
         return new NRequest(
             (Uuid::uuid4())->toString(),
@@ -39,7 +40,8 @@ class DtoFactory
             $body,
             $queryString,
             $createdAt,
-            $proxyResponse
+            $proxyResponse,
+            $headers
         );
     }
 
