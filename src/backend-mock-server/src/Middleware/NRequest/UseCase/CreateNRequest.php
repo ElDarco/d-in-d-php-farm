@@ -16,7 +16,7 @@ class CreateNRequest extends InvokableMiddleware
         $body = $this->getRequest()->getBody()->getContents();
         $uri = $this->getRequest()->getRouteParam('uri') ?? '';
         $method = $this->getRequest()->getMethod();
-        $queryString = $this->getRequest()->getUri()->getQuery();
+        $queryString = urldecode($this->getRequest()->getUri()->getQuery());
 
         $nRequest = DtoFactory::createNRequest($uri, $method, $body, $queryString, new \DateTimeImmutable('now'));
         $this->getRequest()->withAttribute(NRequest::class, $nRequest);
