@@ -14,7 +14,8 @@ class NSpace extends TurnoverObject
         protected array $settings = [],
         protected array $requests = [],
         protected bool $useProxy = false,
-        protected string $proxyToUrl = ''
+        protected string $proxyToUrl = '',
+        protected int $speedResponseMS = 0
     ) {}
 
     public function getId(): string
@@ -109,6 +110,17 @@ class NSpace extends TurnoverObject
         return $this;
     }
 
+    public function getSpeedResponseMS(): int
+    {
+        return $this->speedResponseMS;
+    }
+
+    public function setSpeedResponseMS(int $speedResponseMS): NSpace
+    {
+        $this->speedResponseMS = $speedResponseMS;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -118,6 +130,7 @@ class NSpace extends TurnoverObject
             'requests' => $this->getRequests(),
             'useProxy' => $this->isUseProxy(),
             'proxyToUrl' => $this->getProxyToUrl(),
+            'speedResponseMS' => $this->getSpeedResponseMS(),
         ];
     }
 }

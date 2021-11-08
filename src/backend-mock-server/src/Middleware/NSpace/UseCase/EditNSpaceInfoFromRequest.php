@@ -17,6 +17,7 @@ class EditNSpaceInfoFromRequest extends InvokableMiddleware
         $name = $body['name'] ?? '';
         $useProxy = $body['useProxy'] ?? false;
         $proxyToUrl = $body['proxyToUrl'] ?? '';
+        $speedResponseMS = (int) ($body['speedResponseMS'] ?? 0);
 
         if ($name) {
             $nSpace->setName($name);
@@ -26,6 +27,9 @@ class EditNSpaceInfoFromRequest extends InvokableMiddleware
         }
         if ($proxyToUrl) {
             $nSpace->setProxyToUrl($proxyToUrl);
+        }
+        if ($speedResponseMS || $speedResponseMS === 0) {
+            $nSpace->setSpeedResponseMS($speedResponseMS);
         }
 
         /** @var \MongoDB\Model\BSONDocument $persistObject */
@@ -38,6 +42,7 @@ class EditNSpaceInfoFromRequest extends InvokableMiddleware
                     'name' => $nSpace->getName(),
                     'useProxy' => $nSpace->isUseProxy(),
                     'proxyToUrl' => $nSpace->getProxyToUrl(),
+                    'speedResponseMS' => $nSpace->getSpeedResponseMS(),
                 ]
             ]
         );
