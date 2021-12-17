@@ -14,10 +14,10 @@ spec:
         - name: php
           resources:
             limits:
-              cpu: 400m
-              memory: 900Mi
+              cpu: 700m
+              memory: 1300Mi
             requests:
-              cpu: 10m
+              cpu: 50m
               memory: 300Mi
         - name: nginx
           resources:
