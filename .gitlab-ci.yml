@@ -41,15 +41,13 @@ build_backend_mock_server_image:
     - cd deployments/kubernetes/overlays/$OVERLAY
     - awk -F= '!a[$1]++' .env.staging.orig .env.orig  > .env.staging
     - vault2dotenv -p secret/data/codetry/$OVERLAY/env > .secret.env
-    - kustomize edit set image $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_TAGGED
+    - kustomize edit set image $DOCKER_REGISTRY/$BACKEND_MOCK_SERVER_IMAGE_NAME_PHP_LATEST
     - kustomize build . | kubectl apply -f - --record
     - kubectl -n $NAMESPACE rollout restart deployments/codetry-deployment
 
 deploy_to_k8s_staging:
   stage: staging
   when: manual
-  needs:
-    - build_backend_mock_server_image
   only:
     - merge_requests
     - master
