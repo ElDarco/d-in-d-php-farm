@@ -15,10 +15,10 @@ spec:
           resources:
             limits:
               cpu: 400m
-              memory: 500Mi
+              memory: 900Mi
             requests:
               cpu: 10m
-              memory: 127Mi
+              memory: 300Mi
         - name: nginx
           resources:
             limits:
