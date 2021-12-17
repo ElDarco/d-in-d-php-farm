@@ -27,11 +27,11 @@ spec:
                 name: codetry-configmap
           resources:
             limits:
-              cpu: "25m"
-              memory: 300Mi
+              cpu: 2000m
+              memory: 4000Mi
             requests:
-              cpu: "25m"
-              memory: 270Mi
+              cpu: 500m
+              memory: 1000Mi
           readinessProbe:
             tcpSocket:
               port: 27017
