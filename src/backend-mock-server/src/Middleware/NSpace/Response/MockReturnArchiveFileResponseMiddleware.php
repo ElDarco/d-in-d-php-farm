@@ -17,9 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class MockReturnArchiveFileResponseMiddleware extends InvokableMiddleware
 {
-    public function __invoke(
-        ResponseInterface $response = null
-    ) {
+    public function __invoke()
+    {
         $stream = fopen('/var/www/public/somekvit.zip', 'rb');
         return new Response($stream,200, [
             'Content-Type' => 'application/zip'
