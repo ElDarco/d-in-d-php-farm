@@ -44,6 +44,10 @@ class RoutesDelegator
             \Middleware\NSpace\Response\MockResponseMiddleware::class
         ]);
 
+        $app->post("/n/archive", [
+            \Middleware\NSpace\Response\MockReturnArchiveFileResponseMiddleware::class
+        ]);
+
         return $app;
     }
     // @codingStandardsIgnoreEnd
