@@ -44,7 +44,7 @@ class RoutesDelegator
             \Middleware\NSpace\Response\MockResponseMiddleware::class
         ]);
 
-        $app->post("/n/api/v1/admin/kvit[/]", [
+        $app->get("/n/api/v1/admin/kvit[/]", [
             \Middleware\NSpace\Response\MockReturnArchiveFileResponseMiddleware::class
         ]);
 
