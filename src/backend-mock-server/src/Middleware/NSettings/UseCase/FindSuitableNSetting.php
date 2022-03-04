@@ -29,6 +29,28 @@ class FindSuitableNSetting extends InvokableMiddleware
         }
         foreach ($nSpace->getSettingsObjects() as $nSettings) {
             if (
+                $nSettings->getMethod() === $nRequest->getMethod()
+                && $nSettings->getUri() === $nRequest->getUri()
+            ) {
+                parse_str($nSettings->getQueryString(), $queryParamsInSettings);
+                parse_str($nRequest->getQueryString(), $queryParamsInRequest);
+                $needBeEqual = \count($queryParamsInSettings);
+                $realBeEqual = 0;
+                foreach ($queryParamsInRequest as $keyQueryParamInRequest => $queryParamInRequestValue) {
+                    if ($queryParamsInSettings[$keyQueryParamInRequest] === $queryParamInRequestValue) {
+                        $realBeEqual++;
+                    }
+                }
+                if ($realBeEqual === $needBeEqual) {
+                    $this->getRequest()->withAttribute(NSettings::class, $nSettings);
+                    break;
+                }
+
+                break;
+            }
+        }
+        foreach ($nSpace->getSettingsObjects() as $nSettings) {
+            if (
                 $nSettings->getQueryString() === ""
                 && $nSettings->getMethod() === $nRequest->getMethod()
                 && $nSettings->getUri() === $nRequest->getUri()
