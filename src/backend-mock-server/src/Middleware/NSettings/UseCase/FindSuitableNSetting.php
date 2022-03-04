@@ -50,8 +50,6 @@ class FindSuitableNSetting extends InvokableMiddleware
                     $this->getRequest()->withAttribute(NSettings::class, $nSettings);
                     break;
                 }
-
-                break;
             }
         }
         foreach ($nSpace->getSettingsObjects() as $nSettings) {
