@@ -40,7 +40,9 @@ class FindSuitableNSetting extends InvokableMiddleware
                 $needBeEqual = \count($queryParamsInSettings);
                 $realBeEqual = 0;
                 foreach ($queryParamsInRequest as $keyQueryParamInRequest => $queryParamInRequestValue) {
-                    if ($queryParamsInSettings[$keyQueryParamInRequest] === $queryParamInRequestValue) {
+                    if (array_key_exists($keyQueryParamInRequest, $queryParamsInSettings)
+                        && $queryParamsInSettings[$keyQueryParamInRequest] === $queryParamInRequestValue)
+                    {
                         $realBeEqual++;
                     }
                 }
