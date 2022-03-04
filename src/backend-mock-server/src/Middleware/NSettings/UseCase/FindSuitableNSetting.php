@@ -32,6 +32,9 @@ class FindSuitableNSetting extends InvokableMiddleware
                 $nSettings->getMethod() === $nRequest->getMethod()
                 && $nSettings->getUri() === $nRequest->getUri()
             ) {
+                if ($nSettings->getQueryString() === '') {
+                    continue;
+                }
                 parse_str($nSettings->getQueryString(), $queryParamsInSettings);
                 parse_str($nRequest->getQueryString(), $queryParamsInRequest);
                 $needBeEqual = \count($queryParamsInSettings);
