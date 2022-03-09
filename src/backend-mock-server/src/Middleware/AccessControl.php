@@ -27,8 +27,15 @@ class AccessControl implements MiddlewareInterface
             || !$_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN']
             || $_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN'] === '*'
         ) {
+            $origin = $request->getHeader('Origin');
+            if (is_string(current($origin))) {
+                $origin = current($origin);
+            } else {
+                $origin = '*';
+            }
+
             return $response
-                ->withHeader('Access-Control-Allow-Origin', '*');
+                ->withHeader('Access-Control-Allow-Origin', $origin);
         }
 
         $allowedOrigins = explode(",", $_ENV['APP_MOCK_ACCESS_CONTROL_ALLOW_ORIGIN'] ?? '');
