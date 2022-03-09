@@ -35,6 +35,7 @@ class AccessControl implements MiddlewareInterface
             }
 
             return $response
+                ->withHeader('Access-Control-Allow-Credentials', 'true')
                 ->withHeader('Access-Control-Allow-Origin', $origin);
         }
 
