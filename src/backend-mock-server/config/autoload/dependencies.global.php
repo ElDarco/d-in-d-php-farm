@@ -29,6 +29,7 @@ return [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             \GuzzleHttp\Client::class => \Factory\GuzzleFactory::class,
             \Mezzio\ProblemDetails\ProblemDetailsMiddleware::class => \Mezzio\ProblemDetails\ProblemDetailsMiddlewareFactory::class,
+            \Psr\Log\LoggerInterface::class => \Factory\MonologLoggerFactory::class,
         ],
     ],
 ];

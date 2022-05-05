@@ -43,6 +43,10 @@ $aggregator = new ConfigAggregator([
 
     // Load development config if it exists
     new PhpFileProvider(realpath(__DIR__) . '/development.config.php'),
+
+    ($_ENV['APP_MOCK_SERVER_WORK_MODE'] === 'dev')
+        ? new PhpFileProvider(realpath(__DIR__) . '/monolog/dev/monolog.php')
+        : new PhpFileProvider(realpath(__DIR__) . '/monolog/prod/monolog.php'),
 ], $cacheConfig['config_cache_path']);
 
 return $aggregator->getMergedConfig();
