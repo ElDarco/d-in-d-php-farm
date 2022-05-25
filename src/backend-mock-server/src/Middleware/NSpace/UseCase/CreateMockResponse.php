@@ -8,6 +8,8 @@ use DTO\NSettings;
 use DTO\NSpace;
 use Factory\DtoFactory;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\RequestOptions;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Middleware\InvokableMiddleware;
@@ -34,12 +36,14 @@ class CreateMockResponse extends InvokableMiddleware
                 $response = $response->withHeader($headerKey, $headerValue);
             }
         } elseif ($nSpace->isUseProxy()) {
-            $uri = $this->getRequest()->getUri();
-            preg_match('/(.*)\:\/\/(.*)/', $nSpace->getProxyToUrl(), $matches);
-            $uri = $uri->withHost($matches[2]);
-            $uri = $uri->withScheme($matches[1]);
-            $uri = $uri->withPath($nRequest->getUri());
-            $uri = $uri->withQuery($nRequest->getQueryString());
+            $proxyUri = new Uri($nSpace->getProxyToUrl());
+
+            $uri = $this->getRequest()->getUri()
+                ->withHost($proxyUri->getHost())
+                ->withScheme($proxyUri->getScheme())
+                ->withPort($proxyUri->getPort())
+                ->withPath($nRequest->getUri()); // TODO: тут можно комбинировать с прокси path
+            
             $request = $this->getRequest();
             $request = $request->withUri($uri);
 
