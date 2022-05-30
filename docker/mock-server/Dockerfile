@@ -3,7 +3,7 @@ FROM php:8.0-fpm-alpine
 RUN apk update && apk upgrade \
     && apk add --no-cache bash git openssh unzip icu-dev curl-dev pkgconfig openssl-dev \
     && apk --no-cache add pcre-dev ${PHPIZE_DEPS} \
-    && docker-php-ext-install -j$(nproc) iconv sockets pdo_mysql mysqli pcntl intl bcmath \
+    && docker-php-ext-install -j$(nproc) sockets pdo_mysql mysqli pcntl intl bcmath \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
     && apk del pcre-dev ${PHPIZE_DEPS}
