@@ -15,7 +15,7 @@ build_backend_mock_server_image:
   tags:
     - fines
   stage: build
-  image: "$DOCKER_REGISTRY/library/gitlab-runner-image:with-git"
+  image: "$DOCKER_REGISTRY/library/deployer:1.3"
   only:
     refs:
       - merge_requests
