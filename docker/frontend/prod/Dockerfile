@@ -20,7 +20,7 @@ RUN yarn run vue-cli-service build
 
 FROM nginx:1.19
 
-COPY /docker/nginx/templates /etc/nginx/templates
+COPY /docker/frontend/prod/templates /etc/nginx/templates
 
 COPY --from=builder /home/node/dist /var/www/frontend/dist
 
