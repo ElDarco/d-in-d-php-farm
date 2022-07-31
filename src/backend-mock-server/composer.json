@@ -32,6 +32,7 @@
         "mezzio/mezzio-helpers": "^5.3",
         "mezzio/mezzio-problem-details": "^1.2",
         "mongodb/mongodb": "^1.4",
+        "monolog/monolog": "^2.5",
         "ramsey/uuid": "^4.1"
     },
     "require-dev": {
