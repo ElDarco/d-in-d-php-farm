@@ -56,18 +56,16 @@ services:
     restart: always
     networks:
       - backend-network
-  nodejs-serve:
-    container_name: $APP_COMPOSE_PROJECT_NAME-nodejs-serve
+  front:
+    container_name: $APP_COMPOSE_PROJECT_NAME-front
     build:
       context: ./
-      dockerfile: docker/nodejs-serve/only-dev/Dockerfile
+      dockerfile: docker/frontend/prod/Dockerfile
     working_dir: /home/node
     env_file: .env
     volumes:
       - ./src/frontend:/home/node
-      - ./src/frontend/dev-entrypoint.sh:/entripont.sh
-    ports:
-      - 18080:8080
+      - ./src/frontend/prod-entrypoint.sh:/entripont.sh
     networks:
       - backend-network
   db:
