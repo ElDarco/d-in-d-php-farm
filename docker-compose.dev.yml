@@ -63,6 +63,8 @@ services:
       dockerfile: docker/frontend/prod/Dockerfile
     working_dir: /home/node
     env_file: .env
+    ports:
+      - 18080:80
     volumes:
       - ./src/frontend:/home/node
       - ./src/frontend/prod-entrypoint.sh:/entripont.sh
