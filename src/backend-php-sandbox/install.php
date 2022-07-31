@@ -1,8 +1,12 @@
 <?php
-//USE php install.php http://localhost:18081/php-fpm-73/index.php
+//USE php install.php https://codetry.online/php-fpm-81/index.php https://codetry.online/php-hub/api/v1/php-instance/register
 $publicUrl = '';
+$registrUrl  = '';
 if (array_key_exists('1', $argv)) {
     $publicUrl = $argv[1];
+}
+if (array_key_exists('2', $argv)) {
+    $registrUrl = $argv[2];
 }
 $phpVersion = phpversion();
 echo 'Settings' . PHP_EOL;
@@ -16,7 +20,7 @@ if (!empty($publicUrl)) {
     curl_setopt( $curl, CURLOPT_POSTFIELDS, $payload );
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "http://codetry-nginx/php-hub/api/v1/php-instance/register",
+        CURLOPT_URL => $registrUrl,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
