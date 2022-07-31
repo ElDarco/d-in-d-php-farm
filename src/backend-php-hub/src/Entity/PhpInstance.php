@@ -55,7 +55,6 @@ class PhpInstance extends TurnoverObject
 
     public function getShortVersion(): string
     {
-        $versionElements = explode('.', $this->phpVersion);
-        return $versionElements[0] . '.' . $versionElements[1];
+        return $this->phpVersion;
     }
 }
