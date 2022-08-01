@@ -97,33 +97,6 @@ server {
     listen 80; ## listen for ipv4
 
     gzip on;
-    gzip_disable "msie6";
-
-    gzip_vary on;
-    gzip_proxied any;
-    gzip_comp_level 8;
-    gzip_buffers 16 8k;
-    gzip_http_version 1.1;
-    gzip_types
-        application/atom+xml
-        application/geo+json
-        application/javascript
-        application/x-javascript
-        application/json
-        application/ld+json
-        application/manifest+json
-        application/rdf+xml
-        application/rss+xml
-        application/xhtml+xml
-        application/xml
-        font/eot
-        font/otf
-        font/ttf
-        image/svg+xml
-        text/css
-        text/javascript
-        text/plain
-        text/xml;
 
     server_name codetry;
     index       index.php;
